@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using TonyBlogs.Framework;
 
 namespace TonyBlogs.IRepository
 {
-    public interface IBaseRepository<TEntity> where TEntity : class
+    public interface IBaseRepository<TEntity> : IDependency where TEntity : class
     {
         #region 查询
         /// <summary>
