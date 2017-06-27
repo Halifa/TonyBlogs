@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TonyBlogs.Framework", "TonyBlogs.Framework\TonyBlogs.Framework.csproj", "{943DF536-760C-40B0-B3FC-3EC3E29A2C83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TonyBlogs.IRepository", "TonyBlogs.IRepository\TonyBlogs.IRepository.csproj", "{D6CF2021-B095-4103-9D1C-294E19C9EB4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TonyBlogs.Repository", "TonyBlogs.Repository\TonyBlogs.Repository.csproj", "{075DDA08-C0BF-4523-8826-7D978903553F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{943DF536-760C-40B0-B3FC-3EC3E29A2C83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{943DF536-760C-40B0-B3FC-3EC3E29A2C83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{943DF536-760C-40B0-B3FC-3EC3E29A2C83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{943DF536-760C-40B0-B3FC-3EC3E29A2C83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6CF2021-B095-4103-9D1C-294E19C9EB4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6CF2021-B095-4103-9D1C-294E19C9EB4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6CF2021-B095-4103-9D1C-294E19C9EB4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6CF2021-B095-4103-9D1C-294E19C9EB4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{075DDA08-C0BF-4523-8826-7D978903553F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{075DDA08-C0BF-4523-8826-7D978903553F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{075DDA08-C0BF-4523-8826-7D978903553F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{075DDA08-C0BF-4523-8826-7D978903553F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
