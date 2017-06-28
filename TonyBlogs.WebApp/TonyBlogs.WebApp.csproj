@@ -43,10 +43,6 @@
       <HintPath>..\packages\Autofac.3.1.0\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Autofac.Integration.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.Mvc4.3.1.0\lib\net40\Autofac.Integration.Mvc.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -121,10 +117,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutofacConfig.cs" />
+    <Compile Include="ControllerFactory\AutofacControllerFactory.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filters\ExcepFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Module\MvcControllerModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +148,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TonyBlogs.Common\TonyBlogs.Common.csproj">
+      <Project>{c4d9f227-bae3-42d3-ac50-b463c5f2ee3f}</Project>
+      <Name>TonyBlogs.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TonyBlogs.Entity\TonyBlogs.Entity.csproj">
       <Project>{cadabaec-616d-4135-8337-03d8efbfcb9e}</Project>
       <Name>TonyBlogs.Entity</Name>
@@ -176,6 +179,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Error.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

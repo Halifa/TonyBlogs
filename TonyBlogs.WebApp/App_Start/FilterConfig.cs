@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using TonyBlogs.WebApp.Filters;
 
 namespace TonyBlogs.WebApp
 {
@@ -7,7 +8,7 @@ namespace TonyBlogs.WebApp
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new ExcepFilter());
         }
     }
 }

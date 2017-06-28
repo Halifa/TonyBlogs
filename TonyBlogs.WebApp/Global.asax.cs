@@ -14,12 +14,12 @@ namespace TonyBlogs.WebApp
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
+            AutofacConfig.Register();
 
+            AreaRegistration.RegisterAllAreas();
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            AutofacConfig.Register();
         }
     }
 }

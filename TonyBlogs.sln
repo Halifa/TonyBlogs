@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TonyBlogs.Service", "TonyBl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TonyBlogs.WebApp", "TonyBlogs.WebApp\TonyBlogs.WebApp.csproj", "{C0CEAC86-A5AD-401A-BC4D-5391E50EB388}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TonyBlogs.Common", "TonyBlogs.Common\TonyBlogs.Common.csproj", "{C4D9F227-BAE3-42D3-AC50-B463C5F2EE3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{C0CEAC86-A5AD-401A-BC4D-5391E50EB388}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0CEAC86-A5AD-401A-BC4D-5391E50EB388}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0CEAC86-A5AD-401A-BC4D-5391E50EB388}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4D9F227-BAE3-42D3-AC50-B463C5F2EE3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4D9F227-BAE3-42D3-AC50-B463C5F2EE3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4D9F227-BAE3-42D3-AC50-B463C5F2EE3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4D9F227-BAE3-42D3-AC50-B463C5F2EE3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

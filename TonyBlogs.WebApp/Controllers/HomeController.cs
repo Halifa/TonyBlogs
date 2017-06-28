@@ -19,6 +19,9 @@ namespace TonyBlogs.WebApp.Controllers
 
         public ActionResult Index()
         {
+            int b = 0;
+            int c = 1 / b;
+
             var list = BlogArticleServive.QueryWhere(m => m.ID > 0);
 
             return View(list);

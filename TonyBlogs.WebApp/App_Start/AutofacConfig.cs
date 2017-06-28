@@ -1,10 +1,11 @@
-﻿using Autofac.Integration.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TonyBlogs.Common.Cache;
 using TonyBlogs.Framework;
+using Autofac;
 
 namespace TonyBlogs.WebApp
 {
@@ -19,24 +20,8 @@ namespace TonyBlogs.WebApp
             Bootstrapper boot = new Bootstrapper();
             boot.Start();
 
-            var builder = Bootstrapper.ContainerBuilder;
-
-            // Register your MVC controllers. (MvcApplication is the name of
-            // the class in Global.asax.)
-            builder.RegisterControllers(typeof(MvcApplication).Assembly);
-
-            // OPTIONAL: Register model binders that require DI.
-            builder.RegisterModelBinders(typeof(MvcApplication).Assembly);
-            builder.RegisterModelBinderProvider();
-
-            // OPTIONAL: Enable property injection into action filters.
-            builder.RegisterFilterProvider();
-
-            //创建一个Autofac的容器
-            var container = builder.Build();
-
             //将MVC的控制器对象实例 交由autofac来创建
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+            ControllerBuilder.Current.SetControllerFactory(new AutofacControllerFactory());
         }
     }
 }
