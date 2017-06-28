@@ -72,6 +72,10 @@
       <Project>{cadabaec-616d-4135-8337-03d8efbfcb9e}</Project>
       <Name>TonyBlogs.Entity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TonyBlogs.Framework\TonyBlogs.Framework.csproj">
+      <Project>{943df536-760c-40b0-b3fc-3ec3e29a2c83}</Project>
+      <Name>TonyBlogs.Framework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TonyBlogs.IRepository\TonyBlogs.IRepository.csproj">
       <Project>{d6cf2021-b095-4103-9d1c-294e19c9eb4f}</Project>
       <Name>TonyBlogs.IRepository</Name>
