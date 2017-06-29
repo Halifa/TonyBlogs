@@ -6,7 +6,7 @@ using TonyBlogs.Entity;
 
 namespace TonyBlogs.IService
 {
-    public interface IBlogArticleService : IBaseServices<BlogArticle>
+    public interface IBlogArticleService : IBaseServices<BlogArticleEntity>
     {
     }
 }

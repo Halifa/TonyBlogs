@@ -7,7 +7,7 @@ using TonyBlogs.IRepository;
 
 namespace TonyBlogs.Repository
 {
-    public class BlogArticleRepository : BaseRepository<BlogArticle>, IBlogArticleRepository
+    public class BlogArticleRepository : BaseRepository<BlogArticleEntity>, IBlogArticleRepository
     {
 
     }

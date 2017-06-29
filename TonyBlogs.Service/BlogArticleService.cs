@@ -8,7 +8,7 @@ using TonyBlogs.IService;
 
 namespace TonyBlogs.Service
 {
-    public class BlogArticleService : BaseService<BlogArticle>, IBlogArticleService
+    public class BlogArticleService : BaseService<BlogArticleEntity>, IBlogArticleService
     {
         private IBlogArticleRepository dal;
 

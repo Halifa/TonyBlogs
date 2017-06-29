@@ -15,7 +15,7 @@ namespace TonyBlogs.Repository
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         private static string connStr = "server=localhost;port=3306;User Id=root;pwd=123456;Database=tony_blogs";
-        private static IDbConnectionFactory connFactory = new OrmLiteConnectionFactory(connStr, MySqlDialect.Provider);
+        private static IDbConnectionFactory connFactory = new OrmLiteConnectionFactory(connStr, TonyMySqlOrmLiteDialectProvider.Current);
 
         protected IDbConnection db
         {
@@ -149,5 +149,25 @@ namespace TonyBlogs.Repository
         {
             connection.Close();
         }
+    }
+
+    public class TonyMySqlOrmLiteDialectProvider : MySqlDialectProvider
+    {
+        public static TonyMySqlOrmLiteDialectProvider Current;
+
+        static TonyMySqlOrmLiteDialectProvider()
+        {
+            Current = new TonyMySqlOrmLiteDialectProvider();
+        }
+
+        public override string GetTableName(string table, string schema = null)
+        {
+            string tableName = base.GetTableName(table, schema).ToLower();
+
+            tableName = tableName.Replace("entity", "");
+
+            return tableName;
+        }
+    
     }
 }

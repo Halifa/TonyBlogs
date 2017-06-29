@@ -6,7 +6,7 @@ using System.Text;
 
 namespace TonyBlogs.Entity
 {
-    public class BlogArticle
+    public class BlogArticleEntity
     {
         /// <summary>
         /// 

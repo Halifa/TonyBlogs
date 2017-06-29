@@ -6,7 +6,7 @@ using TonyBlogs.Entity;
 
 namespace TonyBlogs.IRepository
 {
-    public interface IBlogArticleRepository : IBaseRepository<BlogArticle>
+    public interface IBlogArticleRepository : IBaseRepository<BlogArticleEntity>
     {
 
     }
