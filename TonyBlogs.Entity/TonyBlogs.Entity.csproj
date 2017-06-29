@@ -55,11 +55,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlogArticle.cs" />
+    <Compile Include="BlogArticleEntity.cs" />
+    <Compile Include="FunctionEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TonyBlogs.Enum\TonyBlogs.Enum.csproj">
+      <Project>{15864519-c9e2-49f2-ba44-475d69bdbba7}</Project>
+      <Name>TonyBlogs.Enum</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
