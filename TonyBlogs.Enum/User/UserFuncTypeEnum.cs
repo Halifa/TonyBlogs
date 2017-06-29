@@ -10,6 +10,7 @@ namespace TonyBlogs.Enum.User
     /// 功能类型
     /// </summary>
     [Description("功能类型")]
+    [ServiceStack.DataAnnotations.EnumAsInt]
     public enum UserFuncTypeEnum
     {
         /// <summary>

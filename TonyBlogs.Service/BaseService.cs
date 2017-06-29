@@ -44,7 +44,7 @@ namespace TonyBlogs.Service
         /// 
         /// </summary>
         /// <param name="model"></param>
-        public void UpdateOnly<TKey>(TEntity model, Expression<Func<TEntity, TKey>> onlyFields, Expression<Func<TEntity, bool>> where)
+        public void UpdateOnly(TEntity model, Expression<Func<TEntity, object>> onlyFields, Expression<Func<TEntity, bool>> where)
         {
             baseDal.UpdateOnly(model, onlyFields, where);
         }

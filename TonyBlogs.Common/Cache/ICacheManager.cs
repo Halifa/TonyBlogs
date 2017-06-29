@@ -6,7 +6,7 @@ using TonyBlogs.Framework;
 
 namespace TonyBlogs.Common.Cache
 {
-    public interface ICacheManager : IDependency
+    public interface ICacheManager : ISignleton
     {
         /// <summary>
         /// 获取实体

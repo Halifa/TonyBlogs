@@ -32,7 +32,7 @@ namespace TonyBlogs.IService
         /// 修改指定字段
         /// </summary>
         /// <param name="model"></param>
-        void UpdateOnly<TKey>(TEntity model, Expression<Func<TEntity, TKey>> onlyFields, Expression<Func<TEntity, bool>> where);
+        void UpdateOnly(TEntity model, Expression<Func<TEntity, object>> onlyFields, Expression<Func<TEntity, bool>> where);
         #endregion
 
         #region 删除

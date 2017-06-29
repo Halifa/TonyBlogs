@@ -31,7 +31,14 @@ namespace TonyBlogs.Repository
                     CallContext.SetData(typeof(IDbConnection).FullName, obj);
                 }
                 //将当前的EF上下文对象返回
-                return obj as IDbConnection;
+                var result = obj as IDbConnection;
+
+                if (result != null && result.State == ConnectionState.Closed)
+                {
+                    result.Open();
+                }
+
+                return result;
 
             }
         }
@@ -68,7 +75,7 @@ namespace TonyBlogs.Repository
         /// 修改指定字段
         /// </summary>
         /// <param name="model"></param>
-        public void UpdateOnly<TKey>(TEntity model, Expression<Func<TEntity, TKey>> onlyFields, Expression<Func<TEntity, bool>> where)
+        public void UpdateOnly(TEntity model, Expression<Func<TEntity, object>> onlyFields, Expression<Func<TEntity, bool>> where)
         {
             ExecWrite(conn => conn.UpdateOnly(model, onlyFields, where));
         }

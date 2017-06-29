@@ -18,6 +18,7 @@ namespace TonyBlogs.Service
         public UserFunctionService(IUserFunctionRepository userFunDal)
         {
             this._userFunDal = userFunDal;
+            base.baseDal = userFunDal;
         }
 
         public List<UserFunctionTreeItemDTO> GetAllValidFunciton()
@@ -32,9 +33,9 @@ namespace TonyBlogs.Service
             {
                 UserFunctionTreeItemDTO rootItemDTO = new UserFunctionTreeItemDTO();
 
-                rootItemDTO = Mapper.Map<UserFunctionTreeItemDTO>(rootEntity);
+                rootItemDTO = Mapper.DynamicMap<UserFunctionTreeItemDTO>(rootEntity);
 
-                CreateChildNode(rootItemDTO, rootEntityList);
+                CreateChildNode(rootItemDTO, entityList);
 
                 list.Add(rootItemDTO);
             }
@@ -49,7 +50,7 @@ namespace TonyBlogs.Service
             foreach (var item in childEntityList)
             {
                 UserFunctionTreeItemDTO funcItem = new UserFunctionTreeItemDTO();
-                funcItem = Mapper.Map<UserFunctionTreeItemDTO>(item);
+                funcItem = Mapper.DynamicMap<UserFunctionTreeItemDTO>(item);
 
                 CreateChildNode(funcItem, funcEntityList);
 
@@ -57,25 +58,33 @@ namespace TonyBlogs.Service
             }
         }
 
-        public UserFunctionEditDTO GetFunctionEditDTO(long funcID)
+        public UserFunctionEditDTO GetFunctionEditDTO(long funcID, long parentID)
         {
             UserFunctionEditDTO dto = new UserFunctionEditDTO();
 
-            if (funcID <= 0)
+            var funcIDList = new List<long>(){funcID, parentID};
+            var list = baseDal.QueryWhere(m => funcIDList.Contains(m.ID));
+
+            var parentFuncEntity = list.FirstOrDefault(m => m.ID == parentID);
+            var funcEntity = list.FirstOrDefault(m => m.ID == funcID);
+
+            if (funcEntity != null)
             {
-                return dto;
+                dto = Mapper.DynamicMap<UserFunctionEditDTO>(funcEntity);
+                dto.CanDeleteFunc = true;
             }
 
-            var funcEntity = baseDal.Single(m => m.ID == funcID);
-
-            if (funcEntity == null)
+            if (parentFuncEntity != null)
             {
-                return dto;
+                dto.ParentID = parentFuncEntity.ID;
+                dto.ParentFuncTitle = parentFuncEntity.FucTitle;
             }
-
-            dto = Mapper.Map<UserFunctionEditDTO>(funcEntity);
-            dto.CanDeleteFunc = true;
-
+            else
+            {
+                dto.ParentID = 0;
+                dto.ParentFuncTitle = "根节点";
+            }
+            
             return dto;
         }
 
@@ -112,7 +121,7 @@ namespace TonyBlogs.Service
             }
 
             UserFunctionEntity entity = new UserFunctionEntity();
-            entity = Mapper.Map<UserFunctionEntity>(dto);
+            entity = Mapper.DynamicMap<UserFunctionEntity>(dto);
 
             entity.SortNum = sortNum;
             entity.FuncLevel = funcLevel;

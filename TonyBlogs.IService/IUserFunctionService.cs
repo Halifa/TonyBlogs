@@ -12,7 +12,7 @@ namespace TonyBlogs.IService
     {
         List<UserFunctionTreeItemDTO> GetAllValidFunciton();
 
-        UserFunctionEditDTO GetFunctionEditDTO(long funcID);
+        UserFunctionEditDTO GetFunctionEditDTO(long funcID, long parentID);
 
         ExecuteResult AddOrEditFunction(UserFunctionEditDTO dto);
 

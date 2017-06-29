@@ -16,6 +16,11 @@ namespace TonyBlogs.DTO.UserFunction
         public long ParentID { get; set; }
 
         /// <summary>
+        /// 父功能名称
+        /// </summary>
+        public string ParentFuncTitle { get; set; }
+
+        /// <summary>
         /// 功能名称
         /// </summary>
         public string FucTitle { get; set; }

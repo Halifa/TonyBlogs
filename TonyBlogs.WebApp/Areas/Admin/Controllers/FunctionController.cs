@@ -31,9 +31,9 @@ namespace TonyBlogs.WebApp.Areas.Admin.Controllers
             return PartialView(list);
         }
 
-        public ActionResult AjaxGetFuncEditDTO(long funcID)
+        public ActionResult AjaxGetFuncEditDTO(long funcID, long parentID)
         {
-            var result = _funcService.GetFunctionEditDTO(funcID);
+            var result = _funcService.GetFunctionEditDTO(funcID, parentID);
 
             return PartialView(result);
         }

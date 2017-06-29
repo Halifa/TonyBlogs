@@ -6,7 +6,7 @@ using TonyBlogs.Framework;
 
 namespace TonyBlogs.Common.Log
 {
-    public interface ILogger : IDependency
+    public interface ILogger : ISignleton
     {
         void Debug(string message);
         void Debug(string message, Exception exception);
