@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using TonyBlogs.Common.Log;
+using TonyBlogs.DTO;
 using TonyBlogs.Framework;
 
 namespace TonyBlogs.WebApp.Filters
@@ -35,7 +36,7 @@ namespace TonyBlogs.WebApp.Filters
 
             if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
-                filterContext.Result = new JsonResult() { Data = new { status = 1, msg = "请求发生错误，请联系管理员" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                filterContext.Result = new JsonResult() { Data = new ExecuteResult { IsSuccess = false, Message = "请求发生错误，请联系管理员" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
             else
             {

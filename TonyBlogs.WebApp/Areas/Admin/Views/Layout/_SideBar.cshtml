@@ -1,0 +1,31 @@
+﻿@*@using AutoLogin.Web.Context;
+@{
+    string path = Request.Url.AbsolutePath;
+}*@
+
+<!-- BEGIN SIDEBAR -->
+<div class="page-sidebar-wrapper">
+    <div class="page-sidebar navbar-collapse collapse">
+        <!-- BEGIN SIDEBAR MENU -->
+        <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+            <li class="sidebar-toggler-wrapper">
+                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                <div class="sidebar-toggler">
+                </div>
+                <!-- END SIDEBAR TOGGLER BUTTON -->
+            </li>
+            @*@foreach (var menu in UserContext.CurrentUser.MenuList)
+            {
+                <li class="start @(path.Contains(menu.ControllerName)?"active":"")">
+                    <a href="@string.Format(@"/{0}/{1}", menu.ControllerName, menu.Action)">
+                        <i class="@menu.Icon"></i>
+                        <span class="title">@menu.DisplayName</span>
+                        <span class="arrow "></span>
+                    </a>
+                </li>
+            }*@
+        </ul>
+        <!-- END SIDEBAR MENU -->
+    </div>
+</div>
+<!-- END SIDEBAR -->

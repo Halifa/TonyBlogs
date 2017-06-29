@@ -43,6 +43,14 @@
       <HintPath>..\packages\Autofac.3.1.0\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="AutoMapper, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -117,12 +125,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutofacConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\FunctionController.cs" />
     <Compile Include="ControllerFactory\AutofacControllerFactory.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\ExcepFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HtmlExtensions\SelectListExtensions.cs" />
     <Compile Include="Module\MvcControllerModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -130,6 +141,457 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\assets\admin\layout\css\custom.css" />
+    <Content Include="Content\assets\admin\layout\css\layout.css" />
+    <Content Include="Content\assets\admin\layout\css\themes\blue.css" />
+    <Content Include="Content\assets\admin\layout\css\themes\darkblue.css" />
+    <Content Include="Content\assets\admin\layout\css\themes\default.css" />
+    <Content Include="Content\assets\admin\layout\css\themes\grey.css" />
+    <Content Include="Content\assets\admin\layout\css\themes\light.css" />
+    <Content Include="Content\assets\admin\layout\css\themes\light2.css" />
+    <Content Include="Content\assets\admin\layout\img\ajax-loading.gif" />
+    <Content Include="Content\assets\admin\layout\img\ajax-modal-loading.gif" />
+    <Content Include="Content\assets\admin\layout\img\arrow-down.png" />
+    <Content Include="Content\assets\admin\layout\img\automation_16.ico" />
+    <Content Include="Content\assets\admin\layout\img\avatar.png" />
+    <Content Include="Content\assets\admin\layout\img\avatar1.jpg" />
+    <Content Include="Content\assets\admin\layout\img\avatar10.jpg" />
+    <Content Include="Content\assets\admin\layout\img\avatar11.jpg" />
+    <Content Include="Content\assets\admin\layout\img\avatar1_small.jpg" />
+    <Content Include="Content\assets\admin\layout\img\avatar2.jpg" />
+    <Content Include="Content\assets\admin\layout\img\avatar3.jpg" />
+    <Content Include="Content\assets\admin\layout\img\avatar3_small.jpg" />
+    <Content Include="Content\assets\admin\layout\img\avatar4.jpg" />
+    <Content Include="Content\assets\admin\layout\img\avatar5.jpg" />
+    <Content Include="Content\assets\admin\layout\img\avatar6.jpg" />
+    <Content Include="Content\assets\admin\layout\img\avatar7.jpg" />
+    <Content Include="Content\assets\admin\layout\img\avatar8.jpg" />
+    <Content Include="Content\assets\admin\layout\img\avatar9.jpg" />
+    <Content Include="Content\assets\admin\layout\img\hor-menu-red-arrow.png" />
+    <Content Include="Content\assets\admin\layout\img\icon-color-close.png" />
+    <Content Include="Content\assets\admin\layout\img\icon-color.png" />
+    <Content Include="Content\assets\admin\layout\img\icon-img-down.png" />
+    <Content Include="Content\assets\admin\layout\img\icon-img-up.png" />
+    <Content Include="Content\assets\admin\layout\img\inbox-nav-arrow-blue.png" />
+    <Content Include="Content\assets\admin\layout\img\loading-spinner-blue.gif" />
+    <Content Include="Content\assets\admin\layout\img\loading-spinner-default.gif" />
+    <Content Include="Content\assets\admin\layout\img\loading-spinner-grey.gif" />
+    <Content Include="Content\assets\admin\layout\img\loading.gif" />
+    <Content Include="Content\assets\admin\layout\img\logo-big-white.png" />
+    <Content Include="Content\assets\admin\layout\img\logo-big.png" />
+    <Content Include="Content\assets\admin\layout\img\logo-invert.png" />
+    <Content Include="Content\assets\admin\layout\img\logo.png" />
+    <Content Include="Content\assets\admin\layout\img\menu-toggler.png" />
+    <Content Include="Content\assets\admin\layout\img\photo1.jpg" />
+    <Content Include="Content\assets\admin\layout\img\photo2.jpg" />
+    <Content Include="Content\assets\admin\layout\img\photo3.jpg" />
+    <Content Include="Content\assets\admin\layout\img\remove-icon-small.png" />
+    <Content Include="Content\assets\admin\layout\img\search_icon_light.png" />
+    <Content Include="Content\assets\admin\layout\img\sidebar-menu-arrow-reverse.png" />
+    <Content Include="Content\assets\admin\layout\img\sidebar-menu-arrow-right.png" />
+    <Content Include="Content\assets\admin\layout\img\sidebar-menu-arrow.png" />
+    <Content Include="Content\assets\admin\layout\img\sidebar_arrow_icon_light.png" />
+    <Content Include="Content\assets\admin\layout\img\sidebar_arrow_icon_light_rtl.png" />
+    <Content Include="Content\assets\admin\layout\img\sidebar_inline_toggler_icon_blue.jpg" />
+    <Content Include="Content\assets\admin\layout\img\sidebar_inline_toggler_icon_darkblue.jpg" />
+    <Content Include="Content\assets\admin\layout\img\sidebar_inline_toggler_icon_default.jpg" />
+    <Content Include="Content\assets\admin\layout\img\sidebar_inline_toggler_icon_grey.jpg" />
+    <Content Include="Content\assets\admin\layout\img\sidebar_inline_toggler_icon_light.jpg" />
+    <Content Include="Content\assets\admin\layout\img\sidebar_inline_toggler_icon_light2.jpg" />
+    <Content Include="Content\assets\admin\layout\img\sidebar_toggler_icon_blue.png" />
+    <Content Include="Content\assets\admin\layout\img\sidebar_toggler_icon_darkblue.png" />
+    <Content Include="Content\assets\admin\layout\img\sidebar_toggler_icon_default.png" />
+    <Content Include="Content\assets\admin\layout\img\sidebar_toggler_icon_grey.png" />
+    <Content Include="Content\assets\admin\layout\img\sidebar_toggler_icon_light.png" />
+    <Content Include="Content\assets\admin\layout\img\sidebar_toggler_icon_light2.png" />
+    <Content Include="Content\assets\admin\layout\scripts\account.js" />
+    <Content Include="Content\assets\admin\layout\scripts\demo.js" />
+    <Content Include="Content\assets\admin\layout\scripts\layout.js" />
+    <Content Include="Content\assets\admin\layout\scripts\quick-sidebar.js" />
+    <Content Include="Content\assets\admin\pages\css\lock.css" />
+    <Content Include="Content\assets\global\css\components-md.css" />
+    <Content Include="Content\assets\global\css\components-rounded.css" />
+    <Content Include="Content\assets\global\css\components.css" />
+    <Content Include="Content\assets\global\css\plugins-md.css" />
+    <Content Include="Content\assets\global\css\plugins.css" />
+    <Content Include="Content\assets\global\img\accordion-plusminus.png" />
+    <Content Include="Content\assets\global\img\ajax-loading.gif" />
+    <Content Include="Content\assets\global\img\ajax-modal-loading.gif" />
+    <Content Include="Content\assets\global\img\datatable-row-openclose.png" />
+    <Content Include="Content\assets\global\img\flags\ad.png" />
+    <Content Include="Content\assets\global\img\flags\ae.png" />
+    <Content Include="Content\assets\global\img\flags\af.png" />
+    <Content Include="Content\assets\global\img\flags\ag.png" />
+    <Content Include="Content\assets\global\img\flags\ai.png" />
+    <Content Include="Content\assets\global\img\flags\al.png" />
+    <Content Include="Content\assets\global\img\flags\am.png" />
+    <Content Include="Content\assets\global\img\flags\an.png" />
+    <Content Include="Content\assets\global\img\flags\ao.png" />
+    <Content Include="Content\assets\global\img\flags\ar.png" />
+    <Content Include="Content\assets\global\img\flags\as.png" />
+    <Content Include="Content\assets\global\img\flags\at.png" />
+    <Content Include="Content\assets\global\img\flags\au.png" />
+    <Content Include="Content\assets\global\img\flags\aw.png" />
+    <Content Include="Content\assets\global\img\flags\ax.png" />
+    <Content Include="Content\assets\global\img\flags\az.png" />
+    <Content Include="Content\assets\global\img\flags\ba.png" />
+    <Content Include="Content\assets\global\img\flags\bb.png" />
+    <Content Include="Content\assets\global\img\flags\bd.png" />
+    <Content Include="Content\assets\global\img\flags\be.png" />
+    <Content Include="Content\assets\global\img\flags\bf.png" />
+    <Content Include="Content\assets\global\img\flags\bg.png" />
+    <Content Include="Content\assets\global\img\flags\bh.png" />
+    <Content Include="Content\assets\global\img\flags\bi.png" />
+    <Content Include="Content\assets\global\img\flags\bj.png" />
+    <Content Include="Content\assets\global\img\flags\bm.png" />
+    <Content Include="Content\assets\global\img\flags\bn.png" />
+    <Content Include="Content\assets\global\img\flags\bo.png" />
+    <Content Include="Content\assets\global\img\flags\br.png" />
+    <Content Include="Content\assets\global\img\flags\bs.png" />
+    <Content Include="Content\assets\global\img\flags\bt.png" />
+    <Content Include="Content\assets\global\img\flags\bv.png" />
+    <Content Include="Content\assets\global\img\flags\bw.png" />
+    <Content Include="Content\assets\global\img\flags\by.png" />
+    <Content Include="Content\assets\global\img\flags\bz.png" />
+    <Content Include="Content\assets\global\img\flags\ca.png" />
+    <Content Include="Content\assets\global\img\flags\catalonia.png" />
+    <Content Include="Content\assets\global\img\flags\cc.png" />
+    <Content Include="Content\assets\global\img\flags\cd.png" />
+    <Content Include="Content\assets\global\img\flags\cf.png" />
+    <Content Include="Content\assets\global\img\flags\cg.png" />
+    <Content Include="Content\assets\global\img\flags\ch.png" />
+    <Content Include="Content\assets\global\img\flags\ci.png" />
+    <Content Include="Content\assets\global\img\flags\ck.png" />
+    <Content Include="Content\assets\global\img\flags\cl.png" />
+    <Content Include="Content\assets\global\img\flags\cm.png" />
+    <Content Include="Content\assets\global\img\flags\cn.png" />
+    <Content Include="Content\assets\global\img\flags\co.png" />
+    <Content Include="Content\assets\global\img\flags\cr.png" />
+    <Content Include="Content\assets\global\img\flags\cs.png" />
+    <Content Include="Content\assets\global\img\flags\cu.png" />
+    <Content Include="Content\assets\global\img\flags\cv.png" />
+    <Content Include="Content\assets\global\img\flags\cx.png" />
+    <Content Include="Content\assets\global\img\flags\cy.png" />
+    <Content Include="Content\assets\global\img\flags\cz.png" />
+    <Content Include="Content\assets\global\img\flags\de.png" />
+    <Content Include="Content\assets\global\img\flags\dj.png" />
+    <Content Include="Content\assets\global\img\flags\dk.png" />
+    <Content Include="Content\assets\global\img\flags\dm.png" />
+    <Content Include="Content\assets\global\img\flags\do.png" />
+    <Content Include="Content\assets\global\img\flags\dz.png" />
+    <Content Include="Content\assets\global\img\flags\ec.png" />
+    <Content Include="Content\assets\global\img\flags\ee.png" />
+    <Content Include="Content\assets\global\img\flags\eg.png" />
+    <Content Include="Content\assets\global\img\flags\eh.png" />
+    <Content Include="Content\assets\global\img\flags\england.png" />
+    <Content Include="Content\assets\global\img\flags\er.png" />
+    <Content Include="Content\assets\global\img\flags\es.png" />
+    <Content Include="Content\assets\global\img\flags\et.png" />
+    <Content Include="Content\assets\global\img\flags\europeanunion.png" />
+    <Content Include="Content\assets\global\img\flags\fam.png" />
+    <Content Include="Content\assets\global\img\flags\fi.png" />
+    <Content Include="Content\assets\global\img\flags\fj.png" />
+    <Content Include="Content\assets\global\img\flags\fk.png" />
+    <Content Include="Content\assets\global\img\flags\fm.png" />
+    <Content Include="Content\assets\global\img\flags\fo.png" />
+    <Content Include="Content\assets\global\img\flags\fr.png" />
+    <Content Include="Content\assets\global\img\flags\ga.png" />
+    <Content Include="Content\assets\global\img\flags\gb.png" />
+    <Content Include="Content\assets\global\img\flags\gd.png" />
+    <Content Include="Content\assets\global\img\flags\ge.png" />
+    <Content Include="Content\assets\global\img\flags\gf.png" />
+    <Content Include="Content\assets\global\img\flags\gh.png" />
+    <Content Include="Content\assets\global\img\flags\gi.png" />
+    <Content Include="Content\assets\global\img\flags\gl.png" />
+    <Content Include="Content\assets\global\img\flags\gm.png" />
+    <Content Include="Content\assets\global\img\flags\gn.png" />
+    <Content Include="Content\assets\global\img\flags\gp.png" />
+    <Content Include="Content\assets\global\img\flags\gq.png" />
+    <Content Include="Content\assets\global\img\flags\gr.png" />
+    <Content Include="Content\assets\global\img\flags\gs.png" />
+    <Content Include="Content\assets\global\img\flags\gt.png" />
+    <Content Include="Content\assets\global\img\flags\gu.png" />
+    <Content Include="Content\assets\global\img\flags\gw.png" />
+    <Content Include="Content\assets\global\img\flags\gy.png" />
+    <Content Include="Content\assets\global\img\flags\hk.png" />
+    <Content Include="Content\assets\global\img\flags\hm.png" />
+    <Content Include="Content\assets\global\img\flags\hn.png" />
+    <Content Include="Content\assets\global\img\flags\hr.png" />
+    <Content Include="Content\assets\global\img\flags\ht.png" />
+    <Content Include="Content\assets\global\img\flags\hu.png" />
+    <Content Include="Content\assets\global\img\flags\id.png" />
+    <Content Include="Content\assets\global\img\flags\ie.png" />
+    <Content Include="Content\assets\global\img\flags\il.png" />
+    <Content Include="Content\assets\global\img\flags\in.png" />
+    <Content Include="Content\assets\global\img\flags\io.png" />
+    <Content Include="Content\assets\global\img\flags\iq.png" />
+    <Content Include="Content\assets\global\img\flags\ir.png" />
+    <Content Include="Content\assets\global\img\flags\is.png" />
+    <Content Include="Content\assets\global\img\flags\it.png" />
+    <Content Include="Content\assets\global\img\flags\jm.png" />
+    <Content Include="Content\assets\global\img\flags\jo.png" />
+    <Content Include="Content\assets\global\img\flags\jp.png" />
+    <Content Include="Content\assets\global\img\flags\ke.png" />
+    <Content Include="Content\assets\global\img\flags\kg.png" />
+    <Content Include="Content\assets\global\img\flags\kh.png" />
+    <Content Include="Content\assets\global\img\flags\ki.png" />
+    <Content Include="Content\assets\global\img\flags\km.png" />
+    <Content Include="Content\assets\global\img\flags\kn.png" />
+    <Content Include="Content\assets\global\img\flags\kp.png" />
+    <Content Include="Content\assets\global\img\flags\kr.png" />
+    <Content Include="Content\assets\global\img\flags\kw.png" />
+    <Content Include="Content\assets\global\img\flags\ky.png" />
+    <Content Include="Content\assets\global\img\flags\kz.png" />
+    <Content Include="Content\assets\global\img\flags\la.png" />
+    <Content Include="Content\assets\global\img\flags\lb.png" />
+    <Content Include="Content\assets\global\img\flags\lc.png" />
+    <Content Include="Content\assets\global\img\flags\li.png" />
+    <Content Include="Content\assets\global\img\flags\lk.png" />
+    <Content Include="Content\assets\global\img\flags\lr.png" />
+    <Content Include="Content\assets\global\img\flags\ls.png" />
+    <Content Include="Content\assets\global\img\flags\lt.png" />
+    <Content Include="Content\assets\global\img\flags\lu.png" />
+    <Content Include="Content\assets\global\img\flags\lv.png" />
+    <Content Include="Content\assets\global\img\flags\ly.png" />
+    <Content Include="Content\assets\global\img\flags\ma.png" />
+    <Content Include="Content\assets\global\img\flags\mc.png" />
+    <Content Include="Content\assets\global\img\flags\md.png" />
+    <Content Include="Content\assets\global\img\flags\me.png" />
+    <Content Include="Content\assets\global\img\flags\mg.png" />
+    <Content Include="Content\assets\global\img\flags\mh.png" />
+    <Content Include="Content\assets\global\img\flags\mk.png" />
+    <Content Include="Content\assets\global\img\flags\ml.png" />
+    <Content Include="Content\assets\global\img\flags\mm.png" />
+    <Content Include="Content\assets\global\img\flags\mn.png" />
+    <Content Include="Content\assets\global\img\flags\mo.png" />
+    <Content Include="Content\assets\global\img\flags\mp.png" />
+    <Content Include="Content\assets\global\img\flags\mq.png" />
+    <Content Include="Content\assets\global\img\flags\mr.png" />
+    <Content Include="Content\assets\global\img\flags\ms.png" />
+    <Content Include="Content\assets\global\img\flags\mt.png" />
+    <Content Include="Content\assets\global\img\flags\mu.png" />
+    <Content Include="Content\assets\global\img\flags\mv.png" />
+    <Content Include="Content\assets\global\img\flags\mw.png" />
+    <Content Include="Content\assets\global\img\flags\mx.png" />
+    <Content Include="Content\assets\global\img\flags\my.png" />
+    <Content Include="Content\assets\global\img\flags\mz.png" />
+    <Content Include="Content\assets\global\img\flags\na.png" />
+    <Content Include="Content\assets\global\img\flags\nc.png" />
+    <Content Include="Content\assets\global\img\flags\ne.png" />
+    <Content Include="Content\assets\global\img\flags\nf.png" />
+    <Content Include="Content\assets\global\img\flags\ng.png" />
+    <Content Include="Content\assets\global\img\flags\ni.png" />
+    <Content Include="Content\assets\global\img\flags\nl.png" />
+    <Content Include="Content\assets\global\img\flags\no.png" />
+    <Content Include="Content\assets\global\img\flags\np.png" />
+    <Content Include="Content\assets\global\img\flags\nr.png" />
+    <Content Include="Content\assets\global\img\flags\nu.png" />
+    <Content Include="Content\assets\global\img\flags\nz.png" />
+    <Content Include="Content\assets\global\img\flags\om.png" />
+    <Content Include="Content\assets\global\img\flags\pa.png" />
+    <Content Include="Content\assets\global\img\flags\pe.png" />
+    <Content Include="Content\assets\global\img\flags\pf.png" />
+    <Content Include="Content\assets\global\img\flags\pg.png" />
+    <Content Include="Content\assets\global\img\flags\ph.png" />
+    <Content Include="Content\assets\global\img\flags\pk.png" />
+    <Content Include="Content\assets\global\img\flags\pl.png" />
+    <Content Include="Content\assets\global\img\flags\pm.png" />
+    <Content Include="Content\assets\global\img\flags\pn.png" />
+    <Content Include="Content\assets\global\img\flags\pr.png" />
+    <Content Include="Content\assets\global\img\flags\ps.png" />
+    <Content Include="Content\assets\global\img\flags\pt.png" />
+    <Content Include="Content\assets\global\img\flags\pw.png" />
+    <Content Include="Content\assets\global\img\flags\py.png" />
+    <Content Include="Content\assets\global\img\flags\qa.png" />
+    <Content Include="Content\assets\global\img\flags\re.png" />
+    <Content Include="Content\assets\global\img\flags\readme.txt" />
+    <Content Include="Content\assets\global\img\flags\ro.png" />
+    <Content Include="Content\assets\global\img\flags\rs.png" />
+    <Content Include="Content\assets\global\img\flags\ru.png" />
+    <Content Include="Content\assets\global\img\flags\rw.png" />
+    <Content Include="Content\assets\global\img\flags\sa.png" />
+    <Content Include="Content\assets\global\img\flags\sb.png" />
+    <Content Include="Content\assets\global\img\flags\sc.png" />
+    <Content Include="Content\assets\global\img\flags\scotland.png" />
+    <Content Include="Content\assets\global\img\flags\sd.png" />
+    <Content Include="Content\assets\global\img\flags\se.png" />
+    <Content Include="Content\assets\global\img\flags\sg.png" />
+    <Content Include="Content\assets\global\img\flags\sh.png" />
+    <Content Include="Content\assets\global\img\flags\si.png" />
+    <Content Include="Content\assets\global\img\flags\sj.png" />
+    <Content Include="Content\assets\global\img\flags\sk.png" />
+    <Content Include="Content\assets\global\img\flags\sl.png" />
+    <Content Include="Content\assets\global\img\flags\sm.png" />
+    <Content Include="Content\assets\global\img\flags\sn.png" />
+    <Content Include="Content\assets\global\img\flags\so.png" />
+    <Content Include="Content\assets\global\img\flags\sr.png" />
+    <Content Include="Content\assets\global\img\flags\st.png" />
+    <Content Include="Content\assets\global\img\flags\sv.png" />
+    <Content Include="Content\assets\global\img\flags\sy.png" />
+    <Content Include="Content\assets\global\img\flags\sz.png" />
+    <Content Include="Content\assets\global\img\flags\tc.png" />
+    <Content Include="Content\assets\global\img\flags\td.png" />
+    <Content Include="Content\assets\global\img\flags\tf.png" />
+    <Content Include="Content\assets\global\img\flags\tg.png" />
+    <Content Include="Content\assets\global\img\flags\th.png" />
+    <Content Include="Content\assets\global\img\flags\tj.png" />
+    <Content Include="Content\assets\global\img\flags\tk.png" />
+    <Content Include="Content\assets\global\img\flags\tl.png" />
+    <Content Include="Content\assets\global\img\flags\tm.png" />
+    <Content Include="Content\assets\global\img\flags\tn.png" />
+    <Content Include="Content\assets\global\img\flags\to.png" />
+    <Content Include="Content\assets\global\img\flags\tr.png" />
+    <Content Include="Content\assets\global\img\flags\tt.png" />
+    <Content Include="Content\assets\global\img\flags\tv.png" />
+    <Content Include="Content\assets\global\img\flags\tw.png" />
+    <Content Include="Content\assets\global\img\flags\tz.png" />
+    <Content Include="Content\assets\global\img\flags\ua.png" />
+    <Content Include="Content\assets\global\img\flags\ug.png" />
+    <Content Include="Content\assets\global\img\flags\um.png" />
+    <Content Include="Content\assets\global\img\flags\us.png" />
+    <Content Include="Content\assets\global\img\flags\uy.png" />
+    <Content Include="Content\assets\global\img\flags\uz.png" />
+    <Content Include="Content\assets\global\img\flags\va.png" />
+    <Content Include="Content\assets\global\img\flags\vc.png" />
+    <Content Include="Content\assets\global\img\flags\ve.png" />
+    <Content Include="Content\assets\global\img\flags\vg.png" />
+    <Content Include="Content\assets\global\img\flags\vi.png" />
+    <Content Include="Content\assets\global\img\flags\vn.png" />
+    <Content Include="Content\assets\global\img\flags\vu.png" />
+    <Content Include="Content\assets\global\img\flags\wales.png" />
+    <Content Include="Content\assets\global\img\flags\wf.png" />
+    <Content Include="Content\assets\global\img\flags\ws.png" />
+    <Content Include="Content\assets\global\img\flags\ye.png" />
+    <Content Include="Content\assets\global\img\flags\yt.png" />
+    <Content Include="Content\assets\global\img\flags\za.png" />
+    <Content Include="Content\assets\global\img\flags\zm.png" />
+    <Content Include="Content\assets\global\img\flags\zw.png" />
+    <Content Include="Content\assets\global\img\input-spinner.gif" />
+    <Content Include="Content\assets\global\img\loading-spinner-blue.gif" />
+    <Content Include="Content\assets\global\img\loading-spinner-default.gif" />
+    <Content Include="Content\assets\global\img\loading-spinner-grey.gif" />
+    <Content Include="Content\assets\global\img\loading.gif" />
+    <Content Include="Content\assets\global\img\overlay-icon.png" />
+    <Content Include="Content\assets\global\img\portlet-collapse-icon-white.png" />
+    <Content Include="Content\assets\global\img\portlet-collapse-icon.png" />
+    <Content Include="Content\assets\global\img\portlet-config-icon-white.png" />
+    <Content Include="Content\assets\global\img\portlet-config-icon.png" />
+    <Content Include="Content\assets\global\img\portlet-expand-icon-white.png" />
+    <Content Include="Content\assets\global\img\portlet-expand-icon.png" />
+    <Content Include="Content\assets\global\img\portlet-reload-icon-white.png" />
+    <Content Include="Content\assets\global\img\portlet-reload-icon.png" />
+    <Content Include="Content\assets\global\img\portlet-remove-icon-white.png" />
+    <Content Include="Content\assets\global\img\portlet-remove-icon.png" />
+    <Content Include="Content\assets\global\img\remove-icon-small.png" />
+    <Content Include="Content\assets\global\img\social\aboutme.png" />
+    <Content Include="Content\assets\global\img\social\amazon.png" />
+    <Content Include="Content\assets\global\img\social\behance.png" />
+    <Content Include="Content\assets\global\img\social\blogger.png" />
+    <Content Include="Content\assets\global\img\social\deviantart.png" />
+    <Content Include="Content\assets\global\img\social\dribbble.png" />
+    <Content Include="Content\assets\global\img\social\dropbox.png" />
+    <Content Include="Content\assets\global\img\social\evernote.png" />
+    <Content Include="Content\assets\global\img\social\facebook.png" />
+    <Content Include="Content\assets\global\img\social\flickr.png" />
+    <Content Include="Content\assets\global\img\social\forrst.png" />
+    <Content Include="Content\assets\global\img\social\foursquare.png" />
+    <Content Include="Content\assets\global\img\social\github.png" />
+    <Content Include="Content\assets\global\img\social\googleplus.png" />
+    <Content Include="Content\assets\global\img\social\gravatar.png" />
+    <Content Include="Content\assets\global\img\social\instagram.png" />
+    <Content Include="Content\assets\global\img\social\jolicloud.png" />
+    <Content Include="Content\assets\global\img\social\klout.png" />
+    <Content Include="Content\assets\global\img\social\last-fm.png" />
+    <Content Include="Content\assets\global\img\social\linkedin.png" />
+    <Content Include="Content\assets\global\img\social\myspace.png" />
+    <Content Include="Content\assets\global\img\social\picasa.png" />
+    <Content Include="Content\assets\global\img\social\pintrest.png" />
+    <Content Include="Content\assets\global\img\social\quora.png" />
+    <Content Include="Content\assets\global\img\social\reddit.png" />
+    <Content Include="Content\assets\global\img\social\rss.png" />
+    <Content Include="Content\assets\global\img\social\skype.png" />
+    <Content Include="Content\assets\global\img\social\spotify.png" />
+    <Content Include="Content\assets\global\img\social\stumbleupon.png" />
+    <Content Include="Content\assets\global\img\social\tumblr.png" />
+    <Content Include="Content\assets\global\img\social\twitter.png" />
+    <Content Include="Content\assets\global\img\social\vimeo.png" />
+    <Content Include="Content\assets\global\img\social\vk.png" />
+    <Content Include="Content\assets\global\img\social\wordpress.png" />
+    <Content Include="Content\assets\global\img\social\xing.png" />
+    <Content Include="Content\assets\global\img\social\yahoo.png" />
+    <Content Include="Content\assets\global\img\social\youtube.png" />
+    <Content Include="Content\assets\global\img\syncfusion-icons-white.png" />
+    <Content Include="Content\assets\global\img\syncfusion-icons.png" />
+    <Content Include="Content\assets\global\plugins\bootstrap-hover-dropdown\bootstrap-hover-dropdown.js" />
+    <Content Include="Content\assets\global\plugins\bootstrap-hover-dropdown\bootstrap-hover-dropdown.min.js" />
+    <Content Include="Content\assets\global\plugins\bootstrap-modal\css\bootstrap-modal-bs3patch.css" />
+    <Content Include="Content\assets\global\plugins\bootstrap-modal\css\bootstrap-modal.css" />
+    <Content Include="Content\assets\global\plugins\bootstrap-modal\js\bootstrap-modal.js" />
+    <Content Include="Content\assets\global\plugins\bootstrap-modal\js\bootstrap-modalmanager.js" />
+    <Content Include="Content\assets\global\plugins\bootstrap-switch\css\bootstrap-switch.css" />
+    <Content Include="Content\assets\global\plugins\bootstrap-switch\css\bootstrap-switch.min.css" />
+    <Content Include="Content\assets\global\plugins\bootstrap-switch\js\bootstrap-switch.js" />
+    <Content Include="Content\assets\global\plugins\bootstrap-switch\js\bootstrap-switch.min.js" />
+    <Content Include="Content\assets\global\plugins\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\assets\global\plugins\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\assets\global\plugins\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\assets\global\plugins\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\assets\global\plugins\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\assets\global\plugins\bootstrap\js\npm.js" />
+    <Content Include="Content\assets\global\plugins\jstree\jstree.js" />
+    <Content Include="Content\assets\global\plugins\jstree\jstree.min.js" />
+    <Content Include="Content\assets\global\plugins\jstree\themes\default\32px.png" />
+    <Content Include="Content\assets\global\plugins\jstree\themes\default\32px_line.png" />
+    <Content Include="Content\assets\global\plugins\jstree\themes\default\32px_original.png" />
+    <Content Include="Content\assets\global\plugins\jstree\themes\default\40px.png" />
+    <Content Include="Content\assets\global\plugins\jstree\themes\default\style.css" />
+    <Content Include="Content\assets\global\plugins\jstree\themes\default\style.min.css" />
+    <Content Include="Content\assets\global\plugins\jstree\themes\default\throbber.gif" />
+    <Content Include="Content\assets\global\plugins\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\assets\global\plugins\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\assets\global\plugins\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\assets\global\plugins\jquery-migrate.min.js" />
+    <Content Include="Content\assets\global\plugins\jquery-slimscroll\jquery.slimscroll.js" />
+    <Content Include="Content\assets\global\plugins\jquery-slimscroll\jquery.slimscroll.min.js" />
+    <Content Include="Content\assets\global\plugins\jquery-ui\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Content\assets\global\plugins\jquery-ui\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Content\assets\global\plugins\jquery-ui\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Content\assets\global\plugins\jquery-ui\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Content\assets\global\plugins\jquery-ui\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Content\assets\global\plugins\jquery-ui\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\assets\global\plugins\jquery-ui\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Content\assets\global\plugins\jquery-ui\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Content\assets\global\plugins\jquery-ui\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Content\assets\global\plugins\jquery-ui\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\assets\global\plugins\jquery-ui\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Content\assets\global\plugins\jquery-ui\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Content\assets\global\plugins\jquery-ui\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Content\assets\global\plugins\jquery-ui\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\assets\global\plugins\jquery-ui\jquery-ui.min.css" />
+    <Content Include="Content\assets\global\plugins\jquery-ui\jquery-ui.min.js" />
+    <Content Include="Content\assets\global\plugins\jquery.blockui.min.js" />
+    <Content Include="Content\assets\global\plugins\jquery.cokie.min.js" />
+    <Content Include="Content\assets\global\plugins\jquery.min.js" />
+    <Content Include="Content\assets\global\plugins\simple-line-icons\fonts\Simple-Line-Icons.dev.svg" />
+    <Content Include="Content\assets\global\plugins\simple-line-icons\fonts\Simple-Line-Icons.svg" />
+    <Content Include="Content\assets\global\plugins\simple-line-icons\icons-lte-ie7.js" />
+    <Content Include="Content\assets\global\plugins\simple-line-icons\License.txt" />
+    <Content Include="Content\assets\global\plugins\simple-line-icons\Readme.txt" />
+    <Content Include="Content\assets\global\plugins\simple-line-icons\simple-line-icons.css" />
+    <Content Include="Content\assets\global\plugins\simple-line-icons\simple-line-icons.min.css" />
+    <Content Include="Content\assets\global\plugins\uniform\css\uniform.default.css" />
+    <Content Include="Content\assets\global\plugins\uniform\css\uniform.default.min.css" />
+    <Content Include="Content\assets\global\plugins\uniform\images\bg-input-focus.png" />
+    <Content Include="Content\assets\global\plugins\uniform\images\bg-input.png" />
+    <Content Include="Content\assets\global\plugins\uniform\images\sprite.png" />
+    <Content Include="Content\assets\global\plugins\uniform\images\sprite_original.png" />
+    <Content Include="Content\assets\global\plugins\uniform\jquery.uniform.js" />
+    <Content Include="Content\assets\global\plugins\uniform\jquery.uniform.min.js" />
+    <Content Include="Content\assets\global\scripts\datatable.js" />
+    <Content Include="Content\assets\global\scripts\metronic.js" />
+    <Content Include="Content\js\jquery-1.10.1.min.js" />
+    <Content Include="Content\js\jquery.blockui.min.js" />
+    <Content Include="Content\js\public.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -142,6 +604,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Content\assets\frontend\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -152,9 +616,17 @@
       <Project>{c4d9f227-bae3-42d3-ac50-b463c5f2ee3f}</Project>
       <Name>TonyBlogs.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TonyBlogs.DTO\TonyBlogs.DTO.csproj">
+      <Project>{3606c1a4-18c2-418a-afec-4bd7cfa1b363}</Project>
+      <Name>TonyBlogs.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TonyBlogs.Entity\TonyBlogs.Entity.csproj">
       <Project>{cadabaec-616d-4135-8337-03d8efbfcb9e}</Project>
       <Name>TonyBlogs.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TonyBlogs.Enum\TonyBlogs.Enum.csproj">
+      <Project>{15864519-c9e2-49f2-ba44-475d69bdbba7}</Project>
+      <Name>TonyBlogs.Enum</Name>
     </ProjectReference>
     <ProjectReference Include="..\TonyBlogs.Framework\TonyBlogs.Framework.csproj">
       <Project>{943df536-760c-40b0-b3fc-3ec3e29a2c83}</Project>
@@ -187,6 +659,81 @@
     <Content Include="Config\log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\assets\global\plugins\bootstrap-hover-dropdown\LICENSE" />
+    <Content Include="Content\assets\global\plugins\bootstrap-hover-dropdown\README.md" />
+    <Content Include="Content\assets\global\plugins\bootstrap-modal\LICENSE" />
+    <Content Include="Content\assets\global\plugins\bootstrap-modal\README.md" />
+    <Content Include="Content\assets\global\plugins\bootstrap-switch\LICENSE" />
+    <Content Include="Content\assets\global\plugins\bootstrap-switch\README.md" />
+    <Content Include="Content\assets\global\plugins\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Content\assets\global\plugins\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\assets\global\plugins\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\assets\global\plugins\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\assets\global\plugins\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\assets\global\plugins\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\assets\global\plugins\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\assets\global\plugins\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\assets\global\plugins\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\assets\global\plugins\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\assets\global\plugins\font-awesome\less\animated.less" />
+    <Content Include="Content\assets\global\plugins\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Content\assets\global\plugins\font-awesome\less\core.less" />
+    <Content Include="Content\assets\global\plugins\font-awesome\less\fixed-width.less" />
+    <Content Include="Content\assets\global\plugins\font-awesome\less\font-awesome.less" />
+    <Content Include="Content\assets\global\plugins\font-awesome\less\icons.less" />
+    <Content Include="Content\assets\global\plugins\font-awesome\less\larger.less" />
+    <Content Include="Content\assets\global\plugins\font-awesome\less\list.less" />
+    <Content Include="Content\assets\global\plugins\font-awesome\less\mixins.less" />
+    <Content Include="Content\assets\global\plugins\font-awesome\less\path.less" />
+    <Content Include="Content\assets\global\plugins\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Content\assets\global\plugins\font-awesome\less\stacked.less" />
+    <Content Include="Content\assets\global\plugins\font-awesome\less\variables.less" />
+    <Content Include="Content\assets\global\plugins\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Content\assets\global\plugins\font-awesome\scss\_animated.scss" />
+    <Content Include="Content\assets\global\plugins\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Content\assets\global\plugins\font-awesome\scss\_core.scss" />
+    <Content Include="Content\assets\global\plugins\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Content\assets\global\plugins\font-awesome\scss\_icons.scss" />
+    <Content Include="Content\assets\global\plugins\font-awesome\scss\_larger.scss" />
+    <Content Include="Content\assets\global\plugins\font-awesome\scss\_list.scss" />
+    <Content Include="Content\assets\global\plugins\font-awesome\scss\_mixins.scss" />
+    <Content Include="Content\assets\global\plugins\font-awesome\scss\_path.scss" />
+    <Content Include="Content\assets\global\plugins\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Content\assets\global\plugins\font-awesome\scss\_stacked.scss" />
+    <Content Include="Content\assets\global\plugins\font-awesome\scss\_variables.scss" />
+    <Content Include="Content\assets\global\plugins\jquery-slimscroll\README.md" />
+    <Content Include="Content\assets\global\plugins\jquery-slimscroll\slimScroll.jquery.json" />
+    <Content Include="Content\assets\global\plugins\jquery.min.map" />
+    <Content Include="Content\assets\global\plugins\simple-line-icons\fonts\Simple-Line-Icons.eot" />
+    <Content Include="Content\assets\global\plugins\simple-line-icons\fonts\Simple-Line-Icons.ttf" />
+    <Content Include="Content\assets\global\plugins\simple-line-icons\fonts\Simple-Line-Icons.woff" />
+    <Content Include="Content\assets\global\plugins\uniform\css\uniform.default.scss" />
+    <Content Include="Content\assets\global\plugins\uniform\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\_layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Layout\_Footer.cshtml" />
+    <Content Include="Areas\Admin\Views\Layout\_SideBar.cshtml" />
+    <Content Include="Areas\Admin\Views\Layout\_TopMenu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Function\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Function\AjaxGetFuncEditDTO.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Function\AjaxGetAllFunctions.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

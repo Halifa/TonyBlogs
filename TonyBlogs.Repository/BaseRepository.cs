@@ -93,6 +93,15 @@ namespace TonyBlogs.Repository
         }
         #endregion
 
+        protected List<TEntity> QueryWhere(SqlExpression<TEntity> sqlExp)
+        {
+            return ExecRead(conn => conn.Select(sqlExp));
+        }
+
+        protected TKey Scala<TKey>(SqlExpression<TEntity> sqlExp)
+        {
+            return ExecRead(conn => conn.Scalar<TKey>(sqlExp));
+        }
 
         private T ExecWrite<T>(Func<IDbConnection, T> func, IDbConnection connection = null)
         {

@@ -30,6 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.0.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,11 +50,24 @@
     <Compile Include="BaseService.cs" />
     <Compile Include="BlogArticleService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserFunctionService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TonyBlogs.Common\TonyBlogs.Common.csproj">
+      <Project>{c4d9f227-bae3-42d3-ac50-b463c5f2ee3f}</Project>
+      <Name>TonyBlogs.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TonyBlogs.DTO\TonyBlogs.DTO.csproj">
+      <Project>{3606c1a4-18c2-418a-afec-4bd7cfa1b363}</Project>
+      <Name>TonyBlogs.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TonyBlogs.Entity\TonyBlogs.Entity.csproj">
       <Project>{cadabaec-616d-4135-8337-03d8efbfcb9e}</Project>
       <Name>TonyBlogs.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TonyBlogs.Enum\TonyBlogs.Enum.csproj">
+      <Project>{15864519-c9e2-49f2-ba44-475d69bdbba7}</Project>
+      <Name>TonyBlogs.Enum</Name>
     </ProjectReference>
     <ProjectReference Include="..\TonyBlogs.Framework\TonyBlogs.Framework.csproj">
       <Project>{943df536-760c-40b0-b3fc-3ec3e29a2c83}</Project>
@@ -60,6 +81,9 @@
       <Project>{2dec0442-efaa-4c3b-b610-21a95099802f}</Project>
       <Name>TonyBlogs.IService</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

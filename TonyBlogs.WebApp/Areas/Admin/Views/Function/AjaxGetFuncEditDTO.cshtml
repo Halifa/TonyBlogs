@@ -1,0 +1,70 @@
+﻿@model TonyBlogs.DTO.UserFunction.UserFunctionEditDTO
+
+@{
+    Layout = null;
+}
+
+<form action="#" id="form_sample_1" class="form-horizontal" novalidate="novalidate">
+    <div class="form-body">
+        @Html.HiddenFor(m => m.ParentID)
+        @Html.HiddenFor(m => m.ID)
+        <div class="form-group">
+            <label class="col-md-3 control-label">功能类型<span class="required">*</span></label>
+            <div class="col-md-4">
+                @Html.DropDownListFor(m => m.FuncType, Model.FuncType.ToSelectDescriptionList(true), new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">功能名称<span class="required">*</span></label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.FucTitle, new { @class = "form-control", @placeholder = "请输入功能名称" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">功能内容<span class="required">*</span></label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.FuncContent, new { @class = "form-control", @placeholder = "请输入功能内容" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">区域名<span class="required">*</span></label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.FuncContent, new { @class = "form-control", @placeholder = "请输入区域名" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">控制器名<span class="required">*</span></label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.FuncContent, new { @class = "form-control", @placeholder = "请输入控制器名" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">方法名<span class="required">*</span></label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.FuncContent, new { @class = "form-control", @placeholder = "请输入方法名" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">图标<span class="required">*</span></label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(m => m.FuncContent, new { @class = "form-control", @placeholder = "请输入图标" })
+            </div>
+        </div>
+    </div>
+    <div class="form-actions">
+        <div class="row">
+            <div class="col-md-offset-3 col-md-9">
+                <button type="submit" class="btn green">提交</button>
+                <button type="button" class="btn default">取消</button>
+                @if (Model.CanDeleteFunc)
+                {
+                    <button type="button" class="btn blue">删除</button>
+                }
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+
+</script>

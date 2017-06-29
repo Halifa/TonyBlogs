@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Cache\ICacheManager.cs" />
     <Compile Include="Cache\MemoryCacheManager.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Log\ILogger.cs" />
     <Compile Include="Log\Log4netLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,0 +1,86 @@
+﻿@using TonyBlogs.DTO.UserFunction
+
+@model List<UserFunctionTreeItemDTO>
+
+@{
+    Layout = null;
+}
+
+<ul class="jstree-container-ul jstree-children">
+    @foreach (var firItem in Model)
+    {
+        <li>
+            <i class="jstree-icon jstree-ocl"></i>
+            <a class="jstree-anchor" href="#">
+                <i class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom"></i>
+                @firItem.FucTitle
+            </a>
+
+            <ul role="group" class="jstree-children">
+                @foreach (var secItem in firItem.ChildList)
+                {
+                    <li>
+                        <i class="jstree-icon jstree-ocl"></i>
+                        <a class="jstree-anchor" href="#">
+                            <i class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom"></i>
+                            @secItem.FucTitle
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+    }
+
+    <li role="treeitem" aria-expanded="true" id="j1_1" class="jstree-node  jstree-open" aria-selected="false">
+        <i class="jstree-icon jstree-ocl"></i>
+        <a class="jstree-anchor" href="#">
+            <i class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom"></i>
+            Root node 1
+        </a>
+        <ul role="group" class="jstree-children">
+            <li role="treeitem" data-jstree="{ &quot;selected&quot; : true }" id="j1_2" class="jstree-node  jstree-leaf" aria-selected="false">
+                <i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor  jstree-clicked" href="javascript:;">
+                    <i class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom"></i>
+                    Initially selected
+                </a>
+            </li>
+            <li role="treeitem" data-jstree="{ &quot;icon&quot; : &quot;fa fa-briefcase icon-state-success &quot; }" id="j1_3" class="jstree-node  jstree-leaf" aria-selected="false">
+                <i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="#">
+                    <i class="jstree-icon jstree-themeicon fa fa-briefcase icon-state-success  jstree-themeicon-custom"></i>
+                    custom icon URL
+                </a>
+            </li>
+            <li role="treeitem" data-jstree="{ &quot;opened&quot; : true }" aria-expanded="true" id="j1_4" class="jstree-node  jstree-open" aria-selected="false">
+                <i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="#">
+                    <i class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom"></i>
+                    initially open
+                </a><ul role="group" class="jstree-children">
+                    <li role="treeitem" data-jstree="{ &quot;disabled&quot; : true }" id="j1_5" class="jstree-node  jstree-leaf" aria-selected="false">
+                        <i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor  jstree-disabled" href="#">
+                            <i class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom"></i>
+                            Disabled Node
+                        </a>
+                    </li>
+                    <li role="treeitem" data-jstree="{ &quot;type&quot; : &quot;file&quot; }" id="j1_6" class="jstree-node  jstree-leaf jstree-last" aria-selected="false">
+                        <i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="#">
+                            <i class="jstree-icon jstree-themeicon fa fa-file icon-state-warning icon-lg jstree-themeicon-custom"></i>
+                            Another node
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li role="treeitem" data-jstree="{ &quot;icon&quot; : &quot;fa fa-warning icon-state-danger&quot; }" id="j1_7" class="jstree-node  jstree-leaf jstree-last" aria-selected="false">
+                <i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="#">
+                    <i class="jstree-icon jstree-themeicon fa fa-warning icon-state-danger jstree-themeicon-custom"></i>
+                    Custom icon class (bootstrap)
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li role="treeitem" data-jstree="{ &quot;type&quot; : &quot;file&quot; }" id="j1_8" class="jstree-node  jstree-leaf jstree-last" aria-selected="false">
+        <i class="jstree-icon jstree-ocl"></i><a class="jstree-anchor" href="http://www.jstree.com">
+            <i class="jstree-icon jstree-themeicon fa fa-file icon-state-warning icon-lg jstree-themeicon-custom"></i>
+            Clickanle link node
+        </a>
+    </li>
+</ul>

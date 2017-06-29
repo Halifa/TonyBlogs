@@ -41,9 +41,14 @@
   <ItemGroup>
     <Compile Include="IBaseRepository.cs" />
     <Compile Include="IBlogArticleRepository.cs" />
+    <Compile Include="IUserFunctionRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TonyBlogs.DTO\TonyBlogs.DTO.csproj">
+      <Project>{3606c1a4-18c2-418a-afec-4bd7cfa1b363}</Project>
+      <Name>TonyBlogs.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TonyBlogs.Entity\TonyBlogs.Entity.csproj">
       <Project>{cadabaec-616d-4135-8337-03d8efbfcb9e}</Project>
       <Name>TonyBlogs.Entity</Name>
