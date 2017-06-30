@@ -75,6 +75,7 @@
     <Compile Include="BlogArticleRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserFunctionRepository.cs" />
+    <Compile Include="UserPurviewRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TonyBlogs.DTO\TonyBlogs.DTO.csproj">

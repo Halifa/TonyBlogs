@@ -51,6 +51,7 @@
     <Compile Include="BlogArticleService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserFunctionService.cs" />
+    <Compile Include="UserPurviewService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TonyBlogs.Common\TonyBlogs.Common.csproj">
