@@ -13,13 +13,6 @@ namespace TonyBlogs.WebApp.Filters
 {
     public class ExcepFilter : HandleErrorAttribute
     {
-        private ILogger _logger;
-
-        public ExcepFilter():base()
-        {
-            this._logger = ContainerManager.Resolve<ILogger>();  
-        }
-
         public override void OnException(ExceptionContext filterContext)
         {
             Exception exp = filterContext.Exception;
@@ -32,6 +25,7 @@ namespace TonyBlogs.WebApp.Filters
                 innerEx = innerEx.InnerException;
             }
 
+            ILogger _logger = ContainerManager.Resolve<ILogger>();  
             _logger.Error(innerEx.Message, innerEx);
 
             if (filterContext.HttpContext.Request.IsAjaxRequest())

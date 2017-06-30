@@ -10,18 +10,27 @@
             <div class="caption">
                 <i class="fa fa-gift"></i>功能管理
             </div>
-            <div class="actions">
-                <a  id="btnAdd" href="javascript:;" class="btn btn-default btn-sm" fid="0">
-                    <i class="fa fa-plus"></i> 新增
-                </a>
-            </div>
         </div>
         <div class="portlet-body">
             <div class="row">
                 
                 <div class="col-md-3">
-                    <div id="tree_1" class="tree-demo jstree jstree-1 jstree-default" role="tree" aria-activedescendant="j1_1">
-                        
+                    <div class="portlet box yellow">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-gift"></i>功能树
+                            </div>
+                            <div class="actions">
+                                <a id="btnAddFunc" href="javascript:;" class="btn blue btn-sm">
+                                    <i class="fa fa-plus"></i> 新增一级菜单
+                                </a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div id="tree_1" class="tree-demo jstree jstree-1 jstree-default" role="tree" aria-activedescendant="j1_1">
+
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-9" id="funcShow">
@@ -52,12 +61,6 @@
                 $('#tree_1').data('jstree', false);
                 $('#tree_1').jstree();
 
-                // handle link clicks in tree nodes(support target="_blank" as well)
-                $('#tree_1').on('select_node.jstree', function (e, data) {
-                    var link = $('#' + data.selected).find('a');
-                    $('#btnAdd').attr('fid', $(link).attr('fid'));
-                });
-
                 $('#tree_1').on('open_node.jstree', function (event,node) {
                     var id = node.node.id;
                     $("#" + id).find("ul a.jstree-anchor").on("click", function () {
@@ -65,12 +68,6 @@
                         var pfid = $(this).attr("pfid");
                         functionInfo.getFuncInfo(fid, pfid);
                     })
-                });
-
-                //show_node.jstree
-
-                $('#tree_1').on('model.jstree', function (nodes,parent) {
-                    console.log(nodes);
                 });
             }
 
@@ -93,7 +90,7 @@
                 remove: '@Url.Action("AjaxDeleteFunction", "Function")',
             }
 
-            var optFuncInfo = function () {
+            var addOrEditFunc = function () {
                 var data = $("#form_sample_1").serialize();
 
                 Metronic.ajax(
@@ -103,7 +100,7 @@
                             elem: true,
                         }).done(function () {
                             $('#funcShow').html('');
-                            setTimeout(function(){getFuncList()},50);
+                            getFuncList();
                         });
             }
 
@@ -113,7 +110,7 @@
                 });
                 $.post(actions.detail, { funcid: fid, parentid:pfid }, function (result) {
                     $('#funcShow').html(result);
-                    bindElement();
+                    bindDetailElement();
                     Metronic.unblockUI();
                 })
             }
@@ -129,9 +126,23 @@
                         });
             }
 
-            var bindElement = function () {
+            var bindDetailElement = function () {
+                $('#btnAddChildFunc').on('click', function () {
+                    var fid = $(this).attr('fid');
+                    getFuncInfo(0, fid);
+                });
+
                 $('#btnSubmit').on('click', function () {
-                    optFuncInfo();
+                    addOrEditFunc();
+                });
+
+                $('#btnCancel').on('click', function () {
+                    $('#funcShow').html('');
+                });
+
+                $('#btnRemove').on('click', function () {
+                    var fid = $(this).attr('fid');
+                    deleteFunc(fid);
                 });
             }
 
@@ -156,8 +167,8 @@
                 init: function () {
                     getFuncList();
 
-                    $('#btnAdd').on('click', function () {
-                        getFuncInfo(0, $(this).attr('fid'));
+                    $('#btnAddFunc').on('click', function () {
+                        getFuncInfo(0, 0);
                     });
                     
                 },
