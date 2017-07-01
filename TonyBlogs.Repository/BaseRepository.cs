@@ -110,6 +110,11 @@ namespace TonyBlogs.Repository
             return ExecRead(conn => conn.Scalar<TKey>(sqlExp));
         }
 
+        protected long Count(SqlExpression<TEntity> sqlExp)
+        { 
+            return ExecRead(conn => conn.Count(sqlExp));
+        }
+
         private T ExecWrite<T>(Func<IDbConnection, T> func, IDbConnection connection = null)
         {
             if (connection == null)

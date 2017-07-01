@@ -1,0 +1,76 @@
+﻿@using TonyBlogs.DTO.UserPurview
+@model UserPurviewEditDTO
+@{
+    Layout = null;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+    <h3 id="myModalLabel">@(Model.PurviewID == 0 ? "新增角色" : "修改角色")</h3>
+</div>
+<div class="modal-body">
+    <form action="#" id="submitfrm" class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label">权限组名称</label>
+            <div class="controls">
+                @Html.TextBoxFor(m => m.PurviewTitle, new { @class = " m-wrap" })
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">权限组描述</label>
+            <div class="controls">
+                @Html.TextBoxFor(m => m.PurviewContent, new { @class = " m-wrap" })
+            </div>
+        </div>
+        <hr />
+        @Html.HiddenFor(m => m.PurviewID)
+        @Html.HiddenFor(m => m.PurviewFuncIDs)
+        <div class="control-group">
+            <label class="control-label">权限节点</label>
+
+            <div class="controls">
+                @*一级菜单*@
+
+                @foreach (var firItem in Model.FuncList)
+                {
+
+                    <label class="checkbox">
+                        <input type="checkbox" name="FuncIDs" id="PurviewFuncIDs@(firItem.ID)" value="@firItem.ID" />&nbsp;@firItem.FucTitle
+                    </label>
+
+                    @*二级菜单*@
+                    if (firItem.ChildList.Count > 0)
+                    {
+                        <div style="margin-left: 25px;">
+                            @foreach (var secItem in firItem.ChildList)
+                            {
+                                <label class="checkbox">
+                                    <input type="checkbox" name="FuncIDs" id="PurviewFuncIDs@(secItem.ID)" value="@secItem.ID" />&nbsp;@secItem.FucTitle
+                                </label>
+                                <span>&nbsp; &nbsp;</span>
+                                @*三级菜单*@
+                                if (secItem.ChildList.Count() > 0)
+                                {
+                                    <div style='margin-left: 25px;'>
+                                        @foreach (var trdItem in secItem.ChildList)
+                                        {
+                                            <label class="checkbox">
+                                                <input type="checkbox" name="FuncIDs" id="PurviewFuncIDs@(trdItem.ID)" value="@trdItem.ID" />&nbsp;@trdItem.FucTitle
+                                            </label>
+                                            <span>&nbsp; &nbsp;</span>
+                                        }
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button id="btnConfirm" class="btn green" data-dismiss="modal" type="button" aria-hidden="true">提交</button>
+    <button class="btn btnclose" data-dismiss="modal" aria-hidden="true">关闭</button>
+</div>

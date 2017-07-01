@@ -40,10 +40,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\ExecuteResult.cs" />
+    <Compile Include="Base\JQueryDataTableSearchDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserFunction\UserFunctionEditDTO.cs" />
     <Compile Include="UserFunction\UserFunctionSearchDTO.cs" />
     <Compile Include="UserFunction\UserFunctionTreeItemDTO.cs" />
+    <Compile Include="UserPurview\UserPurviewEditDTO.cs" />
+    <Compile Include="UserPurview\UserPurviewListDTO.cs" />
+    <Compile Include="UserPurview\UserPurviewListItemDTO.cs" />
+    <Compile Include="UserPurview\UserPurviewSearchDTO.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TonyBlogs.Enum\TonyBlogs.Enum.csproj">
