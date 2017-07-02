@@ -62,13 +62,15 @@
                 $('#tree_1').jstree();
 
                 $('#tree_1').on('open_node.jstree', function (event,node) {
-                    var id = node.node.id;
-                    $("#" + id).find("ul a.jstree-anchor").on("click", function () {
-                        var fid = $(this).attr("fid");
-                        var pfid = $(this).attr("pfid");
-                        functionInfo.getFuncInfo(fid, pfid);
-                    })
+                    $("#tree_1 a.jstree-anchor").unbind("click", showFuncInfo)
+                    $("#tree_1 a.jstree-anchor").on("click", showFuncInfo);
                 });
+            }
+
+            var showFuncInfo = function () {
+                var fid = $(this).attr("fid");
+                var pfid = $(this).attr("pfid");
+                functionInfo.getFuncInfo(fid, pfid);
             }
 
             return {
