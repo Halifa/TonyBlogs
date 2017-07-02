@@ -3,6 +3,7 @@ using ServiceStack.OrmLite;
 using ServiceStack.OrmLite.MySql;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
@@ -14,7 +15,7 @@ namespace TonyBlogs.Repository
 {
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
-        private static string connStr = "server=localhost;port=3306;User Id=root;pwd=123456;Database=tony_blogs";
+        private static string connStr = ConfigurationManager.ConnectionStrings["tonyblogs"].ConnectionString;
         private static IDbConnectionFactory connFactory = new OrmLiteConnectionFactory(connStr, TonyMySqlOrmLiteDialectProvider.Current);
 
         protected IDbConnection db

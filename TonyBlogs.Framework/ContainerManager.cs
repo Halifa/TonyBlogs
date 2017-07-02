@@ -29,12 +29,7 @@ namespace TonyBlogs.Framework
 
         public static object Resolve(Type type, ILifetimeScope scope = null)
         {
-            if (scope == null)
-            {
-                //no scope specified
-                scope = Scope();
-            }
-            return scope.Resolve(type);
+            return _container.Resolve(type);
         }
 
         public static bool IsRegistered(Type serviceType, ILifetimeScope scope = null)

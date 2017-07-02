@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Web.Compilation;
 
 namespace TonyBlogs.Framework
 {
@@ -21,7 +22,7 @@ namespace TonyBlogs.Framework
             Type baseType = typeof(IDependency);
 
             // 获取所有相关类库的程序集
-            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            Assembly[] assemblies = BuildManager.GetReferencedAssemblies().Cast<Assembly>().ToArray();
             
             var registBuilder = containerBuilder.RegisterAssemblyTypes(assemblies);
 
