@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ServiceStack.DataAnnotations;
+using TonyBlogs.Enum.User;
 
 namespace TonyBlogs.Entity
 {
@@ -33,7 +34,7 @@ namespace TonyBlogs.Entity
         /// <summary>
         /// 状态
         /// </summary>
-        public int UserStatus { get; set; }
+        public UserStatusEnum UserStatus { get; set; }
 
         /// <summary>
         /// 权限ID

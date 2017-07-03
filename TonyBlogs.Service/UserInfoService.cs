@@ -8,6 +8,7 @@ using TonyBlogs.DTO.UserInfo;
 using TonyBlogs.IRepository;
 using AutoMapper;
 using TonyBlogs.DTO;
+using TonyBlogs.Common;
 
 namespace TonyBlogs.Service
 {
@@ -34,22 +35,99 @@ namespace TonyBlogs.Service
 
         public UserInfoListDTO GetUserInfoList(UserInfoSearchDTO searchDTO)
         {
-            throw new NotImplementedException();
+            UserInfoListDTO result = new UserInfoListDTO();
+
+            long totalCount = 0;
+            var entityList = this._userInfoRepository.GetUserInfoList(searchDTO, out totalCount);
+
+            result.TotalRecords = totalCount;
+            var purviewMap = GetPurviewMap();
+            result.List = entityList.Select(m => CreateUserInfoListItemDTO(m, purviewMap)).ToList();
+
+            return result;
+        }
+
+        private UserInfoListItemDTO CreateUserInfoListItemDTO(UserInfoEntity entity, Dictionary<long, string> purviewMap)
+        {
+            var dto = Mapper.DynamicMap<UserInfoListItemDTO>(entity);
+            if (purviewMap.ContainsKey(dto.PurviewID))
+	        {
+                dto.PurviewTitle = purviewMap[dto.PurviewID];
+	        }
+
+            return dto;
         }
 
         public ExecuteResult AddOrEditUserInfo(UserInfoEditDTO dto)
         {
-            throw new NotImplementedException();
-        }
+            ExecuteResult result = new ExecuteResult() { IsSuccess = true };
 
+            var entity = Mapper.DynamicMap<UserInfoEntity>(dto);
+            
+
+            bool isAdd = dto.UserID == 0;
+            if (isAdd)
+            {
+                entity.LoginPWD = EncryptHelper.Encrypt(entity.LoginPWD);
+                entity.UserStatus = Enum.User.UserStatusEnum.Valid;
+                entity.InsertTime = DateTime.Now;
+                baseDal.Add(entity);
+            }
+            else
+            {
+                entity.UpdateTime = DateTime.Now;
+
+                baseDal.UpdateOnly(entity,
+                    m => new {
+                        m.RealName,
+                        m.PurviewID,
+                        m.UpdateTime},
+                    m => m.UserID == dto.UserID);
+            }
+
+            return result;
+        }
+            
         public UserInfoEditDTO GetUserInfoEditDTO(long userID)
         {
-            throw new NotImplementedException();
+            UserInfoEditDTO dto = new UserInfoEditDTO();
+
+            if (userID <= 0)
+            {
+                dto.PurviewMap = GetPurviewMap();
+                return dto;
+            }
+
+            var entity = baseDal.Single(m => m.UserID == userID);
+            if (entity == null)
+            {
+                return dto;
+            }
+
+            dto = Mapper.DynamicMap<UserInfoEditDTO>(entity);
+            dto.PurviewMap = GetPurviewMap();
+
+            return dto;
         }
 
         public ExecuteResult DeleteUserInfo(long userID)
         {
-            throw new NotImplementedException();
+            ExecuteResult result = new ExecuteResult() { IsSuccess = true };
+
+            var entity = baseDal.Single(m => m.UserID == userID);
+
+            if (entity == null)
+            {
+                result.IsSuccess = false;
+                result.Message = "当前功能实体不存在";
+            }
+
+            entity.UserStatus = Enum.User.UserStatusEnum.Deleted;
+            entity.UpdateTime = DateTime.Now;
+
+            baseDal.UpdateOnly(entity, m => new { m.FuncStatus, m.UpdateTime }, m => m.UserID == userID);
+
+            return result;
         }
 
         private Dictionary<long, string> GetPurviewMap()
