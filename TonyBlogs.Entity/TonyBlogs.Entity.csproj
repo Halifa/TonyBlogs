@@ -59,6 +59,7 @@
     <Compile Include="FunctionEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurviewEntity.cs" />
+    <Compile Include="UserInfoEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TonyBlogs.Enum\TonyBlogs.Enum.csproj">
