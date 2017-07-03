@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TonyBlogs.DTO.UserPurview
+namespace TonyBlogs.DTO.UserInfo
 {
     public class UserInfoSearchDTO : JQueryDataTableSearchDTO
     {

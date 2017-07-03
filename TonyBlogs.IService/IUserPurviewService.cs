@@ -17,5 +17,11 @@ namespace TonyBlogs.IService
         UserPurviewEditDTO GetPurviewEditDTO(long purviewID);
 
         ExecuteResult DeletePurview(long purviewID);
+
+        /// <summary>
+        /// 获取权限集合<PurviewID,PurviewTitle>
+        /// </summary>
+        /// <returns></returns>
+        Dictionary<long, string> GetPurviewMap();
     }
 }

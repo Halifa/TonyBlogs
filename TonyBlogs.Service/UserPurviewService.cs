@@ -87,5 +87,12 @@ namespace TonyBlogs.Service
 
             return new ExecuteResult() { IsSuccess = true };
         }
+
+        public Dictionary<long, string> GetPurviewMap()
+        {
+            var purviewList = baseDal.QueryWhere(m => m.PurviewID > 0);
+
+            return purviewList.ToDictionary<PurviewEntity,long, string>(m => m.PurviewID, m => m.PurviewTitle);
+        }
     }
 }
