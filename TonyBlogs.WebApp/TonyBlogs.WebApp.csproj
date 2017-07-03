@@ -130,6 +130,7 @@
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\FunctionController.cs" />
     <Compile Include="Areas\Admin\Controllers\PurviewController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserInfoController.cs" />
     <Compile Include="ControllerFactory\AutofacControllerFactory.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\ExcepFilter.cs" />
@@ -1117,6 +1118,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Purview\AjaxGetEditDTO.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\UserInfo\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

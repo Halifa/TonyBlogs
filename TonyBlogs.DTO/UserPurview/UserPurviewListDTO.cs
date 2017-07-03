@@ -5,10 +5,8 @@ using System.Text;
 
 namespace TonyBlogs.DTO.UserPurview
 {
-    public class UserPurviewListDTO
+    public class UserPurviewListDTO : BaseListDTO<UserPurviewListItemDTO>
     {
-        public List<UserPurviewListItemDTO> List { get; set; }
 
-        public long TotalRecords { get; set; }
     }
 }
