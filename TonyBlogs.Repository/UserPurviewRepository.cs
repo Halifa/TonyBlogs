@@ -15,12 +15,12 @@ namespace TonyBlogs.Repository
         {
             var sqlExp = db.From<PurviewEntity>();
 
-            if (searchDTO.PurviewID > 0)
+            if (searchDTO.PurviewID.HasValue)
             {
                 sqlExp.Where(m=>m.PurviewID == searchDTO.PurviewID);
             }
 
-            if (string.IsNullOrEmpty(searchDTO.PurviewTitle))
+            if (!string.IsNullOrEmpty(searchDTO.PurviewTitle))
             {
                 sqlExp.Where(m => m.PurviewTitle == searchDTO.PurviewTitle);
             }

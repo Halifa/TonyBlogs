@@ -8,7 +8,7 @@ using TonyBlogs.IService;
 
 namespace TonyBlogs.WebApp.Areas.Admin.Controllers
 {
-    public class PurviewController : Controller
+    public class PurviewController : BaseController
     {
         private IUserPurviewService _purviewService;
 

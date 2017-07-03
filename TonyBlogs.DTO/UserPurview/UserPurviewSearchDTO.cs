@@ -7,7 +7,7 @@ namespace TonyBlogs.DTO.UserPurview
 {
     public class UserPurviewSearchDTO : JQueryDataTableSearchDTO
     {
-        public long PurviewID { get; set; }
+        public long? PurviewID { get; set; }
 
 
         public string PurviewTitle { get; set; }

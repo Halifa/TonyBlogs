@@ -8,7 +8,7 @@ using TonyBlogs.IService;
 
 namespace TonyBlogs.WebApp.Areas.Admin.Controllers
 {
-    public class FunctionController : Controller
+    public class FunctionController : BaseController
     {
         private IUserFunctionService _funcService;
 

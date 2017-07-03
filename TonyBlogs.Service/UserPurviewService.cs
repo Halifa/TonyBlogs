@@ -65,6 +65,7 @@ namespace TonyBlogs.Service
 
             if (purviewID <= 0)
             {
+                dto.FuncList = _funcService.GetAllValidFunciton();
                 return dto;
             }
 

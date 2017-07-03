@@ -859,7 +859,7 @@ var Metronic = function () {
                 var agrs = arguments;
                 $ok.on("click", function () {
                     if (typeof opts.callBack == "function") {
-                        opts.callBack.apply(this, agrs[0].callBackArgs);
+                        opts.callBack.call(this, agrs[0].callBackArgs);
                     }
                 });
                 $footer.append($ok);
@@ -1057,6 +1057,20 @@ var Metronic = function () {
                });
             })
         },
+        formatString: function () {
+            if (arguments.length < 1) {
+                return null;
+            }
+
+            var str = arguments[0];
+
+            for (var i = 1; i < arguments.length; i++) {
+                var placeHolder = '{' + (i - 1) + '}';
+                str = str.replace(placeHolder, arguments[i]);
+            }
+
+            return str;
+        },
 
         handleResponse: function (data, userOptions, $dfd) {
             Metronic.clearBusy(userOptions.elem);
@@ -1076,5 +1090,6 @@ var Metronic = function () {
             }
         }
     };
+
 
 }();
