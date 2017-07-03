@@ -58,6 +58,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\UserFuncStatusEnum.cs" />
     <Compile Include="User\UserFuncTypeEnum.cs" />
+    <Compile Include="User\UserStatusEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

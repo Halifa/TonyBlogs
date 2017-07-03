@@ -42,6 +42,7 @@
     <Compile Include="IBaseService.cs" />
     <Compile Include="IBlogArticleService.cs" />
     <Compile Include="IUserFunctionService.cs" />
+    <Compile Include="IUserInfoService.cs" />
     <Compile Include="IUserPurviewService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
