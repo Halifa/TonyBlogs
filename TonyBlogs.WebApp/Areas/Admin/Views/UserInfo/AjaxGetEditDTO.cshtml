@@ -1,0 +1,65 @@
+﻿@using TonyBlogs.DTO.UserInfo
+@model UserInfoEditDTO
+@{
+    Layout = null;
+    bool isAdd = Model.UserID == 0;
+}
+
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+    <h4 class="modal-title">@( isAdd ? "新增用户" : "修改用户")</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-horizontal" role="form">
+                <div class="form-body">
+                    @Html.HiddenFor(m => m.UserID)
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">用户账号</label>
+                        <div class="col-md-4">
+                            @if (isAdd)
+                            {
+                                @Html.TextBoxFor(m => m.LoginName, new { @class = " form-control" })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(m => m.LoginName, new { @class = " form-control", @disabled = "disabled" })
+                            }
+                        </div>
+                    </div>
+                    @if (isAdd)
+                    {
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">用户密码</label>
+                            <div class="col-md-4">
+                                @Html.PasswordFor(m => m.LoginPWD, new { @class = " form-control" })
+                            </div>
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">用户姓名</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.RealName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">权限组描述</label>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(i => i.PurviewID, Model.PurviewMap.ToSelectList<long>("权限"), new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<div class="modal-footer">
+    <button id="btnConfirm" class="btn green" type="button" aria-hidden="true">提交</button>
+    <button class="btn btnclose" data-dismiss="modal" aria-hidden="true">关闭</button>
+</div>
+

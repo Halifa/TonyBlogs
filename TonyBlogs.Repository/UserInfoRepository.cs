@@ -30,7 +30,7 @@ namespace TonyBlogs.Repository
                 sqlExp.Where(m => m.RealName == searchDTO.RealName);
             }
 
-            if (searchDTO.PurviewID.HasValue)
+            if (searchDTO.PurviewID>0)
             {
                 sqlExp.Where(m => m.PurviewID == searchDTO.PurviewID);
             }

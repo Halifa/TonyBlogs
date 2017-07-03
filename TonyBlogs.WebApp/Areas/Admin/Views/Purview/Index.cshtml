@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="controls pull-left" style="margin-right: 5px;">
-                    @Html.TextBoxFor(i => i.PurviewTitle, new { @class = "form-control", placeholder = "权限标题" })
+                    @Html.TextBoxFor(i => i.PurviewTitle, new { @class = "form-control", placeholder = "权限名称" })
                 </div>
 
                 <div class="controls pull-left">
@@ -37,7 +37,7 @@
                 <div class="portlet box green">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-edit"></i>角色管理
+                            <i class="fa fa-edit"></i>权限管理
                         </div>
                         <div class="tools">
                             <a href="javascript:;" class="collapse">
@@ -54,10 +54,10 @@
                                             权限编号
                                         </th>
                                         <th>
-                                            名称
+                                            权限名称
                                         </th>
                                         <th>
-                                            描述
+                                            权限描述
                                         </th>
                                         <th>
                                             录入时间
@@ -83,8 +83,8 @@
 </div>
 
 @section scripts{
-<script src="~/Content/assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js?123134" type="text/javascript"></script>
-<script src="~/Content/assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js?1231314" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js?123134" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js?1231314" type="text/javascript"></script>
     <script src="~/Content/assets/global/plugins/datatables/media/js/jquery.dataTables.js"></script>
     <script src="~/Content/assets/global/plugins/datatables/media/js/dataTables.bootstrap.js"></script>
     <script type="text/javascript">
@@ -162,20 +162,7 @@
 
                 },
                 "drawCallback": function (settings) {
-                    $('button.edit').on('click', function () {
-                        var pid = $(this).attr('pid');
-                        getDetail(pid);
-                    });
-                    $('button.delete').on('click', function () {
-                        var pid = $(this).attr('pid');
-                        Metronic.modalAlert({
-                            message: "您确定要删除该角色吗？",
-                            dialogId: "deleteDialog",
-                            cancelButton: { text: "取消" },
-                            callBack: fnDelete,
-                            callBackArgs: { pid: pid }
-                        })
-                    })
+                    bindListElement();
                 }
             });
 
@@ -258,18 +245,14 @@
 
                     var formData = _$form.serialize();
                     creatOrEdit(formData);
-                    _tenantService.addHouse(house).done(function () {
-                        location.reload(true); //reload page to see new tenant!
-                    });
                 });
             }
 
-            var bindListElelemt = function () {
+            function bindListElement() {
                 $('button.edit').on('click', function () {
-                    var id = $(this).attr('pid');
-                    getDetail(id);
+                    var pid = $(this).attr('pid');
+                    getDetail(pid);
                 });
-
                 $('button.delete').on('click', function () {
                     var pid = $(this).attr('pid');
                     Metronic.modalAlert({
@@ -277,7 +260,7 @@
                         dialogId: "deleteDialog",
                         cancelButton: { text: "取消" },
                         callBack: fnDelete,
-                        pid: pid
+                        callBackArgs: { pid: pid }
                     })
                 })
             }

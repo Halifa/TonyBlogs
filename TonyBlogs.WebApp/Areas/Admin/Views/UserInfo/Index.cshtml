@@ -1,1 +1,301 @@
-﻿
+﻿﻿@using TonyBlogs.DTO.UserInfo
+@model UserInfoSearchDTO
+
+@{
+    
+}
+
+@section css{
+    <link href="~/Content/assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css?123134" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css?123134" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/global/plugins/datatables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+}
+
+<div class="page-content">
+    <div>
+
+        <div class="table-toolbar">
+            <form id="form">
+                <div class="controls pull-left" style="margin-right: 5px;">
+                    @Html.TextBoxFor(i => i.UserID, new { @class = "form-control", placeholder = "用户编号" })
+                </div>
+
+                <div class="controls pull-left" style="margin-right: 5px;">
+                    @Html.TextBoxFor(i => i.LoginName, new { @class = "form-control", placeholder = "用户名" })
+                </div>
+
+                <div class="controls pull-left" style="margin-right: 5px;">
+                    @Html.TextBoxFor(i => i.LoginName, new { @class = "form-control", placeholder = "姓名" })
+                </div>
+
+                <div class="controls pull-left" style="margin-right: 5px;">
+                    @Html.DropDownListFor(i => i.PurviewID, Model.PurviewMap.ToSelectList<long>("权限"),new { @class = "form-control" })
+                </div>
+                <div class="controls pull-left">
+                    <a class="btn blue" href="#" id="btnSearch"><i class="fa fa-search"></i>搜 索 </a>
+                </div>
+                <div class="controls pull-right">
+                    <a id="sample_editable_new" href="#" class="btn green"><i class="fa fa-plus"></i>新 增</a>
+                </div>
+
+            </form>
+        </div>
+
+        <!-- BEGIN PAGE CONTENT-->
+        <div class="row">
+            <div class="col-md-12">
+                <!-- BEGIN EXAMPLE TABLE PORTLET-->
+                <div class="portlet box green">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-edit"></i>用户管理
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+
+                        <div id="tableContainer">
+                            <table class="table table-striped table-hover table-bordered" id="myDatatable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            用户编号
+                                        </th>
+                                        <th>
+                                            用户名
+                                        </th>
+                                        <th>
+                                            姓名
+                                        </th>
+                                        <th>
+                                            权限名称
+                                        </th>
+                                        <th>
+                                            录入时间
+                                        </th>
+                                        <th>
+                                            操作
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- END EXAMPLE TABLE PORTLET-->
+            </div>
+        </div>
+        <!-- END PAGE CONTENT -->
+        <div id="DetailModal" class="modal fade" tabindex="-1" data-width="560" aria-hidden="true" style="display: none; width: 560px; margin-left: -379px; margin-top: 0px;" data-backdrop="static">
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/assets/global/plugins/bootstrap-modal/js/bootstrap-modalmanager.js?123134" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/bootstrap-modal/js/bootstrap-modal.js?1231314" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/datatables/media/js/jquery.dataTables.js"></script>
+    <script src="~/Content/assets/global/plugins/datatables/media/js/dataTables.bootstrap.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            myFunc.init();
+        })
+
+        var actions = {
+            list: '@Url.Action("AjaxGetList", "UserInfo")',
+            detail: '@Url.Action("AjaxGetEditDTO", "UserInfo")',
+            edit: '@Url.Action("AjaxAddOrEdit", "UserInfo")',
+            remove: '@Url.Action("AjaxDelete", "UserInfo")',
+        }
+
+        var myFunc = (function () {
+            var listTable = $('#myDatatable').dataTable({
+                "aLengthMenu": [10, 15, 20],
+                "info": true,
+                'bPaginate': true,  //是否分页。
+                'bFilter': false,
+                "bServerSide": true,
+                "bProcessing": true,
+                "sAjaxSource": actions.list,//这个是请求的地址
+                "aoColumns": [
+                             { "mData": "UserID" },
+                             { "mData": "LoginName" },
+                             { "mData": "RealName" },
+                             { "mData": "PurviewTitle" },
+                             { "mData": "InsertTime" },
+                             { //自定义列
+                                 "mData": "UserID",
+                                 "sClass": "center",
+                                 "bSearchable": false,
+                                 "bSortable": false,
+                                 "mRender": function (data, type, full) {
+
+                                     return Metronic.formatString('<div class="btn-group">\
+                                                                    <button class="btn blue edit" uid="{0}"><i class="fa fa-pencil"></i>修改</button>\
+                                                                </div>\
+                                                                <div class="btn-group">\
+                                                                    <button class="btn red delete"  uid="{1}"><i class="fa fa-trash-o"></i>删除</button>\
+                                                                    </div>', data, data);
+                                 }
+                             }
+                ],
+                "aoColumnDefs": [{
+                    sDefaultContent: '',
+                    aTargets: ['_all']
+                }],
+                "fnServerData": retrieveData, // 获取数据的处理函数
+                "oLanguage": {
+
+                    "sProcessing": "正在加载中......",
+
+                    "sLengthMenu": "每页显示 _MENU_ 条记录",
+
+                    "sZeroRecords": "对不起，查询不到相关数据！",
+
+                    "sEmptyTable": "表中无数据存在！",
+
+                    "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+
+                    "sInfoFiltered": "数据表中共为 _MAX_ 条记录",
+
+                    "oPaginate": {
+
+                        "sFirst": "首页",
+
+                        "sPrevious": "上一页",
+
+                        "sNext": "下一页",
+
+                        "sLast": "末页",
+
+                    },
+
+                },
+                "drawCallback": function (settings) {
+                    bindListElement();
+                }
+            });
+
+            // 3个参数的名字可以随便命名,但必须是3个参数,少一个都不行
+            function retrieveData(sSource, aoData, fnCallback) {
+                var searchData = $("#form").serialize();
+
+                $.ajax({
+
+                    url: sSource,//这个就是请求地址对应sAjaxSource
+
+                    data: $.param(aoData) + "&" + searchData,//这个是把datatable的一些基本数据传给后台,比如起始位置,每页显示的行数
+
+                    type: 'post',
+
+                    dataType: 'json',
+
+                    async: false,
+
+                    success: function (result) {
+
+                        fnCallback(result);//把返回的数据传给这个方法就可以了,datatable会自动绑定数据的
+
+                    },
+
+                    error: function (msg) {
+
+                    }
+
+                });
+
+            }
+
+            var creatOrEdit = function (formdata) {
+                Metronic.ajax(
+                        {
+                            url: actions.edit,
+                            data: formdata,
+                            elem: true,
+                        }).done(function () {
+                            $('#DetailModal').modal('hide');
+                            refreshTable();
+                        });
+            };
+
+            var getDetail = function (uid) {
+                Metronic.ajax(
+                        {
+                            url: actions.detail,
+                            data: { userid: uid },
+                            elem: true,
+                        }).done(function (result) {
+                            $('#DetailModal').html(result);
+                            $('#DetailModal').modal('show');
+                            bindDetailElement();
+                        });
+            };
+
+            var bindDetailElement = function () {
+                var _$modal = $('#DetailModal');
+                var _$form = _$modal.find('form');
+
+               $('#btnConfirm').click(function (e) {
+                   e.preventDefault();
+
+                    var formData = _$form.serialize();
+                    creatOrEdit(formData);
+                });
+            }
+
+            function bindListElement() {
+                $('button.edit').on('click', function () {
+                    var uid = $(this).attr('uid');
+                    getDetail(uid);
+                });
+                $('button.delete').on('click', function () {
+                    var uid = $(this).attr('uid');
+                    Metronic.modalAlert({
+                        message: "您确定要删除该用户吗？",
+                        dialogId: "deleteDialog",
+                        cancelButton: { text: "取消" },
+                        callBack: fnDelete,
+                        callBackArgs: { uid: uid }
+                    })
+                })
+            }
+
+            var refreshTable = function () {
+                var currentPage = $('#myDatatable_paginate li.paginate_button.active>a').html();
+                listTable.fnPageChange(currentPage - 1, true);
+            }
+
+            var fnDelete = function (obj) {
+
+                Metronic.ajax(
+                        {
+                            url: actions.remove,
+                            data: { userid: obj.uid },
+                            elem: true,
+                        }).done(function () {
+                            $('#DetailModal').modal('hide');
+                            refreshTable();
+                        });
+            }
+
+            return {
+                init: function () {
+                    $("#btnSearch").on('click', function () {
+                        listTable.fnDraw();
+                    })
+
+                    $("#sample_editable_new").on("click", function () {
+                        getDetail(0);
+                    })
+                }
+            };
+        })();
+
+        
+    </script>
+}

@@ -23,6 +23,11 @@ namespace TonyBlogs.DTO.UserInfo
         public string LoginName { get; set; }
 
         /// <summary>
+        /// 账号密码
+        /// </summary>
+        public string LoginPWD { get; set; }
+
+        /// <summary>
         /// 真实姓名
         /// </summary>
         public string RealName { get; set; }

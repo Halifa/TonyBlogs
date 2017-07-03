@@ -22,7 +22,7 @@ namespace TonyBlogs.DTO.UserInfo
         /// <summary>
         /// 权限ID
         /// </summary>
-        public long? PurviewID { get; set; }
+        public long PurviewID { get; set; }
 
         /// <summary>
         /// 权限集合<PurviewID, PurviewTitle>

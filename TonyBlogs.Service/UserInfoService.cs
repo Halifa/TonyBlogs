@@ -68,7 +68,7 @@ namespace TonyBlogs.Service
             bool isAdd = dto.UserID == 0;
             if (isAdd)
             {
-                entity.LoginPWD = EncryptHelper.Encrypt(entity.LoginPWD);
+                entity.LoginPWD = EncryptHelper.Encrypt(dto.LoginPWD);
                 entity.UserStatus = Enum.User.UserStatusEnum.Valid;
                 entity.InsertTime = DateTime.Now;
                 baseDal.Add(entity);
@@ -105,6 +105,7 @@ namespace TonyBlogs.Service
             }
 
             dto = Mapper.DynamicMap<UserInfoEditDTO>(entity);
+            dto.LoginPWD = string.Empty;
             dto.PurviewMap = GetPurviewMap();
 
             return dto;

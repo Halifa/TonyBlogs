@@ -44,4 +44,26 @@ public static class SelectListExtensions
 
         return new SelectList(values, "Id", "Name", enumObj);
     }
+
+    public static IEnumerable<SelectListItem> ToSelectList<TValue>(this Dictionary<TValue, string> map, string defaultText)
+    {
+        if (string.IsNullOrEmpty(defaultText)) defaultText = "";
+
+        var result = map.Select(keyPair => new SelectListItem
+        {
+            Text = keyPair.Value,
+            Value = keyPair.Key.ToString(),
+            Selected = defaultText.Equals(keyPair.Value.ToString())
+        }).ToList();
+
+        if (!result.Any(item => item.Selected))
+        {
+            result.Insert(0, new SelectListItem()
+            {
+                Text = defaultText,
+                Value = "0"
+            });
+        }
+        return result;
+    }
 }
