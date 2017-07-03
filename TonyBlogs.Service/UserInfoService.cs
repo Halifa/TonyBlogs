@@ -125,7 +125,7 @@ namespace TonyBlogs.Service
             entity.UserStatus = Enum.User.UserStatusEnum.Deleted;
             entity.UpdateTime = DateTime.Now;
 
-            baseDal.UpdateOnly(entity, m => new { m.FuncStatus, m.UpdateTime }, m => m.UserID == userID);
+            baseDal.UpdateOnly(entity, m => new { m.UserStatus, m.UpdateTime }, m => m.UserID == userID);
 
             return result;
         }

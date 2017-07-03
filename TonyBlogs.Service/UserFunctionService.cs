@@ -8,6 +8,7 @@ using TonyBlogs.DTO.UserFunction;
 using TonyBlogs.IRepository;
 using AutoMapper;
 using TonyBlogs.DTO;
+using TonyBlogs.Common.Cache;
 
 namespace TonyBlogs.Service
 {
@@ -23,7 +24,7 @@ namespace TonyBlogs.Service
 
         public List<UserFunctionTreeItemDTO> GetAllValidFunciton()
         {
-            var entityList = _userFunDal.GetAllValidFunctions();
+            var entityList = GetAllFromCache();
 
             var rootEntityList = entityList.Where(m=>m.ParentID == 0);
 
@@ -62,8 +63,10 @@ namespace TonyBlogs.Service
         {
             UserFunctionEditDTO dto = new UserFunctionEditDTO();
 
+            var allFuncs = GetAllFromCache();
+
             var funcIDList = new List<long>(){funcID, parentID};
-            var list = baseDal.QueryWhere(m => funcIDList.Contains(m.ID));
+            var list = allFuncs.Where(m => funcIDList.Contains(m.ID));
 
             var parentFuncEntity = list.FirstOrDefault(m => m.ID == parentID);
             var funcEntity = list.FirstOrDefault(m => m.ID == funcID);
@@ -104,6 +107,8 @@ namespace TonyBlogs.Service
             {
                 baseDal.Add(funEntity);
             }
+
+            RemoveAllCache();
 
             return result;
 
@@ -146,7 +151,20 @@ namespace TonyBlogs.Service
 
             baseDal.UpdateOnly(entity, m => m.FuncStatus, m => m.ID == funcID);
 
+            RemoveAllCache();
+
             return result;
+        }
+
+        private List<UserFunctionEntity> GetAllFromCache()
+        {
+            return Cache.GetOrAdd<List<UserFunctionEntity>>(
+                AllEnityCacheKey, 120, _userFunDal.GetAllValidFunctions);
+        }
+
+        private void RemoveAllCache()
+        {
+            Cache.Remove(AllEnityCacheKey);
         }
     }
 }

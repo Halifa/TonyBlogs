@@ -28,11 +28,22 @@ namespace TonyBlogs.Service
         {
             UserPurviewListDTO result = new UserPurviewListDTO();
 
-            long totalCount = 0;
-            var entityList = this._userPurviewDal.GetPurviewList(searchDTO, out totalCount);
+            IEnumerable<PurviewEntity> list = GetAllFromCache();
 
-            result.TotalRecords = totalCount;
-            result.List = entityList.Select(m => Mapper.DynamicMap<UserPurviewListItemDTO>(m)).ToList();
+            if (searchDTO.PurviewID.HasValue)
+            {
+                list = list.Where(m => m.PurviewID == searchDTO.PurviewID);
+            }
+
+            if (!string.IsNullOrEmpty(searchDTO.PurviewTitle))
+            {
+                list = list.Where(m => m.PurviewTitle == searchDTO.PurviewTitle);
+            }
+
+            var pagedList = list.Skip((searchDTO.PageIndex - 1) * searchDTO.iDisplayLength).Take(searchDTO.iDisplayLength);
+
+            result.TotalRecords = list.Count();
+            result.List = pagedList.Select(m => Mapper.DynamicMap<UserPurviewListItemDTO>(m)).ToList();
 
             return result;
         }
@@ -56,6 +67,8 @@ namespace TonyBlogs.Service
                     m => m.PurviewID == dto.PurviewID);
             }
 
+            RemoveAllCache();
+
             return result;
         }
 
@@ -69,7 +82,7 @@ namespace TonyBlogs.Service
                 return dto;
             }
 
-            var entity = baseDal.Single(m => m.PurviewID == purviewID);
+            var entity = GetAllFromCache().FirstOrDefault(m => m.PurviewID == purviewID);
             if (entity == null)
             {
                 return dto;
@@ -84,15 +97,30 @@ namespace TonyBlogs.Service
         public ExecuteResult DeletePurview(long purviewID)
         {
             baseDal.Delete(m => m.PurviewID == purviewID);
+            RemoveAllCache();
 
             return new ExecuteResult() { IsSuccess = true };
         }
 
         public Dictionary<long, string> GetPurviewMap()
         {
-            var purviewList = baseDal.QueryWhere(m => m.PurviewID > 0);
+            var purviewList = GetAllFromCache();
 
             return purviewList.ToDictionary<PurviewEntity,long, string>(m => m.PurviewID, m => m.PurviewTitle);
+        }
+
+        private List<PurviewEntity> GetAllFromCache()
+        {
+            return Cache.GetOrAdd<List<PurviewEntity>>(
+                AllEnityCacheKey, 120,
+                () => {
+                    return baseDal.QueryWhere(m => m.PurviewID > 0);
+                });
+        }
+
+        private void RemoveAllCache()
+        {
+            Cache.Remove(AllEnityCacheKey);
         }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using TonyBlogs.Common.Cache;
+using TonyBlogs.Framework;
 using TonyBlogs.IRepository;
 using TonyBlogs.IService;
 
@@ -11,6 +13,18 @@ namespace TonyBlogs.Service
     public class BaseService<TEntity> : IBaseServices<TEntity> where TEntity : class
     {
         public IBaseRepository<TEntity> baseDal;
+
+        protected ICacheManager Cache {
+            get {
+                return ContainerManager.Resolve<ICacheManager>();
+            }
+        }
+
+        protected string AllEnityCacheKey {
+            get {
+                return typeof(TEntity).FullName;
+            }
+        }
 
         #region 查询
         /// <summary>
