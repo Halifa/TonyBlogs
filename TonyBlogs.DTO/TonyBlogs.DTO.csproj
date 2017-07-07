@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\AccountLoginDTO.cs" />
+    <Compile Include="Account\AccountLoginResultDTO.cs" />
     <Compile Include="Base\BaseListDTO.cs" />
     <Compile Include="Base\ExecuteResult.cs" />
     <Compile Include="Base\JQueryDataTableSearchDTO.cs" />

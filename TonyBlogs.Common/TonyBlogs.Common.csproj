@@ -47,6 +47,8 @@
     <Compile Include="Cache\CacheExtension.cs" />
     <Compile Include="Cache\ICacheManager.cs" />
     <Compile Include="Cache\MemoryCacheManager.cs" />
+    <Compile Include="Cookie\CookieNameConfigInfo.cs" />
+    <Compile Include="Encode\Base64Helper.cs" />
     <Compile Include="Encrypt\EncryptHelper.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Log\ILogger.cs" />

@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAccountService.cs" />
     <Compile Include="IBaseService.cs" />
     <Compile Include="IBlogArticleService.cs" />
     <Compile Include="IUserFunctionService.cs" />

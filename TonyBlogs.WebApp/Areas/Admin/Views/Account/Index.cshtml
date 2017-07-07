@@ -1,0 +1,113 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Tony博客平台</title>
+    <link href="~/Content/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <link href="~/Content/assets/admin/pages/css/lock.css" rel="stylesheet" />
+    <!-- BEGIN THEME STYLES -->
+    <link href="~/Content/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css" />
+    <link id="style_color" href="~/Content/assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="/Content/assets/admin/layout/img/automation_16.ico">
+</head>
+<body>
+    <div class="page-lock">
+        <div class="page-logo">
+            <a class="brand" href="/admin">
+                <img src="/content/assets/admin/layout/img/logo.png" alt="logo" />
+            </a>
+        </div>
+        <div class="page-body">
+            <div class="lock-head">
+                用户登录
+            </div>
+            <div class="lock-body ">
+                <div class="pull-left lock-avatar-block" style="padding-left:50px;">
+                    &nbsp;
+                </div>
+                <form class="lock-form pull-left" action="/" id="loginForm">
+                    <div class="form-group">
+                        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="请输入用户名" name="username" />
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control placeholder-no-fix" type="password" id="password" autocomplete="off" placeholder="请输入密码" name="password" />
+                    </div>
+                    <div class="form-actions">
+                        <button id="btnLogin" type="button" class="btn btn-success uppercase">登录</button>
+                    </div>
+                    <p id="errorDiv" class="alert-borderless  " style="display:none;color:#F3565D;">
+                        <br />
+                        <b>登录失败!</b> <label id="errorMsg"></label>
+                    </p>
+
+                </form>
+
+            </div>
+            <div class="lock-bottom">
+            </div>
+        </div>
+        <div class="page-footer-custom">
+            @DateTime.Now.Year &copy; TonyBlogs by Tony.
+        </div>
+    </div>
+
+    <!-- END FOOTER -->
+    <script src="~/Content/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/Content/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <script src="~/Content/assets/global/scripts/metronic.js" type="text/javascript"></script>
+    <script src="~/Content/assets/admin/layout/scripts/account.js"></script>
+    <script>
+      $(function() {
+         Metronic.init(); // init metronic core components
+        Account().init(); // init account
+      });
+
+      var Account = function () {
+
+          var login = function () {
+              $('#errorDiv').css('display', 'none');
+              Metronic.blockUI({
+                  animate: true
+              });
+              var data = $('#loginForm').serialize();
+              $.post('admin/account/login', data, function (result) {
+                  Metronic.unblockUI();
+                  if (!result.IsSuccess) {
+                      $('#errorDiv').css('display', 'inline');
+                      $('#errorMsg').html(result.Message);
+                  }
+                  else {
+                      window.location = '/admin/userinfo';
+                  }
+              })
+          }
+
+          var keyDown = function (event) {
+              if (event.keyCode == 13) {
+                  event.returnValue = false;
+                  event.cancel = true;
+                  login();
+              }
+          }
+
+          return {
+              //main
+              init: function () {
+                  $('#btnLogin').on('click', login);
+                  $('#password').on('keydown', keyDown);
+              }
+          };
+      }
+
+    </script>
+</body>
+</html>
