@@ -1,0 +1,20 @@
+﻿@using TonyBlogs.DTO.UserFunction
+
+@model UserFunctionTreeItemDTO
+
+@{
+    Layout = null;
+}
+
+<li>
+    <a fid="@Model.ID" pfid="@Model.ParentID" href="#">@Model.FucTitle</a>
+    @if (Model.ChildList.Count > 0)
+    {
+        <ul role="group" class="jstree-children">
+            @foreach (var secItem in Model.ChildList)
+            {
+                @Html.Partial("_FunctionItemPartial", secItem)
+            }
+        </ul>
+    }
+</li>

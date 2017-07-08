@@ -9,19 +9,6 @@
 <ul>
     @foreach (var firItem in Model)
     {
-        <li>
-            <a fid="@firItem.ID" pfid="@firItem.ParentID" href="#">@firItem.FucTitle</a>
-            @if (firItem.ChildList.Count>0)
-            {
-                <ul role="group" class="jstree-children">
-                    @foreach (var secItem in firItem.ChildList)
-                    {
-                        <li>
-                            <a fid="@secItem.ID" pfid="@secItem.ParentID" href="#">@secItem.FucTitle</a>
-                        </li>
-                    }
-                </ul>
-            }
-        </li>
+        @Html.Partial("_FunctionItemPartial", firItem)
     }
 </ul>
