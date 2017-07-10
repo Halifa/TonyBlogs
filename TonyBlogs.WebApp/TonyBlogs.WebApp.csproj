@@ -132,6 +132,8 @@
     <Compile Include="Areas\Admin\Controllers\FunctionController.cs" />
     <Compile Include="Areas\Admin\Controllers\PurviewController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserInfoController.cs" />
+    <Compile Include="Context\MenuContext.cs" />
+    <Compile Include="Context\UserContext.cs" />
     <Compile Include="ControllerFactory\AutofacControllerFactory.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\AuthFilter.cs" />

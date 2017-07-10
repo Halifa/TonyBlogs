@@ -9,6 +9,7 @@ using TonyBlogs.IRepository;
 using AutoMapper;
 using TonyBlogs.DTO;
 using TonyBlogs.Common;
+using TonyBlogs.Enum.User;
 
 namespace TonyBlogs.Service
 {
@@ -16,13 +17,15 @@ namespace TonyBlogs.Service
     {
         private IUserInfoRepository _userInfoRepository;
         private IUserPurviewService _userPurviewService;
+        private IUserFunctionService _userFunctionService;
 
-        public UserInfoService(IUserInfoRepository userInfoRepository, 
-            IUserPurviewService userPurviewService)
+        public UserInfoService(IUserInfoRepository userInfoRepository,
+            IUserPurviewService userPurviewService, IUserFunctionService userFunctionService)
         {
             this._userInfoRepository = userInfoRepository;
             this.baseDal = userInfoRepository;
             this._userPurviewService = userPurviewService;
+            this._userFunctionService = userFunctionService;
         }
 
         public UserInfoSearchDTO GetUserInfoSearchDTO()
@@ -36,6 +39,7 @@ namespace TonyBlogs.Service
         public UserInfoListDTO GetUserInfoList(UserInfoSearchDTO searchDTO)
         {
             UserInfoListDTO result = new UserInfoListDTO();
+            searchDTO.UserStatus = UserStatusEnum.Valid;
 
             long totalCount = 0;
             var entityList = this._userInfoRepository.GetUserInfoList(searchDTO, out totalCount);
@@ -58,6 +62,46 @@ namespace TonyBlogs.Service
             return dto;
         }
 
+        public UserObj GetUserObj(long userID, bool isFromCache = true)
+        {
+            if (isFromCache == false)
+            {
+                return InternalGetUserObj(userID);
+            }
+
+            UserCacheBiz userCacheBiz = new UserCacheBiz(userID);
+            var userObj = userCacheBiz.GetUserCache();
+            if (userObj == null)
+            {
+                userObj = InternalGetUserObj(userID);
+                userCacheBiz.SetUserCache(userObj);
+            }
+
+            return userObj;
+        }
+
+        private UserObj InternalGetUserObj(long userID)
+        {
+            var userEntity = baseDal.Single(m => m.UserID == userID && m.UserStatus == Enum.User.UserStatusEnum.Valid);
+            if (userEntity == null)
+            {
+                return null;
+            }
+
+            var purviewEntity = _userPurviewService.Single(m => m.PurviewID == userEntity.PurviewID);
+            if (purviewEntity == null)
+            {
+                return null;
+            }
+
+            UserObj userObj = Mapper.DynamicMap<UserObj>(userEntity);
+            userObj.PurviewTitle = purviewEntity.PurviewTitle;
+            userObj.PurviewFuncIDs = purviewEntity.PurviewFuncIDs;
+            userObj.UserMenuList = _userFunctionService.GetUserFunctionMenuList(purviewEntity.PurviewFuncIDs);
+
+            return userObj;
+        }
+
         public ExecuteResult AddOrEditUserInfo(UserInfoEditDTO dto)
         {
             ExecuteResult result = new ExecuteResult() { IsSuccess = true };
@@ -71,7 +115,7 @@ namespace TonyBlogs.Service
                 entity.LoginPWD = EncryptHelper.Encrypt(dto.LoginPWD);
                 entity.UserStatus = Enum.User.UserStatusEnum.Valid;
                 entity.InsertTime = DateTime.Now;
-                baseDal.Add(entity);
+                dto.UserID = baseDal.Add(entity,true);
             }
             else
             {
@@ -84,6 +128,8 @@ namespace TonyBlogs.Service
                         m.UpdateTime},
                     m => m.UserID == dto.UserID);
             }
+
+            new UserCacheBiz(dto.UserID).RemoveUserCache();
 
             return result;
         }
@@ -127,6 +173,7 @@ namespace TonyBlogs.Service
             entity.UpdateTime = DateTime.Now;
 
             baseDal.UpdateOnly(entity, m => new { m.UserStatus, m.UpdateTime }, m => m.UserID == userID);
+            new UserCacheBiz(userID).RemoveUserCache();
 
             return result;
         }

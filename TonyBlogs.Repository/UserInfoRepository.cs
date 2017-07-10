@@ -35,6 +35,11 @@ namespace TonyBlogs.Repository
                 sqlExp.Where(m => m.PurviewID == searchDTO.PurviewID);
             }
 
+            if (searchDTO.UserStatus.HasValue)
+            {
+                sqlExp.Where(m => m.UserStatus == searchDTO.UserStatus);
+            }
+
             totalCount = base.Count(sqlExp);
 
             sqlExp.Limit(searchDTO.PageIndex - 1, searchDTO.iDisplayLength);

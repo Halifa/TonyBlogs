@@ -14,6 +14,8 @@ namespace TonyBlogs.IService
 
         UserInfoListDTO GetUserInfoList(UserInfoSearchDTO searchDTO);
 
+        UserObj GetUserObj(long userID, bool isFromCache = true);
+
         ExecuteResult AddOrEditUserInfo(UserInfoEditDTO dto);
 
         UserInfoEditDTO GetUserInfoEditDTO(long userID);

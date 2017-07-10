@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TonyBlogs.Enum.User;
 
 namespace TonyBlogs.DTO.UserInfo
 {
@@ -23,6 +24,8 @@ namespace TonyBlogs.DTO.UserInfo
         /// 权限ID
         /// </summary>
         public long PurviewID { get; set; }
+
+        public UserStatusEnum? UserStatus { get; set; }
 
         /// <summary>
         /// 权限集合<PurviewID, PurviewTitle>

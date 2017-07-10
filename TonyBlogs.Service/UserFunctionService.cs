@@ -44,6 +44,44 @@ namespace TonyBlogs.Service
             return list;
         }
 
+        public List<UserFunctionMenuItemDTO> GetAllFuncitonMenuList()
+        {
+            var entityList = GetAllFromCache();
+
+            return entityList.Select(m => Mapper.DynamicMap<UserFunctionMenuItemDTO>(m)).ToList();
+        }
+
+        public List<UserFunctionMenuTreeDTO> GetUserFunctionMenuList(string funcIDs) 
+        {
+            var entityList = GetAllFromCache();
+            var userFuncEntityList = entityList.Where(m => funcIDs.Contains(m.ID.ToString()));
+            var rootEntityList = userFuncEntityList.Where(m => m.ParentID == 0);
+
+            List<UserFunctionMenuTreeDTO> list = new List<UserFunctionMenuTreeDTO>();
+
+            foreach (var firItem in rootEntityList)
+            {
+                UserFunctionMenuTreeDTO firItemDTO = new UserFunctionMenuTreeDTO();
+
+                firItemDTO = Mapper.DynamicMap<UserFunctionMenuTreeDTO>(firItem);
+
+                List<UserFunctionMenuTreeDTO> childList = new List<UserFunctionMenuTreeDTO>();
+                foreach (var secItem in userFuncEntityList.Where(m=>m.ParentID == firItem.ID))
+                {
+                    UserFunctionMenuTreeDTO secItemDTO = new UserFunctionMenuTreeDTO();
+
+                    secItemDTO = Mapper.DynamicMap<UserFunctionMenuTreeDTO>(secItem);
+                    childList.Add(secItemDTO);
+                }
+
+                firItemDTO.ChildList = childList;
+
+                list.Add(firItemDTO);
+            }
+
+            return list;
+        }
+
         private void CreateChildNode(UserFunctionTreeItemDTO parentItemDTO, IEnumerable<UserFunctionEntity> funcEntityList)
         {
             var childEntityList = funcEntityList.Where(m => m.ParentID == parentItemDTO.ID);
@@ -131,6 +169,9 @@ namespace TonyBlogs.Service
             entity.SortNum = sortNum;
             entity.FuncLevel = funcLevel;
             entity.FuncStatus = Enum.User.UserFuncStatusEnum.Valid;
+            entity.AreaName = entity.AreaName ?? string.Empty;
+            entity.ControllerName = entity.ControllerName ?? string.Empty;
+            entity.ActionName = entity.ActionName ?? string.Empty;
 
             return entity;
         }

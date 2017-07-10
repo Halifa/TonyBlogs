@@ -1,6 +1,4 @@
-﻿@*@using AutoLogin.Web.Context;*@
-
-<!-- BEGIN HEADER -->
+﻿<!-- BEGIN HEADER -->
 <div class="page-header -i navbar navbar-fixed-top">
     <!-- BEGIN HEADER INNER -->
     <div class="page-header-inner">
@@ -27,7 +25,7 @@
                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <img alt="" class="img-circle" src="~/Content/assets/admin/layout/img/avatar.png" />
                         <span class="username username-hide-on-mobile">
-                            @*@UserContext.CurrentUser.UserInfo.UserName*@
+                            @UserContext.CurrentUser.RealName
                         </span>
                         <i class="fa fa-angle-down"></i>
                     </a>

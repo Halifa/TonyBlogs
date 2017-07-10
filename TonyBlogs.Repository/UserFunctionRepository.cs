@@ -6,6 +6,7 @@ using TonyBlogs.DTO.UserFunction;
 using TonyBlogs.Entity;
 using TonyBlogs.IRepository;
 using ServiceStack.OrmLite;
+using TonyBlogs.Enum.User;
 
 namespace TonyBlogs.Repository
 {
@@ -40,7 +41,7 @@ namespace TonyBlogs.Repository
 
         public List<UserFunctionEntity> GetAllValidFunctions()
         {
-            return GetFunctionList(new UserFunctionSearchDTO());
+            return GetFunctionList(new UserFunctionSearchDTO() { FuncStatus = UserFuncStatusEnum.Valid});
         }
 
         public int GetMaxSortNum(long parentID)

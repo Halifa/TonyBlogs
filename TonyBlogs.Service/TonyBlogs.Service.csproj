@@ -52,7 +52,8 @@
     <Compile Include="BlogArticleService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserFunctionService.cs" />
-    <Compile Include="UserInfoService.cs" />
+    <Compile Include="UserInfo\UserCacheBiz.cs" />
+    <Compile Include="UserInfo\UserInfoService.cs" />
     <Compile Include="UserPurviewService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -86,7 +87,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

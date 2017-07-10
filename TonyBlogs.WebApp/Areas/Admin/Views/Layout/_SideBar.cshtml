@@ -1,7 +1,9 @@
-﻿@*@using AutoLogin.Web.Context;
+﻿@using TonyBlogs.DTO.UserFunction
 @{
-    string path = Request.Url.AbsolutePath;
-}*@
+    UserFunctionMenuItemDTO currentMenuItem = MenuContext.CurrentMenu ?? new UserFunctionMenuItemDTO();
+    long currentFuncID = currentMenuItem.ID;
+    long currentFuncParentID = currentMenuItem.ParentID;
+}
 
 <!-- BEGIN SIDEBAR -->
 <div class="page-sidebar-wrapper">
@@ -14,16 +16,47 @@
                 </div>
                 <!-- END SIDEBAR TOGGLER BUTTON -->
             </li>
-            @*@foreach (var menu in UserContext.CurrentUser.MenuList)
+            @foreach (var menu in UserContext.CurrentUser.UserMenuList)
             {
-                <li class="start @(path.Contains(menu.ControllerName)?"active":"")">
-                    <a href="@string.Format(@"/{0}/{1}", menu.ControllerName, menu.Action)">
-                        <i class="@menu.Icon"></i>
-                        <span class="title">@menu.DisplayName</span>
-                        <span class="arrow "></span>
-                    </a>
-                </li>
-            }*@
+                if (menu.ChildList.Count == 0)
+                {
+                    <li class="start @(menu.ID == currentFuncID ? "active" : "")">
+                        <a href="@MenuContext.GenerateUrlPath(menu.AreaName, menu.ControllerName, menu.ActionName)">
+                            <i class="@menu.Icon"></i>
+                            <span class="title">@menu.FucTitle</span>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    bool isCurrentParent = menu.ID == currentFuncParentID; 
+                    
+                    <li class="start @(isCurrentParent ? "active open" : "")">
+                        <a href="javascript:;">
+                            <i class="icon-home"></i>
+                            <span class="title">@menu.FucTitle</span>
+                            @if (isCurrentParent)
+                            {
+                                <span class="selected"></span>
+                            }
+                            <span class="@(isCurrentParent ? "arrow open" : "")"></span>
+                        </a>
+                        <ul class="sub-menu">
+                            @foreach (var childMenu in menu.ChildList)
+                            {
+                                <li class="@(childMenu.ID == currentFuncID ? "active" : "")">
+                                    <a href="@MenuContext.GenerateUrlPath(childMenu.AreaName, childMenu.ControllerName, childMenu.ActionName)">
+                                        <i class="@childMenu.Icon"></i>
+                                        @childMenu.FucTitle
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+
+                }
+
+            }
         </ul>
         <!-- END SIDEBAR MENU -->
     </div>
