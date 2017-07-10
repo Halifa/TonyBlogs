@@ -32,8 +32,8 @@ namespace TonyBlogs.WebApp.Areas.Admin.Controllers
             var result = _accountServcie.Login(dto);
             if (result.IsSuccess == true)
             {
-                Response.Cookies.Add(new HttpCookie(CookieNameConfigInfo.CookieName, result.CookieValue) { Domain = CookieNameConfigInfo.DomainName });
-                Response.Cookies.Add(new HttpCookie(CookieNameConfigInfo.CacheKeyCookieName, result.CookieValueCacheKey) { Domain = CookieNameConfigInfo.DomainName });
+                Response.Cookies.Add(new HttpCookie(CookieNameConfigInfo.CookieName, result.CookieValue) { Domain = CookieNameConfigInfo.DomainName, Expires =DateTime.Now.AddHours(1)});
+                Response.Cookies.Add(new HttpCookie(CookieNameConfigInfo.CacheKeyCookieName, result.CookieValueCacheKey) { Domain = CookieNameConfigInfo.DomainName, Expires = DateTime.Now.AddHours(1) });
             }
 
             return Json(new ExecuteResult(result.IsSuccess, result.Message), 

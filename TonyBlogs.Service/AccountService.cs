@@ -42,6 +42,7 @@ namespace TonyBlogs.Service
             string cookieValueToEncrypt = string.Format("{0}_{1}_{2}", loginUser.UserID, loginUser.LoginName, DateTime.Now);
             string encryptCookieValue = EncryptHelper.Encrypt(cookieValueToEncrypt);
             string cacheKey = string.Format("AccountService_Login_{0}", loginUser.UserID);
+            _cache.Remove(cacheKey);
             _cache.Set(cacheKey, encryptCookieValue, TimeSpan.FromHours(1));
 
             result.CookieValue = encryptCookieValue;
