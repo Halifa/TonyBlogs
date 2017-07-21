@@ -1,0 +1,166 @@
+﻿@using TonyBlogs.DTO.BlogArticle
+@model BlogArticleEditDTO
+
+@{
+    var categoryList = new List<string>(){
+        "技术博文",
+        "随笔日志",
+    };
+}
+
+@section css{
+    <link href="~/Content/assets/global/plugins/wang-editor/dist/css/wangEditor.min.css" rel="stylesheet" />
+}
+
+<div class="page-content" style="min-height:345px">
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gift"></i>博客录入编辑
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="#" id="form_sample_1" class="form-horizontal" novalidate="novalidate">
+                        <div class="form-body">
+                            @Html.HiddenFor(m => m.ID)
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">标题<span class="required">*</span>&nbsp;:</label>
+                                <div class="col-md-11">
+                                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control"})
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">类别&nbsp;:</label>
+                                <div class="col-md-3">
+                                    @Html.DropDownListFor(m => m.Category, categoryList.Select(m=>new SelectListItem() { Value=m, Text=m}), new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">内容&nbsp;:</label>
+                                <div class='col-md-11'>
+                                    <textarea id="@Html.NameFor(m=>m.Content)" rows="18" name="@Html.NameFor(m=>m.Content)" class='form-control'>
+                                        @if (Model.ID > 0)
+                                        {
+                                            @MvcHtmlString.Create(Model.Content)
+                                        }
+                                        else
+                                        {
+                                            <p>请输入内容</p>
+                                        }
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-1 control-label">备注&nbsp;:</label>
+                                <div class="col-md-11">
+                                    @Html.TextBoxFor(m => m.Remark, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div class="row">
+                                <div class="col-md-offset-1 col-md-9">
+                                    <button id="btnSubmit" type="button" class="btn green">保存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/assets/global/plugins/wang-editor/dist/js/wangEditor.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            blogFunc.init();
+        })
+
+        var editor = new wangEditor('Content');
+
+        var blogFunc = (function () {
+            var editorInit = function () {
+                //// 获取元素
+                //var textarea = document.getElementById('Content');
+                // 生成编辑器
+                
+                // 自定义菜单
+                editor.config.menus = [
+                'source',
+                '|',
+                'bold',
+                'underline',
+                'italic',
+                'eraser',
+                'forecolor',
+                'bgcolor',
+                '|',
+                'quote',
+                'fontfamily',
+                'fontsize',
+                'head',
+                'unorderlist',
+                'orderlist',
+                'alignleft',
+                'aligncenter',
+                'alignright',
+                '|',
+                'link',
+                'unlink',
+                'emotion',
+                '|',
+                'img',
+                'insertcode',
+                '|',
+                'undo',
+                'redo',
+                'fullscreen'
+                ];
+                editor.create();
+
+            };
+
+            var actions = {
+                detail: '@Url.Action("AddOrEdit", "BlogArticle")',
+                edit: '@Url.Action("AjaxAddOrEdit", "BlogArticle")',
+            };
+
+            var addOrEdit = function () {
+                var content = editor.$txt.html();
+                content = content.replace(/</g, '&lt;').replace(/"/g, '&quot;').replace(/>/g, '&gt;');
+                $('#Content').val(content);
+                var data = $("#form_sample_1").serialize();
+
+                Metronic.ajax(
+                        {
+                            url: actions.edit,
+                            data: data,
+                            elem: true,
+                        }).done(function (result) {
+                            if (result.IsSuccess == true) {
+                                window.location = actions.detail + "?blogid=" + result.BlogID;
+                            }
+                            else {
+                                Metronic.modalAlert({
+                                    message: result.Message,
+                                })
+                            }
+                        });
+            }
+
+            return {
+                init: function () {
+                    editorInit();
+                    $("#btnSubmit").on('click', function () {
+                        addOrEdit();
+                    })
+                }
+            };
+        })();
+    </script>
+}
