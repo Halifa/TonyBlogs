@@ -8,6 +8,7 @@ using TonyBlogs.IService;
 using TonyBlogs.DTO.BlogArticle;
 using AutoMapper;
 using TonyBlogs.DTO.UserInfo;
+using TonyBlogs.DTO;
 
 namespace TonyBlogs.Service
 {
@@ -73,6 +74,31 @@ namespace TonyBlogs.Service
             resultDTO.BlogID = blogID;
 
             return resultDTO;
+        }
+
+        public BlogArticleListDTO GetList(JQueryDataTableSearchDTO searchDTO, IUserBasicInfo userInfo)
+        {
+            var theSearchDTO = Mapper.DynamicMap<BlogArticleSearchDTO>(searchDTO);
+            theSearchDTO.UserID = userInfo.UserID;
+
+            BlogArticleListDTO result = new BlogArticleListDTO();
+
+            long totalCount = 0;
+            var entityList = this.dal.GetList(theSearchDTO, out totalCount);
+
+            result.TotalRecords = totalCount;
+            result.List = entityList.Select(m => Mapper.DynamicMap<BlogArticleListItemDTO>(m)).ToList();
+
+            return result;
+        }
+
+        public ExecuteResult Delete(long blogID)
+        {
+            ExecuteResult result = new ExecuteResult();
+
+            dal.Delete(m => m.ID == blogID);
+
+            return result;
         }
     }
 }

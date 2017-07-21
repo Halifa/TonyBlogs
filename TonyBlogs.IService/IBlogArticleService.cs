@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TonyBlogs.DTO;
 using TonyBlogs.DTO.BlogArticle;
 using TonyBlogs.DTO.UserInfo;
 using TonyBlogs.Entity;
@@ -13,5 +14,9 @@ namespace TonyBlogs.IService
         BlogArticleEditDTO GetBlogArticleEditDTO(long blogID);
 
         BlogArticleEditResultDTO AddOrEditBlogArticle(BlogArticleEditDTO dto, IUserBasicInfo userInfo);
+
+        BlogArticleListDTO GetList(JQueryDataTableSearchDTO searchDTO, IUserBasicInfo userInfo);
+
+        ExecuteResult Delete(long blogID);
     }
 }

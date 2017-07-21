@@ -46,6 +46,9 @@
     <Compile Include="Base\JQueryDataTableSearchDTO.cs" />
     <Compile Include="BlogArticle\BlogArticleEditDTO.cs" />
     <Compile Include="BlogArticle\BlogArticleEditResultDTO.cs" />
+    <Compile Include="BlogArticle\BlogArticleListDTO.cs" />
+    <Compile Include="BlogArticle\BlogArticleListItemDTO.cs" />
+    <Compile Include="BlogArticle\BlogArticleSearchDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserFunction\UserFunctionEditDTO.cs" />
     <Compile Include="UserFunction\UserFunctionMenuItemDTO.cs" />
