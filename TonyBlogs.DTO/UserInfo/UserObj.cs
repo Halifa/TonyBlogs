@@ -6,7 +6,7 @@ using TonyBlogs.DTO.UserFunction;
 
 namespace TonyBlogs.DTO.UserInfo
 {
-    public class UserObj
+    public class UserObj : IUserBasicInfo
     {
         /// <summary>
         /// 用户ID
@@ -39,5 +39,23 @@ namespace TonyBlogs.DTO.UserInfo
         public string PurviewFuncIDs { get; set; }
 
         public List<UserFunctionMenuTreeDTO> UserMenuList { get; set; }
+    }
+
+    public interface IUserBasicInfo
+    {
+        /// <summary>
+        /// 用户ID
+        /// </summary>
+        long UserID { get; set; }
+
+        /// <summary>
+        /// 登录账号
+        /// </summary>
+        string LoginName { get; set; }
+
+        /// <summary>
+        /// 真实姓名
+        /// </summary>
+        string RealName { get; set; }
     }
 }

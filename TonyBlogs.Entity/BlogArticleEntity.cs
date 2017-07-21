@@ -16,9 +16,14 @@ namespace TonyBlogs.Entity
         public long ID { get; set; }
 
         /// <summary>
-        /// 创建人
+        /// 创建人用户编号
         /// </summary>
-        public string Submitter { get; set; }
+        public long UserID { get; set; }
+
+        /// <summary>
+        /// 创建人姓名
+        /// </summary>
+        public string RealName { get; set; }
 
         /// <summary>
         /// 博客标题

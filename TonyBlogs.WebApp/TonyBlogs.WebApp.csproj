@@ -129,6 +129,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BlogArticleController.cs" />
     <Compile Include="Areas\Admin\Controllers\FunctionController.cs" />
     <Compile Include="Areas\Admin\Controllers\PurviewController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserInfoController.cs" />
@@ -945,6 +946,72 @@
     <Content Include="Content\assets\global\plugins\uniform\images\sprite_original.png" />
     <Content Include="Content\assets\global\plugins\uniform\jquery.uniform.js" />
     <Content Include="Content\assets\global\plugins\uniform\jquery.uniform.min.js" />
+    <Content Include="Content\assets\global\plugins\wang-editor\dist\css\wangEditor.css" />
+    <Content Include="Content\assets\global\plugins\wang-editor\dist\css\wangEditor.min.css" />
+    <Content Include="Content\assets\global\plugins\wang-editor\dist\fonts\icomoon.svg" />
+    <Content Include="Content\assets\global\plugins\wang-editor\dist\js\lib\jquery-1.10.2.min.js" />
+    <Content Include="Content\assets\global\plugins\wang-editor\dist\js\lib\jquery-2.2.1.js" />
+    <Content Include="Content\assets\global\plugins\wang-editor\dist\js\wangEditor.js" />
+    <Content Include="Content\assets\global\plugins\wang-editor\dist\js\wangEditor.min.js" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\1.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\10.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\11.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\12.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\13.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\14.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\15.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\16.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\17.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\18.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\19.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\2.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\20.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\21.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\22.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\23.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\24.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\25.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\26.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\27.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\28.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\29.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\3.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\30.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\31.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\32.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\33.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\34.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\35.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\36.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\37.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\38.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\39.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\4.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\40.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\41.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\42.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\43.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\44.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\45.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\46.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\47.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\48.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\49.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\5.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\50.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\6.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\7.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\8.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\default\9.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\jinxing\1.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\jinxing\2.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\jinxing\3.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\jinxing\4.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\jinxing\5.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\emotions\jinxing\6.gif" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\highlightjs\dark.css" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\highlightjs\github.css" />
+    <Content Include="Content\assets\global\plugins\wang-editor\static\highlightjs\highlight.pack.js" />
     <Content Include="Content\assets\global\scripts\datatable.js" />
     <Content Include="Content\assets\global\scripts\metronic.js" />
     <Content Include="Content\js\jquery-1.10.1.min.js" />
@@ -1134,6 +1201,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Function\_FunctionItemPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\BlogArticle\AddOrEdit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\assets\global\plugins\wang-editor\dist\css\wangEditor.less" />
+    <Content Include="Content\assets\global\plugins\wang-editor\dist\fonts\icomoon.eot" />
+    <Content Include="Content\assets\global\plugins\wang-editor\dist\fonts\icomoon.ttf" />
+    <Content Include="Content\assets\global\plugins\wang-editor\dist\fonts\icomoon.woff" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
