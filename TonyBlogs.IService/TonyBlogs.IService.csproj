@@ -42,6 +42,7 @@
     <Compile Include="IAccountService.cs" />
     <Compile Include="IBaseService.cs" />
     <Compile Include="IBlogArticleService.cs" />
+    <Compile Include="IBlogCommentService.cs" />
     <Compile Include="IUserFunctionService.cs" />
     <Compile Include="IUserInfoService.cs" />
     <Compile Include="IUserPurviewService.cs" />

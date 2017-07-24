@@ -50,6 +50,7 @@
     <Compile Include="AccountService.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="BlogArticleService.cs" />
+    <Compile Include="BlogCommentService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserFunctionService.cs" />
     <Compile Include="UserInfo\UserCacheBiz.cs" />
