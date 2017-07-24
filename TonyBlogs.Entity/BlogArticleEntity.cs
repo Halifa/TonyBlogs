@@ -36,6 +36,11 @@ namespace TonyBlogs.Entity
         public string Category { get; set; }
 
         /// <summary>
+        /// 摘要
+        /// </summary>
+        public string Summary { get; set; }
+
+        /// <summary>
         /// 内容
         /// </summary>
         public string Content { get; set; }

@@ -32,6 +32,21 @@ namespace TonyBlogs.Repository
 
             totalCount = base.Count(sqlExp);
 
+            sqlExp.OrderByDescending(m => m.CreateTime);
+            sqlExp.Select(m => new
+            {
+                m.ID,
+                m.UserID,
+                m.RealName,
+                m.Title,
+                m.Category,
+                m.Summary,
+                m.Traffic,
+                m.CommentNum,
+                m.UpdateTime,
+                m.CreateTime,
+                m.Remark,
+            });
             sqlExp.Limit(searchDTO.PageIndex - 1, searchDTO.iDisplayLength);
 
             var list = base.QueryWhere(sqlExp);

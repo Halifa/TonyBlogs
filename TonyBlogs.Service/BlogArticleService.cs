@@ -9,6 +9,7 @@ using TonyBlogs.DTO.BlogArticle;
 using AutoMapper;
 using TonyBlogs.DTO.UserInfo;
 using TonyBlogs.DTO;
+using TonyBlogs.Common.Html;
 
 namespace TonyBlogs.Service
 {
@@ -55,11 +56,13 @@ namespace TonyBlogs.Service
                 entity.UpdateTime = DateTime.Now;
                 entity.UserID = userInfo.UserID;
                 entity.RealName = userInfo.RealName;
+                SetBlogSummary(entity);
                 blogID = baseDal.Add(entity, true);
             }
             else
             {
                 entity.UpdateTime = DateTime.Now;
+                SetBlogSummary(entity);
                 baseDal.UpdateOnly(entity,
                     m => new {
                         m.Title,
@@ -74,6 +77,19 @@ namespace TonyBlogs.Service
             resultDTO.BlogID = blogID;
 
             return resultDTO;
+        }
+
+        private void SetBlogSummary(BlogArticleEntity entity)
+        {
+            string summary = HtmlTools.ReplaceHtmlTag(entity.Content);
+
+            if (summary.Length > 200)
+            {
+                summary = summary.Substring(0, 200);
+                summary += "...";
+            }
+
+            entity.Summary = summary;
         }
 
         public BlogArticleListDTO GetList(JQueryDataTableSearchDTO searchDTO, IUserBasicInfo userInfo)
@@ -94,7 +110,7 @@ namespace TonyBlogs.Service
 
         public ExecuteResult Delete(long blogID)
         {
-            ExecuteResult result = new ExecuteResult();
+            ExecuteResult result = new ExecuteResult() { IsSuccess = true};
 
             dal.Delete(m => m.ID == blogID);
 

@@ -51,6 +51,7 @@
     <Compile Include="Encode\Base64Helper.cs" />
     <Compile Include="Encrypt\EncryptHelper.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Html\HtmlTools.cs" />
     <Compile Include="Log\ILogger.cs" />
     <Compile Include="Log\Log4netLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
