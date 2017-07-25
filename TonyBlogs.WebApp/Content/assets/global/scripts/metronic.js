@@ -814,6 +814,10 @@ var Metronic = function () {
             return id;
         },
 
+        simpleAlert: function (message) {
+            this.modalAlert({message:message});
+        },
+
         modalAlert: function (options) {
             var defaultOpts = {
                 title: "提示",

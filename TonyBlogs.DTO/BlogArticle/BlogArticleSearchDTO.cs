@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TonyBlogs.DTO.BlogArticle
 {
-    public class BlogArticleSearchDTO : JQueryDataTableSearchDTO
+    public class BlogArticleSearchDTO : PageSearchDTO
     {
         public long UserID { get; set; }
 

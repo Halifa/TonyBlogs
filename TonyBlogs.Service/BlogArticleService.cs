@@ -68,6 +68,7 @@ namespace TonyBlogs.Service
                         m.Title,
                         m.Category,
                         m.Content,
+                        m.Summary,
                         m.UpdateTime,
                         m.Remark,
                     },
@@ -94,16 +95,34 @@ namespace TonyBlogs.Service
 
         public BlogArticleListDTO GetList(JQueryDataTableSearchDTO searchDTO, IUserBasicInfo userInfo)
         {
-            var theSearchDTO = Mapper.DynamicMap<BlogArticleSearchDTO>(searchDTO);
-            theSearchDTO.UserID = userInfo.UserID;
+            BlogArticleSearchDTO blogSearchDTO = new BlogArticleSearchDTO() 
+            {
+                PageIndex = searchDTO.PageIndex,
+                PageSize = searchDTO.iDisplayLength,
+                UserID = userInfo.UserID
+            };
 
             BlogArticleListDTO result = new BlogArticleListDTO();
 
             long totalCount = 0;
-            var entityList = this.dal.GetList(theSearchDTO, out totalCount);
+            var entityList = this.dal.GetList(blogSearchDTO, out totalCount);
 
             result.TotalRecords = totalCount;
             result.List = entityList.Select(m => Mapper.DynamicMap<BlogArticleListItemDTO>(m)).ToList();
+
+            return result;
+        }
+
+        public BlogArticleListPageDTO GetListPage(BlogArticleSearchDTO searchDTO)
+        {
+            long totalCount = 0;
+            var entityList = this.dal.GetList(searchDTO, out totalCount);
+
+            BlogArticleListPageDTO result = new BlogArticleListPageDTO();
+
+            result.TotalRecords = totalCount;
+            result.PageSize = searchDTO.PageSize;
+            result.List = entityList.Select(m => Mapper.DynamicMap<BlogArticleListItemPageDTO>(m)).ToList();
 
             return result;
         }

@@ -128,6 +128,7 @@
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BaseAuthController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\BlogArticleController.cs" />
     <Compile Include="Areas\Admin\Controllers\FunctionController.cs" />
@@ -1482,6 +1483,18 @@
     <Content Include="Content\assets\frontend\pages\img\.DS_Store" />
     <Content Include="Content\assets\frontend\pages\img\layerslider\.DS_Store" />
     <Content Include="Content\assets\frontend\pages\img\revolutionslider\.DS_Store" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Layout\_Header.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Layout\_Footer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

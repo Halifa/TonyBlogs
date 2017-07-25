@@ -17,6 +17,8 @@ namespace TonyBlogs.IService
 
         BlogArticleListDTO GetList(JQueryDataTableSearchDTO searchDTO, IUserBasicInfo userInfo);
 
+        BlogArticleListPageDTO GetListPage(BlogArticleSearchDTO searchDTO);
+
         ExecuteResult Delete(long blogID);
     }
 }

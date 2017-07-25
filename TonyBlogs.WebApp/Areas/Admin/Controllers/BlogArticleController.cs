@@ -9,7 +9,7 @@ using TonyBlogs.IService;
 
 namespace TonyBlogs.WebApp.Areas.Admin.Controllers
 {
-    public class BlogArticleController : BaseController
+    public class BlogArticleController : BaseAuthController
     {
         private IBlogArticleService _blogArticleService;
 

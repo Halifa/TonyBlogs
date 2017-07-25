@@ -8,7 +8,7 @@ using TonyBlogs.IService;
 
 namespace TonyBlogs.WebApp.Areas.Admin.Controllers
 {
-    public class UserInfoController : BaseController
+    public class UserInfoController : BaseAuthController
     {
         private IUserInfoService _userInfoService;
 
