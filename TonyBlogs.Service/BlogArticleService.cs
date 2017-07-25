@@ -127,6 +127,11 @@ namespace TonyBlogs.Service
             return result;
         }
 
+        public List<BlogArticleViewRankItemPageDTO> GetViewRankList()
+        {
+            return dal.GetViewRankList();
+        }
+
         public ExecuteResult Delete(long blogID)
         {
             ExecuteResult result = new ExecuteResult() { IsSuccess = true};

@@ -101,9 +101,19 @@ namespace TonyBlogs.Repository
         }
         #endregion
 
+        protected SqlExpression<TEntity> GetSqlExp()
+        {
+            return db.From<TEntity>();
+        }
+
         protected List<TEntity> QueryWhere(SqlExpression<TEntity> sqlExp)
         {
             return ExecRead(conn => conn.Select(sqlExp));
+        }
+
+        protected List<To> Query<To>(SqlExpression<TEntity> sqlExp)
+        {
+            return ExecRead(conn => conn.LoadSelect<To, TEntity>(sqlExp));
         }
 
         protected TKey Scala<TKey>(SqlExpression<TEntity> sqlExp)

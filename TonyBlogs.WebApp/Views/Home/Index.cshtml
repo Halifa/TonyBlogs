@@ -29,35 +29,18 @@
                 <!-- BEGIN RIGHT SIDEBAR -->
                 <div class="col-md-3 col-sm-3 blog-sidebar">
                     <!-- CATEGORIES START -->
-                    <h2 class="no-top-space">分类</h2>
+                    <h3 class="no-top-space">分类</h3>
                     <ul class="nav sidebar-categories margin-bottom-40">
                         <li><a href="javascript:;">博客</a></li>
                         <li><a href="javascript:;">随笔</a></li>
                     </ul>
                     <!-- CATEGORIES END -->
                     <!-- BEGIN RECENT NEWS -->
-                    <h2>最近阅读排行</h2>
+                    <h3 style="margin-bottom: 20px;">最近阅读排行</h3>
                     <div class="recent-news margin-bottom-10">
-                        <div class="row margin-bottom-10">
+                        <div v-for="viewblog in ViewRankList" class="row margin-bottom-10">
                             <div class="col-md-12">
-                                <h3><a href="javascript:;">Letiusto gnissimos</a></h3>
-                                <p>Decusamus tiusto odiodig nis simos ducimus qui sint</p>
-                            </div>
-                        </div>
-                        <div class="row margin-bottom-10">
-                            <div class="col-md-12">
-                                <h3><a href="javascript:;">Letiusto gnissimos</a></h3>
-                            </div>
-                        </div>
-                        <div class="row margin-bottom-10">
-                            <div class="col-md-12">
-                                <h3><a href="javascript:;">Letiusto gnissimos</a></h3>
-                            </div>
-                        </div>
-                        <div class="row margin-bottom-10">
-                            <div class="col-md-12">
-                                <h3><a href="javascript:;">Letiusto gnissimos</a></h3>
-                                <p>Decusamus tiusto odiodig nis simos ducimus qui sint</p>
+                                <a href="javascript:;" style="color: #E84D1C" v-on:click="JumpDetail(viewblog.ID)">{{viewblog.Title}}</a>
                             </div>
                         </div>
                     </div>
@@ -106,11 +89,13 @@
             PageSize: 10,
         },
         BlogList: [],
+        ViewRankList:[],
         PageCount: 1,
     };
 
     var actions = {
         list: '@Url.Action("AjaxGetPageList", "Home")',
+        viewrank: '@Url.Action("AjaxGetViewRankList", "Home")',
         detail: '@Url.Action("AjaxGetDetail", "Home")',
     }
 
@@ -141,6 +126,24 @@
                 }
             });
         },
+
+        GetViewRankList: function () {
+            $.ajax({
+                url: actions.viewrank,
+                type: "GET",
+                dataType: "json",
+                success: function (retData) {
+                    data.ViewRankList = retData;
+                },
+                error: function (retData) {
+                    Metronic.simpleAlert("发生错误，请重试！");
+                }
+            })
+        },
+
+        JumpDetail: function (blogID) {
+            window.open(actions.detail + "?blogID=" + blogID);
+        },
     };
 
     var blogitemTemplates = {
@@ -156,7 +159,7 @@
             },
 
             IsLastItem: function () {
-                return this.index == (data.BlogList.length -1);
+                return this.index == (data.BlogList.length - 1);
             }
         }
     };
@@ -170,7 +173,7 @@
         methods: paramMethods,
         mounted: function () {
             this.GetList();
-
+            this.GetViewRankList();
         },
     });
 

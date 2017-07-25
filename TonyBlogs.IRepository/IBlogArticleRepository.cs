@@ -10,5 +10,7 @@ namespace TonyBlogs.IRepository
     public interface IBlogArticleRepository : IBaseRepository<BlogArticleEntity>
     {
         List<BlogArticleEntity> GetList(BlogArticleSearchDTO searchDTO, out long totalCount);
+
+        List<BlogArticleViewRankItemPageDTO> GetViewRankList();
     }
 }

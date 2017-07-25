@@ -13,7 +13,7 @@ namespace TonyBlogs.Repository
     {
         public List<BlogArticleEntity> GetList(BlogArticleSearchDTO searchDTO, out long totalCount)
         {
-            var sqlExp = db.From<BlogArticleEntity>();
+            var sqlExp = GetSqlExp();
 
             if (searchDTO.UserID > 0)
             {
@@ -50,6 +50,22 @@ namespace TonyBlogs.Repository
             sqlExp.Limit(searchDTO.PageIndex - 1, searchDTO.PageSize);
 
             var list = base.QueryWhere(sqlExp);
+
+            return list;
+        }
+
+        public List<BlogArticleViewRankItemPageDTO> GetViewRankList()
+        {
+            var sqlExp = GetSqlExp();
+            sqlExp.Select(m => new
+            {
+                m.ID,
+                m.Title,
+            });
+            sqlExp.OrderByDescending(m => m.Traffic);
+            sqlExp.Limit(0, 10);
+
+            var list = base.Query<BlogArticleViewRankItemPageDTO>(sqlExp);
 
             return list;
         }

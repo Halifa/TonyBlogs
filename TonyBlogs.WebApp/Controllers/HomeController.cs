@@ -32,5 +32,12 @@ namespace TonyBlogs.WebApp.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult AjaxGetViewRankList()
+        {
+            var result = _blogArticleService.GetViewRankList();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
