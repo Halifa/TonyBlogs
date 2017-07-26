@@ -59,14 +59,14 @@
     <div>
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <h4><b><a href="{{DetailUrl}}">{{blog.Title}}</a></b></h4>
+                <h4><b><a v-bind:href="DetailUrl">{{blog.Title}}</a></b></h4>
                 <ul class="blog-info">
                     <li><i class="fa fa-calendar"></i> {{blog.CreateTime}}</li>
                     <li v-if="HasComments"><i class="fa fa-comments"></i> {{blog.CommentNum}}</li>
                     <li><i class="fa fa-tags"></i> {{blog.Category}}</li>
                 </ul>
                 <p>{{blog.Summary}}</p>
-                <a href="{{DetailUrl}}" class="more">阅读更多 <i class="icon-angle-right"></i></a>
+                <a v-bind:href="DetailUrl" class="more">阅读更多 <i class="icon-angle-right"></i></a>
             </div>
         </div>
         <hr class="blog-post-sep">
@@ -151,7 +151,7 @@
         template: '#blogitem-template',
         computed: {
             DetailUrl: function () {
-                return actions.detail + "?blogID=" + this.blog.BlogID;
+                return actions.detail + "?blogID=" + this.blog.ID;
             },
 
             HasComments: function () {

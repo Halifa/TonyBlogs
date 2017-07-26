@@ -8,7 +8,7 @@ using TonyBlogs.IService;
 
 namespace TonyBlogs.WebApp.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : BaseFrontController
     {
 
         private IBlogArticleService _blogArticleService;

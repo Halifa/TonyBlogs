@@ -15,6 +15,13 @@ namespace TonyBlogs.WebApp.Filters
 {
     public class AuthFilter : FilterAttribute, IActionFilter
     {
+        private bool isCheckAuth;
+
+        public AuthFilter(bool isCheckAuth = true)
+        {
+            this.isCheckAuth = isCheckAuth;
+        }
+
         public void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var request = filterContext.HttpContext.Request;
@@ -119,7 +126,10 @@ namespace TonyBlogs.WebApp.Filters
 
         private void RedirectToLogin(HttpResponseBase response)
         {
-            response.Redirect("/admin", true);
+            if (isCheckAuth)
+            {
+                response.Redirect("/admin", true); 
+            }
         }
 
         public void OnActionExecuted(ActionExecutedContext filterContext)

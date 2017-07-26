@@ -11,8 +11,16 @@
             <!-- BEGIN TOP BAR MENU -->
             <div class="col-md-6 col-sm-6 additional-nav">
                 <ul class="list-unstyled list-inline pull-right">
-                    <li><a href="/admin">登录</a></li>
-                    <li><a href="#">注册</a></li>
+                    @if (UserContext.CurrentUser == null)
+                    {
+                        <li><a href="/admin">登录</a></li>
+                        <li><a href="#">注册</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="/admin/blogarticle">@UserContext.CurrentUser.RealName</a></li>
+                        <li><a href="/admin/account/logout">退出</a></li>
+                    }
                 </ul>
             </div>
             <!-- END TOP BAR MENU -->
