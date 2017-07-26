@@ -49,10 +49,11 @@
     <Compile Include="BlogArticle\BlogArticleEditResultDTO.cs" />
     <Compile Include="BlogArticle\BlogArticleListDTO.cs" />
     <Compile Include="BlogArticle\BlogArticleListItemDTO.cs" />
-    <Compile Include="BlogArticle\BlogArticleListItemPageDTO.cs" />
-    <Compile Include="BlogArticle\BlogArticleListPageDTO.cs" />
+    <Compile Include="BlogArticle\Page\BlogArticleDetailPageDTO.cs" />
+    <Compile Include="BlogArticle\Page\BlogArticleListItemPageDTO.cs" />
+    <Compile Include="BlogArticle\Page\BlogArticleListPageDTO.cs" />
     <Compile Include="BlogArticle\BlogArticleSearchDTO.cs" />
-    <Compile Include="BlogArticle\BlogArticleViewRankItemPageDTO.cs" />
+    <Compile Include="BlogArticle\Page\BlogArticleViewRankItemPageDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserFunction\UserFunctionEditDTO.cs" />
     <Compile Include="UserFunction\UserFunctionMenuItemDTO.cs" />

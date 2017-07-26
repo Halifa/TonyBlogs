@@ -18,11 +18,20 @@ namespace TonyBlogs.WebApp.Controllers
             this._blogArticleService = blogArticleService;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(BlogArticleSearchDTO dto)
         {
-            var list = _blogArticleService.QueryWhere(m => m.ID > 0);
+            dto = dto ?? new BlogArticleSearchDTO();
+            return View("index",dto);
+        }
 
-            return View(list);
+        public ActionResult Blog()
+        {
+            return Index(new BlogArticleSearchDTO() { Category = "技术博文" });
+        }
+
+        public ActionResult Essay()
+        {
+            return Index(new BlogArticleSearchDTO() { Category = "随笔日志" });
         }
 
         public ActionResult AjaxGetPageList(BlogArticleSearchDTO searchDTO)

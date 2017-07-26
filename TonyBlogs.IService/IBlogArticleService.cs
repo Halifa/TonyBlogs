@@ -19,6 +19,8 @@ namespace TonyBlogs.IService
 
         BlogArticleListPageDTO GetListPage(BlogArticleSearchDTO searchDTO);
 
+        BlogArticleDetailPageDTO GetBlogArticleDetail(long blogID);
+
         List<BlogArticleViewRankItemPageDTO> GetViewRankList();
 
         ExecuteResult Delete(long blogID);

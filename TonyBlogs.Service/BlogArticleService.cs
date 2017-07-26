@@ -132,6 +132,24 @@ namespace TonyBlogs.Service
             return dal.GetViewRankList();
         }
 
+        public BlogArticleDetailPageDTO GetBlogArticleDetail(long blogID)
+        {
+            BlogArticleDetailPageDTO dto = null;
+            if (blogID <= 0)
+            {
+                return dto;
+            }
+
+            var entity = baseDal.Single(m => m.ID == blogID);
+            if (entity == null)
+            {
+                return dto;
+            }
+
+            dto = Mapper.DynamicMap<BlogArticleDetailPageDTO>(entity);
+            return dto;
+        }
+
         public ExecuteResult Delete(long blogID)
         {
             ExecuteResult result = new ExecuteResult() { IsSuccess = true};

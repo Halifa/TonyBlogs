@@ -1,4 +1,6 @@
-﻿@section css{
+﻿@model TonyBlogs.DTO.BlogArticle.BlogArticleSearchDTO
+
+@section css{
     <style type="text/css">
         [v-cloak] {
             display: none;
@@ -31,8 +33,8 @@
                     <!-- CATEGORIES START -->
                     <h3 class="no-top-space">分类</h3>
                     <ul class="nav sidebar-categories margin-bottom-40">
-                        <li><a href="javascript:;">博客</a></li>
-                        <li><a href="javascript:;">随笔</a></li>
+                        <li><a href="/blog">博客</a></li>
+                        <li><a href="/essay">随笔</a></li>
                     </ul>
                     <!-- CATEGORIES END -->
                     <!-- BEGIN RECENT NEWS -->
@@ -87,6 +89,7 @@
         SearchDTO: {
             PageIndex: 1,
             PageSize: 10,
+            Category: '@Model.Category',
         },
         BlogList: [],
         ViewRankList:[],
@@ -96,7 +99,7 @@
     var actions = {
         list: '@Url.Action("AjaxGetPageList", "Home")',
         viewrank: '@Url.Action("AjaxGetViewRankList", "Home")',
-        detail: '@Url.Action("AjaxGetDetail", "Home")',
+        detail: '/b/',
     }
 
     var paramMethods = {
@@ -142,7 +145,7 @@
         },
 
         JumpDetail: function (blogID) {
-            window.open(actions.detail + "?blogID=" + blogID);
+            window.open(actions.detail + blogID);
         },
     };
 
@@ -151,7 +154,7 @@
         template: '#blogitem-template',
         computed: {
             DetailUrl: function () {
-                return actions.detail + "?blogID=" + this.blog.ID;
+                return actions.detail + this.blog.ID;
             },
 
             HasComments: function () {
