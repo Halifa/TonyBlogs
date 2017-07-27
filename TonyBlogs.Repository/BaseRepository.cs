@@ -126,6 +126,11 @@ namespace TonyBlogs.Repository
             return ExecRead(conn => conn.Count(sqlExp));
         }
 
+        protected bool Exist(Expression<Func<TEntity, bool>> predicate)
+        {
+            return ExecRead(conn => conn.Exists(predicate);
+        }
+
         private T ExecWrite<T>(Func<IDbConnection, T> func, IDbConnection connection = null)
         {
             if (connection == null)
