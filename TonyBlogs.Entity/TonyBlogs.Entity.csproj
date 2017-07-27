@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="BlogArticleEntity.cs" />
     <Compile Include="BlogCommentEntity.cs" />
+    <Compile Include="BlogTrafficLogEntity.cs" />
     <Compile Include="FunctionEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurviewEntity.cs" />

@@ -24,5 +24,9 @@ namespace TonyBlogs.IService
         List<BlogArticleViewRankItemPageDTO> GetViewRankList();
 
         ExecuteResult Delete(long blogID);
+
+        ExecuteResult AddBlogTraffic(long blogID, string ip);
+
+        ExecuteResult UpdateBlogComment(long blogID, int commentCount);
     }
 }
