@@ -76,6 +76,8 @@
     <Compile Include="BlogArticleRepository.cs" />
     <Compile Include="BlogCommentRepository.cs" />
     <Compile Include="BlogTrafficLogRepository.cs" />
+    <Compile Include="data\MyTransaction.cs" />
+    <Compile Include="data\DbTransactionContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserFunctionRepository.cs" />
     <Compile Include="UserInfoRepository.cs" />

@@ -128,7 +128,7 @@ namespace TonyBlogs.Repository
 
         protected bool Exist(Expression<Func<TEntity, bool>> predicate)
         {
-            return ExecRead(conn => conn.Exists(predicate);
+            return ExecRead(conn => conn.Exists(predicate));
         }
 
         private T ExecWrite<T>(Func<IDbConnection, T> func, IDbConnection connection = null)
@@ -182,9 +182,28 @@ namespace TonyBlogs.Repository
         /// </summary>
         /// <param name="connection"></param>
         /// <param name="IsReadConnection">是否读链接 默认不是</param>
-        public  void CloseConnection(IDbConnection connection)
+        protected  void CloseConnection(IDbConnection connection)
         {
-            connection.Close();
+            if (!DbTransactionContext.HasTransaction(connection.Database))
+            {
+                connection.Close();
+            }
+        }
+
+        protected MyTransaction OpenTransaction()
+        {
+            MyTransaction transaction = null;
+            if (!DbTransactionContext.HasTransaction(db.Database))
+            {
+                transaction = new MyTransaction(db.BeginTransaction());
+                DbTransactionContext.AddTransaction(db.Database, transaction);
+            }
+            else
+            {
+                transaction = DbTransactionContext.GetTransaction(db.Database);
+            }
+            transaction.AddCount();
+            return transaction;
         }
     }
 

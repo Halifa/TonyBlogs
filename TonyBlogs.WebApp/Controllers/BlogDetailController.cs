@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using TonyBlogs.DTO.BlogArticle;
@@ -20,6 +21,10 @@ namespace TonyBlogs.WebApp.Controllers
         public ActionResult Index(long blogID)
         {
             BlogArticleDetailPageDTO dto = this._blogArticleService.GetBlogArticleDetail(blogID);
+
+            string ip = GetClientIp();
+            //异步处理访问数
+            Task.Factory.StartNew(() => _blogArticleService.AddBlogTraffic(blogID, ip));
 
             return View(dto);
         }

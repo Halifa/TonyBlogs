@@ -6,11 +6,20 @@ using TonyBlogs.DTO.BlogArticle;
 using TonyBlogs.Entity;
 using TonyBlogs.IRepository;
 using ServiceStack.OrmLite;
+using TonyBlogs.DTO;
+using System.Data;
 
 namespace TonyBlogs.Repository
 {
     public class BlogArticleRepository : BaseRepository<BlogArticleEntity>, IBlogArticleRepository
     {
+        private IBlogTrafficLogRepository _trafficDal;
+
+        public BlogArticleRepository(IBlogTrafficLogRepository trafficDal)
+        {
+            this._trafficDal = trafficDal;
+        }
+
         public List<BlogArticleEntity> GetList(BlogArticleSearchDTO searchDTO, out long totalCount)
         {
             var sqlExp = GetSqlExp();
@@ -68,6 +77,47 @@ namespace TonyBlogs.Repository
             var list = base.Query<BlogArticleViewRankItemPageDTO>(sqlExp);
 
             return list;
+        }
+
+        public ExecuteResult AddBlogTraffic(long blogID, string ip)
+        {
+            ExecuteResult result = new ExecuteResult() { IsSuccess = true };
+
+            if (_trafficDal.ExistView(blogID, ip))
+            {
+                return result;
+            }
+
+            var blogEntity = base.Single(m => m.ID == blogID);
+            if (blogEntity == null)
+            {
+                return result;
+            }
+
+            BlogTrafficLogEntity trafficEntity = new BlogTrafficLogEntity()
+                {
+                    BlogID = blogID,
+                    IP = ip,
+                    InsertTime = DateTime.Now
+                };
+            blogEntity.Traffic += 1;
+
+            MyTransaction transaction = OpenTransaction();
+            try
+            {
+                long id = _trafficDal.Add(trafficEntity, true);
+
+                base.UpdateOnly(blogEntity, m => new { m.Traffic }, m => m.ID == blogID);
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                throw ex;
+            }
+
+            return result;
         }
     }
 }

@@ -158,5 +158,15 @@ namespace TonyBlogs.Service
 
             return result;
         }
+
+        public ExecuteResult AddBlogTraffic(long blogID, string ip)
+        {
+            return dal.AddBlogTraffic(blogID, ip);
+        }
+
+        public ExecuteResult UpdateBlogComment(long blogID, int commentCount)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
