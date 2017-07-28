@@ -2,14 +2,17 @@
 
 @section css{
     <style type="text/css">
-        .blog-detail img{
-            max-width:100%
-        }   
+        .blog-detail img {
+            max-width: 100%;
+        }
+        [v-cloak] {
+            display: none;
+        }
     </style>
 }
 
 <!-- BEGIN SIDEBAR & CONTENT -->
-<div class="row margin-bottom-40">
+<div class="row margin-bottom-40 v-cloak" id="app">
     <!-- BEGIN CONTENT -->
     <div class="col-md-12 col-sm-12">
         <div class="content-page">
@@ -18,7 +21,7 @@
                 <div class="col-md-9 col-sm-9 blog-item blog-detail">
                     <h2 style="margin-bottom:20px">@Model.Title</h2>
                     <div>@Html.Raw(WebUtility.HtmlDecode(Model.Content))</div>
-                    
+
                     <ul class="blog-info">
                         <li><i class="fa fa-user"></i> By @Model.RealName</li>
                         <li><i class="fa fa-calendar"></i> @Model.CreateTime</li>
@@ -26,66 +29,57 @@
                         <li><i class="fa fa-comments"></i> @Model.CommentNum</li>
                         <li><i class="fa fa-tags"></i> @Model.Category</li>
                     </ul>
-                    <h2>Comments</h2>
+                    <h3>评论</h3>
                     <div class="comments">
-                        <div class="media">
-                            <a href="javascript:;" class="pull-left">
-                                <img src="/content/assets/frontend/pages/img/people/img1-small.jpg" alt="" class="media-object">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading">Media heading <span>5 hours ago / <a href="javascript:;">Reply</a></span></h4>
-                                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                                <!-- Nested media object -->
-                                <div class="media">
-                                    <a href="javascript:;" class="pull-left">
-                                        <img src="/content/assets/frontend/pages/img/people/img2-small.jpg" alt="" class="media-object">
-                                    </a>
-                                    <div class="media-body">
-                                        <h4 class="media-heading">Media heading <span>17 hours ago / <a href="javascript:;">Reply</a></span></h4>
-                                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                                    </div>
-                                </div>
-                                <!--end media-->
-                                <div class="media">
-                                    <a href="javascript:;" class="pull-left">
-                                        <img src="/content/assets/frontend/pages/img/people/img3-small.jpg" alt="" class="media-object">
-                                    </a>
-                                    <div class="media-body">
-                                        <h4 class="media-heading">Media heading <span>2 days ago / <a href="javascript:;">Reply</a></span></h4>
-                                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                                    </div>
-                                </div>
-                                <!--end media-->
-                            </div>
-                        </div>
                         <!--end media-->
-                        <div class="media">
-                            <a href="javascript:;" class="pull-left">
-                                <img src="/content/assets/frontend/pages/img/people/img4-small.jpg" alt="" class="media-object">
-                            </a>
+                        <div class="media comment" v-for="(comment, index) in comments_list">
                             <div class="media-body">
-                                <h4 class="media-heading">Media heading <span>July 25,2013 / <a href="javascript:;">Reply</a></span></h4>
-                                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                                <div class="media-heading">
+                                <a class="author">{{comment.RealName}}</a> 
+                                <span>
+                                    {{comment.InsertTime}} / 
+                                    <a v-on:click="GoToRelyComment(comment, comment.ID)" href="javascript:;">回复</a>
+                                </span>
+                            </div>
+                                <p>{{comment.Content}}</p>
+                                <!-- Nested media object -->
+                                <div class="sub-comment-list" v-if="comment.ChildrenList.length>0">
+                                    <div class="sub-comment" v-for="sub_comment  in comment.ChildrenList">
+                                        <p>
+                                            <a class="author" href="/u/" target="_blank">{{sub_comment.RealName}}</a>：
+                                            <span v-html="sub_comment.Content"></span>
+                                        </p>
+                                        <div class="sub-tool-group">
+                                            <span>{{sub_comment.InsertTime}}</span>
+                                            <a v-on:click="GoToRelyComment(sub_comment, comment.ID)"><i class="fa fa-comment-o"></i> <span>回复</span></a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+
                         <!--end media-->
                     </div>
-                    <div class="post-comment padding-top-40">
-                        <h3>Leave a Comment</h3>
-                        <form role="form">
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input class="form-control" type="text">
-                            </div>
-                            <div class="form-group">
-                                <label>Email <span class="color-red">*</span></label>
-                                <input class="form-control" type="text">
-                            </div>
-                            <div class="form-group">
-                                <label>Message</label>
-                                <textarea class="form-control" rows="8"></textarea>
-                            </div>
-                            <p><button class="btn btn-primary" type="submit">Post a Comment</button></p>
+                    <div class="post-comment padding-top-40" id="post-comment">
+                        <form class="new-comment">
+                            @if (Model.IsLogin)
+                            {
+                                <div class="sign-container">
+                                    <a href="/admin" class="btn btn-sign">登录</a> <span>后发表评论</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <textarea placeholder="写下你的评论..." v-on:focus="ShowCommentSendBtn" v-model="CommentAddDTO.Content"></textarea>
+                                <div class="write-function-block" v-show="comment_send_btn_show">
+                                    @*<div class="emoji-modal-wrap">
+                            <a class="emoji"><i class="fa fa-smile-o iconfont ic-comment-emotions"></i></a>
+                        </div>*@
+                                    <a class="btn btn-send" v-on:click="SendComment">发送</a>
+                                    <a class="cancel" v-on:click="ClearComment">取消</a>
+                                </div>
+                            }
                         </form>
                     </div>
                 </div>
@@ -154,36 +148,6 @@
                         </div>
                     </div>
                     <!-- END BLOG TALKS -->
-                    <!-- BEGIN BLOG PHOTOS STREAM -->
-                    <div class="blog-photo-stream margin-bottom-20">
-                        <h2>Photos Stream</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="javascript:;"><img alt="" src="/content/assets/frontend/pages/img/people/img5-small.jpg"></a></li>
-                            <li><a href="javascript:;"><img alt="" src="/content/assets/frontend/pages/img/works/img1.jpg"></a></li>
-                            <li><a href="javascript:;"><img alt="" src="/content/assets/frontend/pages/img/people/img4-large.jpg"></a></li>
-                            <li><a href="javascript:;"><img alt="" src="/content/assets/frontend/pages/img/works/img6.jpg"></a></li>
-                            <li><a href="javascript:;"><img alt="" src="/content/assets/frontend/pages/img/pics/img1-large.jpg"></a></li>
-                            <li><a href="javascript:;"><img alt="" src="/content/assets/frontend/pages/img/pics/img2-large.jpg"></a></li>
-                            <li><a href="javascript:;"><img alt="" src="/content/assets/frontend/pages/img/works/img3.jpg"></a></li>
-                            <li><a href="javascript:;"><img alt="" src="/content/assets/frontend/pages/img/people/img2-large.jpg"></a></li>
-                        </ul>
-                    </div>
-                    <!-- END BLOG PHOTOS STREAM -->
-                    <!-- BEGIN BLOG TAGS -->
-                    <div class="blog-tags margin-bottom-20">
-                        <h2>Tags</h2>
-                        <ul>
-                            <li><a href="javascript:;"><i class="fa fa-tags"></i>OS</a></li>
-                            <li><a href="javascript:;"><i class="fa fa-tags"></i>Metronic</a></li>
-                            <li><a href="javascript:;"><i class="fa fa-tags"></i>Dell</a></li>
-                            <li><a href="javascript:;"><i class="fa fa-tags"></i>Conquer</a></li>
-                            <li><a href="javascript:;"><i class="fa fa-tags"></i>MS</a></li>
-                            <li><a href="javascript:;"><i class="fa fa-tags"></i>Google</a></li>
-                            <li><a href="javascript:;"><i class="fa fa-tags"></i>Keenthemes</a></li>
-                            <li><a href="javascript:;"><i class="fa fa-tags"></i>Twitter</a></li>
-                        </ul>
-                    </div>
-                    <!-- END BLOG TAGS -->
                 </div>
                 <!-- END RIGHT SIDEBAR -->
             </div>
@@ -192,3 +156,126 @@
     <!-- END CONTENT -->
 </div>
 <!-- END SIDEBAR & CONTENT -->
+@section scripts{
+    <script src="~/Content/assets/global/plugins/vue-2.1.7.min.js"></script>
+    <script type="text/javascript">
+        var data = {
+            CommentAddDTO: {
+                BlogID: '@Model.ID',
+                ParentID: 0,
+                Content: '',
+            },
+
+            reply_comment: {},
+            is_reply:false,
+            blog_id: '@Model.ID',  
+            
+            comment_send_btn_show:false,
+
+            comments_list: [],
+        };
+
+        var actions = {
+            comments_list: '@Url.Action("AjaxGetCoommentList", "BlogDetail")',
+            comments_add: '@Url.Action("AjaxAddComment", "BlogDetail")',
+        };
+
+        var paramMethods = {
+
+            GetCommnetList: function () {
+                $.ajax({
+                    url: actions.comments_list,
+                    data: { blogid: data.blog_id },
+                    type: "GET",
+                    dataType: "json",
+                    success: function (retData) {
+                        data.comments_list = retData;
+                    },
+                    error: function (retData) {
+                        Metronic.simpleAlert("发生错误，请重试！");
+                    }
+                })
+            },
+
+            ClearComment: function () {
+                data.CommentAddDTO.Content = '';
+                data.CommentAddDTO.ParentID = 0;
+                data.is_reply = false;
+                data.reply_comment = {};
+                this.ToggleCommentSendBtn();
+            },
+
+            ToggleCommentSendBtn: function () {
+                data.comment_send_btn_show = !data.comment_send_btn_show;
+            },
+
+            ShowCommentSendBtn: function () {
+                data.comment_send_btn_show = true;
+            },
+
+            SendComment: function () {
+                if (data.is_reply) {
+                    this.ReplyComment();
+                }
+                else {
+                    this.AddComment();
+                }
+            },
+
+            AddComment: function () {
+                data.CommentAddDTO.ParentID = 0;
+                this.AjaxAddComment(data.CommentAddDTO);
+            },
+
+            GoToRelyComment: function (pComment, pId) {
+                data.reply_comment = pComment;
+                data.reply_comment.ID = pId;
+                data.is_reply = true;
+                data.CommentAddDTO.Content = "@@" + pComment.RealName + " ";
+                this.ToggleCommentSendBtn();
+                window.location.hash = '#post-comment';
+            },
+            
+            ReplyComment: function () {
+                var actionData = $.extend({}, data.CommentAddDTO);
+                actionData.ParentID = data.reply_comment.ID;
+
+                var atAuthor = "@@" + data.reply_comment.RealName;
+                var atAuthorLink = Metronic.formatString('&lt;a class="author" href="/u/{0}" target="_blank"&gt;{1}&lt;/a&gt;',
+                                                data.reply_comment.UserID, atAuthor);
+                actionData.Content = actionData.Content.replace(atAuthor, atAuthorLink);
+
+                this.AjaxAddComment(actionData);
+            },
+
+            AjaxAddComment: function (actionData) {
+
+                $.ajax({
+                    url: actions.comments_add,
+                    data: actionData,
+                    type: "POST",
+                    dataType: "json",
+                    success: function (retData) {
+                        paramMethods.GetCommnetList();
+                        paramMethods.ClearComment();
+                    },
+                    error: function (retData) {
+                        Metronic.simpleAlert("发生错误，请重试！");
+                    }
+                })
+            },
+
+        };
+
+        var vueObj = new Vue({
+            el: "#app",
+            data: data,
+            methods: paramMethods,
+            mounted: function () {
+                this.GetCommnetList();
+            },
+        });
+
+
+    </script>
+}

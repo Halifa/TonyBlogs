@@ -9,17 +9,16 @@
 }
 
 <!-- BEGIN SIDEBAR & CONTENT -->
-<div class="row margin-bottom-40" id="app">
+<div class="row margin-bottom-40 v-cloak" id="app">
     <!-- BEGIN CONTENT -->
     <div class="col-md-12 col-sm-12">
         <div class="content-page">
             <div class="row">
                 <!-- BEGIN LEFT SIDEBAR -->
                 <div class="col-md-9 col-sm-9 blog-posts">
-                    <blogitem v-for="(blogitem, index) in BlogList" 
+                    <blogitem v-for="(blogitem, index) in BlogList"
                               v-bind:blog="blogitem"
                               v-bind:index="index"></blogitem>
-
                     <paginate v-bind:page-count="PageCount"
                               v-bind:click-handler="JumpPage"
                               v-bind:prev-text="'上一页'"
@@ -47,7 +46,6 @@
                         </div>
                     </div>
                     <!-- END RECENT NEWS -->
-
                 </div>
                 <!-- END RIGHT SIDEBAR -->
             </div>

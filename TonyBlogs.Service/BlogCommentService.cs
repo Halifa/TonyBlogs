@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using TonyBlogs.DTO;
 using TonyBlogs.DTO.BlogComment;
@@ -56,7 +57,9 @@ namespace TonyBlogs.Service
 
         public List<BlogCommentListItemPageDTO> GetCommentList(long blogID)
         {
-            List<BlogCommentEntity> entityList = this._commentDal.QueryWhere(m => m.ID == blogID);
+            List<BlogCommentListItemPageDTO> listDTO = new List<BlogCommentListItemPageDTO>();
+
+            List<BlogCommentEntity> entityList = this._commentDal.QueryWhere(m => m.BlogID == blogID);
 
             var rootEntityList = entityList.Where(m=>m.ParentID == 0);
 
@@ -65,11 +68,16 @@ namespace TonyBlogs.Service
                 var firDTO = Mapper.DynamicMap<BlogCommentListItemPageDTO>(firstLevel);
                 firDTO.ChildrenList = entityList
                     .Where(m => m.ParentID == firDTO.ID)
-                    .Select(m => Mapper.DynamicMap<BlogCommentListItemPageDTO>(m))
+                    .Select(m => {
+                        var secDTO = Mapper.DynamicMap<BlogCommentListItemPageDTO>(m);
+                        secDTO.Content = WebUtility.HtmlDecode(secDTO.Content);
+                        return secDTO;
+                    })
                     .ToList();
+                listDTO.Add(firDTO);
             }
 
-            return List;
+            return listDTO;
         }
     }
 }

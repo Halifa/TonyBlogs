@@ -58,5 +58,10 @@ namespace TonyBlogs.DTO.BlogArticle
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; }
+
+        /// <summary>
+        /// 是否登录了
+        /// </summary>
+        public bool IsLogin { get; set; }
     }
 }
