@@ -4,11 +4,11 @@ using System.Data;
 using System.Linq;
 using System.Text;
 
-namespace TonyBlogs.Repository
+namespace TonyBlogs.Framework.Data
 {
-    public  class MyTransaction
+    public class MyTransaction
     {
-        internal MyTransaction(IDbTransaction transaction)
+        public MyTransaction(IDbTransaction transaction)
         {
             this.Transaction = transaction;
             this.Connection = transaction.Connection;
@@ -77,6 +77,5 @@ namespace TonyBlogs.Repository
         {
             connection.Close();
         }
-
     }
 }

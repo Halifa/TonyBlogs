@@ -4,9 +4,9 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 
-namespace TonyBlogs.Repository
+namespace TonyBlogs.Framework.Data
 {
-    internal class DbTransactionContext
+    public class DbTransactionContext
     {
         private static string CONTEXT_TRANSACTIONS_COLLECTION = "CONTEXT_TRANSACTIONS_COLLECTION";
 
@@ -15,14 +15,14 @@ namespace TonyBlogs.Repository
         /// </summary>
         /// <param name="key"></param>
         /// <param name="transaction"></param>
-        internal static void AddTransaction(string key, MyTransaction transaction)
+        public static void AddTransaction(string key, MyTransaction transaction)
         {
             var obj = CallContext.LogicalGetData(CONTEXT_TRANSACTIONS_COLLECTION);
 
             List<MyTransaction> MyTransactions = null;
             if (obj == null)
             {
-                MyTransactions=new List<MyTransaction>();
+                MyTransactions = new List<MyTransaction>();
                 MyTransactions.Add(transaction);
             }
             else
@@ -49,7 +49,7 @@ namespace TonyBlogs.Repository
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        internal static bool HasTransaction(string key)
+        public static bool HasTransaction(string key)
         {
             var obj = CallContext.LogicalGetData(CONTEXT_TRANSACTIONS_COLLECTION);
             if (obj == null)
@@ -68,7 +68,7 @@ namespace TonyBlogs.Repository
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        internal static MyTransaction GetTransaction(string key)
+        public static MyTransaction GetTransaction(string key)
         {
             var obj = CallContext.LogicalGetData(CONTEXT_TRANSACTIONS_COLLECTION);
             if (obj == null)
@@ -90,7 +90,7 @@ namespace TonyBlogs.Repository
         /// <param name="key"></param>
         /// <param name="distinct"></param>
         /// <returns></returns>
-        internal static bool RemoveTransaction(string key)
+        public static bool RemoveTransaction(string key)
         {
             var obj = CallContext.LogicalGetData(CONTEXT_TRANSACTIONS_COLLECTION);
             if (obj == null)

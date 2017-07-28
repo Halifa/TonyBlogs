@@ -23,6 +23,11 @@ namespace TonyBlogs.Entity
         public long UserID { get; set; }
 
         /// <summary>
+        /// 用户姓名
+        /// </summary>
+        public string RealName { get; set; }
+
+        /// <summary>
         /// 内容
         /// </summary>
         public string Content { get; set; }
@@ -31,5 +36,10 @@ namespace TonyBlogs.Entity
         /// 创建时间
         /// </summary>
         public DateTime InsertTime { get; set; }
+
+        /// <summary>
+        /// 评论父ID
+        /// </summary>
+        public long ParentID { get; set; }
     }
 }

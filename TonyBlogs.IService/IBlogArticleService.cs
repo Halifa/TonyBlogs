@@ -27,6 +27,5 @@ namespace TonyBlogs.IService
 
         ExecuteResult AddBlogTraffic(long blogID, string ip);
 
-        ExecuteResult UpdateBlogComment(long blogID, int commentCount);
     }
 }

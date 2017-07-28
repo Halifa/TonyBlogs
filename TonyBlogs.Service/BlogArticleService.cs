@@ -163,10 +163,5 @@ namespace TonyBlogs.Service
         {
             return dal.AddBlogTraffic(blogID, ip);
         }
-
-        public ExecuteResult UpdateBlogComment(long blogID, int commentCount)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

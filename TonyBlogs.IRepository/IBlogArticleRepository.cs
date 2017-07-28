@@ -15,5 +15,7 @@ namespace TonyBlogs.IRepository
         List<BlogArticleViewRankItemPageDTO> GetViewRankList();
 
         ExecuteResult AddBlogTraffic(long blogID, string ip);
+
+        ExecuteResult UpdateBlogComment(long blogID, int commentCount);
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using TonyBlogs.Framework;
+using TonyBlogs.Framework.Data;
 
 namespace TonyBlogs.IRepository
 {
@@ -44,5 +45,7 @@ namespace TonyBlogs.IRepository
 
         long Add(TEntity model, bool selectIdentity);
         #endregion
+
+        MyTransaction OpenTransaction();
     }
 }

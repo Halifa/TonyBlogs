@@ -9,6 +9,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
+using TonyBlogs.Framework;
+using TonyBlogs.Framework.Data;
 using TonyBlogs.IRepository;
 
 namespace TonyBlogs.Repository
@@ -190,7 +192,7 @@ namespace TonyBlogs.Repository
             }
         }
 
-        protected MyTransaction OpenTransaction()
+        public MyTransaction OpenTransaction()
         {
             MyTransaction transaction = null;
             if (!DbTransactionContext.HasTransaction(db.Database))

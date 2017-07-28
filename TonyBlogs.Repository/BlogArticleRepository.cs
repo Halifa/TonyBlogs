@@ -8,6 +8,7 @@ using TonyBlogs.IRepository;
 using ServiceStack.OrmLite;
 using TonyBlogs.DTO;
 using System.Data;
+using TonyBlogs.Framework.Data;
 
 namespace TonyBlogs.Repository
 {
@@ -116,6 +117,23 @@ namespace TonyBlogs.Repository
                 transaction.Rollback();
                 throw ex;
             }
+
+            return result;
+        }
+
+        public ExecuteResult UpdateBlogComment(long blogID, int commentCount)
+        {
+            ExecuteResult result = new ExecuteResult() { IsSuccess = true };
+
+            var blogEntity = base.Single(m => m.ID == blogID);
+            if (blogEntity == null)
+            {
+                return result;
+            }
+
+            blogEntity.CommentNum += commentCount;
+
+            base.UpdateOnly(blogEntity, m => new { m.CommentNum }, m => m.ID == blogID);
 
             return result;
         }

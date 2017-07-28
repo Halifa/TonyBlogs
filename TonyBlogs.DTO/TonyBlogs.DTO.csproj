@@ -54,6 +54,8 @@
     <Compile Include="BlogArticle\Page\BlogArticleListPageDTO.cs" />
     <Compile Include="BlogArticle\BlogArticleSearchDTO.cs" />
     <Compile Include="BlogArticle\Page\BlogArticleViewRankItemPageDTO.cs" />
+    <Compile Include="BlogComment\BlogCommentAddPageDTO.cs" />
+    <Compile Include="BlogComment\BlogCommentListItemPageDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserFunction\UserFunctionEditDTO.cs" />
     <Compile Include="UserFunction\UserFunctionMenuItemDTO.cs" />
