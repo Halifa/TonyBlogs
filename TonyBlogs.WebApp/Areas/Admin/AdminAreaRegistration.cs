@@ -15,6 +15,7 @@ namespace TonyBlogs.WebApp.Areas.Admin
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute("TonyBlogs_LoginPage", "Admin", new { area = "Admin", controller = "Account", action = "Index" });
+            context.MapRoute("TonyBlogs_RegisterPage", "Register", new { area = "Admin", controller = "Account", action = "Register" });
 
             context.MapRoute(
                 "Admin_default",

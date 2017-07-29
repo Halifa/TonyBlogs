@@ -19,6 +19,9 @@ namespace TonyBlogs.IRepository
         List<TEntity> QueryWhere(Expression<Func<TEntity, bool>> predicate);
 
         TEntity Single(Expression<Func<TEntity, bool>> predicate);
+
+        bool Exist(Expression<Func<TEntity, bool>> predicate);
+
         #endregion
 
         #region 编辑

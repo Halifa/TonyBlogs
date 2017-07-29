@@ -1,10 +1,13 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TonyBlogs.Common;
 using TonyBlogs.Common.Cache;
+using TonyBlogs.DTO;
 using TonyBlogs.DTO.Account;
+using TonyBlogs.Entity;
 using TonyBlogs.IService;
 
 namespace TonyBlogs.Service
@@ -12,12 +15,16 @@ namespace TonyBlogs.Service
     public class AccountService : IAccountService
     {
         private IUserInfoService _userService;
+        private IUserPurviewService _userPurviewService;
         private ICacheManager _cache;
 
-        public AccountService(IUserInfoService userService, ICacheManager cache)
+        public AccountService(IUserInfoService userService, 
+            ICacheManager cache,
+            IUserPurviewService userPurviewService)
         {
             this._userService = userService;
             this._cache = cache;
+            this._userPurviewService = userPurviewService;
         }
 
         public AccountLoginResultDTO Login(AccountLoginDTO dto)
@@ -47,6 +54,28 @@ namespace TonyBlogs.Service
 
             result.CookieValue = encryptCookieValue;
             result.CookieValueCacheKey = Base64Helper.Base64Encode(cacheKey);
+
+            return result;
+        }
+
+        public ExecuteResult RegisterBlogUser(AccountRegisterDTO dto)
+        {
+            ExecuteResult result = new ExecuteResult() { IsSuccess = true };
+
+            if (this._userService.ExistUserName(dto.LoginName))
+            {
+                result.IsSuccess = false;
+                result.Message = "该用户名已经被注册";
+
+                return result;
+            }
+
+            var entity = Mapper.DynamicMap<UserInfoEntity>(dto);
+            entity.PurviewID = _userPurviewService.GetPurviewMap().Single(m => m.Value == "博客作者").Key;
+            entity.LoginPWD = EncryptHelper.Encrypt(dto.LoginPWD);
+            entity.UserStatus = Enum.User.UserStatusEnum.Valid;
+            entity.InsertTime = DateTime.Now;
+            _userService.Add(entity, true);
 
             return result;
         }

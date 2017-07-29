@@ -61,6 +61,11 @@ namespace TonyBlogs.Repository
         { 
             return ExecRead(conn => conn.Single(predicate));
         }
+
+        public bool Exist(Expression<Func<TEntity, bool>> predicate)
+        {
+            return ExecRead(conn => conn.Exists(predicate));
+        }
         #endregion
 
         #region 编辑
@@ -126,11 +131,6 @@ namespace TonyBlogs.Repository
         protected long Count(SqlExpression<TEntity> sqlExp)
         { 
             return ExecRead(conn => conn.Count(sqlExp));
-        }
-
-        protected bool Exist(Expression<Func<TEntity, bool>> predicate)
-        {
-            return ExecRead(conn => conn.Exists(predicate));
         }
 
         private T ExecWrite<T>(Func<IDbConnection, T> func, IDbConnection connection = null)

@@ -1,10 +1,12 @@
-﻿@{
+﻿@model TonyBlogs.DTO.Account.AccountRegisterDTO
+
+@{
     Layout = "~/Areas/admin/Views/Shared/_account_layout.cshtml"; ;
 }
 
 <div class="page-body">
     <div class="lock-head">
-        用户登录
+        用户注册
     </div>
     <div class="lock-body ">
         <div class="pull-left lock-avatar-block" style="padding-left:50px;">
@@ -12,17 +14,20 @@
         </div>
         <form class="lock-form pull-left" action="/" id="loginForm">
             <div class="form-group">
-                <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="请输入用户名" name="username" />
+                <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="请输入用户名" name="@Html.NameFor(m=>m.LoginName)" />
             </div>
             <div class="form-group">
-                <input class="form-control placeholder-no-fix" type="password" id="password" autocomplete="off" placeholder="请输入密码" name="password" />
+                <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="请输入昵称" name="@Html.NameFor(m=>m.RealName)" />
+            </div>
+            <div class="form-group">
+                <input class="form-control placeholder-no-fix" type="password" id="password" autocomplete="off" placeholder="请输入密码" name="@Html.NameFor(m=>m.LoginPWD)" />
             </div>
             <div class="form-actions">
-                <button id="btnLogin" type="button" class="btn btn-success uppercase">登录</button>
+                <button id="btnReg" type="button" class="btn btn-success uppercase">注册</button>
             </div>
             <p id="errorDiv" class="alert-borderless  " style="display:none;color:#F3565D;">
                 <br />
-                <b>登录失败!</b> <label id="errorMsg"></label>
+                <b>注册失败!</b> <label id="errorMsg"></label>
             </p>
 
         </form>
@@ -40,27 +45,21 @@
 
       var Account = function () {
 
-          var login = function () {
+          var register = function () {
               $('#errorDiv').css('display', 'none');
               Metronic.blockUI({
                   animate: true
               });
               var data = $('#loginForm').serialize();
-              $.post('admin/account/login', data, function (result) {
+              $.post('/admin/account/AjaxRegister', data, function (result) {
                   Metronic.unblockUI();
                   if (!result.IsSuccess) {
                       $('#errorDiv').css('display', 'inline');
                       $('#errorMsg').html(result.Message);
                   }
                   else {
-                      if (document.referrer.length <= 0
-                          || document.referrer.toLowerCase().indexOf("register") > 0) {
-                          window.location = "/admin/blogarticle";
-                      }
-                      else {
-                          window.location = document.referrer;
-                      }
-
+                      Metronic.remindSuccess("注册成功，请进行登录");
+                      window.location = '/admin';
                   }
               })
           }
@@ -69,14 +68,14 @@
               if (event.keyCode == 13) {
                   event.returnValue = false;
                   event.cancel = true;
-                  login();
+                  register();
               }
           }
 
           return {
               //main
               init: function () {
-                  $('#btnLogin').on('click', login);
+                  $('#btnReg').on('click', register);
                   $('#password').on('keydown', keyDown);
               }
           };

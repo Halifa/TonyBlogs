@@ -65,6 +65,7 @@
     <Compile Include="UserInfo\UserInfoEditDTO.cs" />
     <Compile Include="UserInfo\UserInfoListDTO.cs" />
     <Compile Include="UserInfo\UserInfoListItemDTO.cs" />
+    <Compile Include="Account\AccountRegisterDTO.cs" />
     <Compile Include="UserInfo\UserInfoSearchDTO.cs" />
     <Compile Include="UserInfo\UserObj.cs" />
     <Compile Include="UserPurview\UserPurviewEditDTO.cs" />

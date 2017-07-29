@@ -20,6 +20,8 @@ namespace TonyBlogs.IService
 
         UserInfoEditDTO GetUserInfoEditDTO(long userID);
 
+        bool ExistUserName(string userName);
+
         ExecuteResult DeleteUserInfo(long userID);
     }
 }

@@ -112,6 +112,14 @@ namespace TonyBlogs.Service
             bool isAdd = dto.UserID == 0;
             if (isAdd)
             {
+                if (this.ExistUserName(dto.LoginName))
+                {
+                    result.IsSuccess = false;
+                    result.Message = "该用户名已经被注册";
+
+                    return result;
+                }
+
                 entity.LoginPWD = EncryptHelper.Encrypt(dto.LoginPWD);
                 entity.UserStatus = Enum.User.UserStatusEnum.Valid;
                 entity.InsertTime = DateTime.Now;
@@ -181,6 +189,11 @@ namespace TonyBlogs.Service
         private Dictionary<long, string> GetPurviewMap()
         {
             return _userPurviewService.GetPurviewMap();
+        }
+
+        public bool ExistUserName(string userName)
+        {
+            return this._userInfoRepository.Exist(m => m.LoginName == userName && m.UserStatus == UserStatusEnum.Valid);
         }
     }
 }

@@ -79,7 +79,13 @@
                 "bProcessing": true,
                 "sAjaxSource": actions.list,//这个是请求的地址
                 "aoColumns": [
-                             { "mData": "Title" },
+                             {
+                                 "mData": "ID",
+                                 "mRender": function (data, type, full) {
+
+                                     return Metronic.formatString('<a href="/b/{0}" >{1}</a>', data, full.Title);
+                                 }
+                             },
                              { "mData": "Category" },
                              { "mData": "UpdateTime" },
                              { //自定义列
