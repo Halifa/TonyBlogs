@@ -41,9 +41,9 @@ namespace TonyBlogs.WebApp.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult AjaxGetViewRankList()
+        public ActionResult AjaxGetViewRankList(long userID)
         {
-            var result = _blogArticleService.GetViewRankList();
+            var result = _blogArticleService.GetViewRankList(userID);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

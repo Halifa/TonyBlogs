@@ -1280,6 +1280,7 @@
     <Content Include="Content\assets\global\plugins\wang-editor\static\highlightjs\highlight.pack.js" />
     <Content Include="Content\assets\global\scripts\datatable.js" />
     <Content Include="Content\assets\global\scripts\metronic.js" />
+    <Content Include="Content\js\blog.view.rank.js" />
     <Content Include="Content\js\jquery-1.10.1.min.js" />
     <Content Include="Content\js\jquery.blockui.min.js" />
     <Content Include="Content\js\public.js" />

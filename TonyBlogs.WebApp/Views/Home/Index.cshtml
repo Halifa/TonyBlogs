@@ -36,16 +36,9 @@
                         <li><a href="/essay">随笔</a></li>
                     </ul>
                     <!-- CATEGORIES END -->
-                    <!-- BEGIN RECENT NEWS -->
-                    <h3 style="margin-bottom: 20px;">最近阅读排行</h3>
-                    <div class="recent-news margin-bottom-10">
-                        <div v-for="viewblog in ViewRankList" class="row margin-bottom-10">
-                            <div class="col-md-12">
-                                <a href="javascript:;" style="color: #E84D1C" v-on:click="JumpDetail(viewblog.ID)">{{viewblog.Title}}</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END RECENT NEWS -->
+                    <!-- BEGIN BLOGVIEW -->
+                    <blogview v-bind:userid="0"></blogview>
+                    <!-- END BLOGVIEW -->
                 </div>
                 <!-- END RIGHT SIDEBAR -->
             </div>
@@ -73,15 +66,15 @@
     </div>    
 </script>
 
+
 @section scripts{
 <script src="~/Content/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="~/Content/assets/global/plugins/vue-2.1.7.min.js"></script>
 <script src="~/Content/assets/global/plugins/vue-plugin/vuejs-paginate.js"></script>
+<script src="~/Content/js/blog.view.rank.js"></script>
 
 <script type="text/javascript">
-    $(function () {
 
-    })
 
     var data = {
         SearchDTO: {
@@ -104,6 +97,7 @@
         JumpPage: function (pageIndex) {
             data.SearchDTO.PageIndex = pageIndex;
             this.GetList();
+            Metronic.scrollTo($("#app"));
         },
 
         GetList: function () {
@@ -165,6 +159,8 @@
         }
     };
 
+   
+
     Vue.component('blogitem', blogitemTemplates);
     Vue.component('paginate', VuejsPaginate)
 
@@ -174,7 +170,6 @@
         methods: paramMethods,
         mounted: function () {
             this.GetList();
-            this.GetViewRankList();
         },
     });
 

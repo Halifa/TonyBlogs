@@ -127,9 +127,9 @@ namespace TonyBlogs.Service
             return result;
         }
 
-        public List<BlogArticleViewRankItemPageDTO> GetViewRankList()
+        public List<BlogArticleViewRankItemPageDTO> GetViewRankList(long userID)
         {
-            return dal.GetViewRankList();
+            return dal.GetViewRankList(userID);
         }
 
         public BlogArticleDetailPageDTO GetBlogArticleDetail(long blogID)

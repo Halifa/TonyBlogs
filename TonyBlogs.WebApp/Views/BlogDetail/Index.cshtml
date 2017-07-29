@@ -35,7 +35,7 @@
                         <div class="media comment" v-for="(comment, index) in comments_list">
                             <div class="media-body">
                                 <div class="media-heading">
-                                <a class="author">{{comment.RealName}}</a> 
+                                <a class="name">{{comment.RealName}}</a> 
                                 <span>
                                     {{comment.InsertTime}} / 
                                     <a v-on:click="GoToRelyComment(comment, comment.ID)" href="javascript:;">回复</a>
@@ -86,68 +86,15 @@
                 <!-- END LEFT SIDEBAR -->
                 <!-- BEGIN RIGHT SIDEBAR -->
                 <div class="col-md-3 col-sm-3 blog-sidebar">
-                    <!-- CATEGORIES START -->
-                    <h2 class="no-top-space">Categories</h2>
                     <ul class="nav sidebar-categories margin-bottom-40">
-                        <li><a href="javascript:;">London (18)</a></li>
-                        <li><a href="javascript:;">Moscow (5)</a></li>
-                        <li class="active"><a href="javascript:;">Paris (12)</a></li>
-                        <li><a href="javascript:;">Berlin (7)</a></li>
-                        <li><a href="javascript:;">Istanbul (3)</a></li>
+                        <li><a href="/blog">博客</a></li>
+                        <li><a href="/essay">随笔</a></li>
                     </ul>
                     <!-- CATEGORIES END -->
-                    <!-- BEGIN RECENT NEWS -->
-                    <h2>Recent News</h2>
-                    <div class="recent-news margin-bottom-10">
-                        <div class="row margin-bottom-10">
-                            <div class="col-md-3">
-                                <img class="img-responsive" alt="" src="/content/assets/frontend/pages/img/people/img2-large.jpg">
-                            </div>
-                            <div class="col-md-9 recent-news-inner">
-                                <h3><a href="javascript:;">Letiusto gnissimos</a></h3>
-                                <p>Decusamus tiusto odiodig nis simos ducimus qui sint</p>
-                            </div>
-                        </div>
-                        <div class="row margin-bottom-10">
-                            <div class="col-md-3">
-                                <img class="img-responsive" alt="" src="/content/assets/frontend/pages/img/people/img1-large.jpg">
-                            </div>
-                            <div class="col-md-9 recent-news-inner">
-                                <h3><a href="javascript:;">Deiusto anissimos</a></h3>
-                                <p>Decusamus tiusto odiodig nis simos ducimus qui sint</p>
-                            </div>
-                        </div>
-                        <div class="row margin-bottom-10">
-                            <div class="col-md-3">
-                                <img class="img-responsive" alt="" src="/content/assets/frontend/pages/img/people/img3-large.jpg">
-                            </div>
-                            <div class="col-md-9 recent-news-inner">
-                                <h3><a href="javascript:;">Tesiusto baissimos</a></h3>
-                                <p>Decusamus tiusto odiodig nis simos ducimus qui sint</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END RECENT NEWS -->
-                    <!-- BEGIN BLOG TALKS -->
-                    <div class="blog-talks margin-bottom-30">
-                        <h2>Popular Talks</h2>
-                        <div class="tab-style-1">
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a data-toggle="tab" href="#tab-1">Multipurpose</a></li>
-                                <li><a data-toggle="tab" href="#tab-2">Documented</a></li>
-                            </ul>
-                            <div class="tab-content">
-                                <div id="tab-1" class="tab-pane row-fluid fade in active">
-                                    <p class="margin-bottom-10">Raw denim you probably haven't heard of them jean shorts Austin. eu banh mi, qui irure terry richardson ex squid Aliquip placeat salvia cillum iphone.</p>
-                                    <p><a class="more" href="javascript:;">Read more</a></p>
-                                </div>
-                                <div id="tab-2" class="tab-pane fade">
-                                    <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. aliquip jean shorts ullamco ad vinyl aesthetic magna delectus mollit. Keytar helvetica VHS salvia..</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END BLOG TALKS -->
+                    <!-- BEGIN BLOGVIEW -->
+                    <blogview v-bind:userid="@Model.UserID"></blogview>
+                    <!-- END BLOGVIEW -->
+
                 </div>
                 <!-- END RIGHT SIDEBAR -->
             </div>
@@ -158,6 +105,8 @@
 <!-- END SIDEBAR & CONTENT -->
 @section scripts{
     <script src="~/Content/assets/global/plugins/vue-2.1.7.min.js"></script>
+    <script src="~/Content/js/blog.view.rank.js"></script>
+
     <script type="text/javascript">
         var data = {
             CommentAddDTO: {
@@ -233,7 +182,9 @@
                 data.is_reply = true;
                 data.CommentAddDTO.Content = "@@" + pComment.RealName + " ";
                 this.ToggleCommentSendBtn();
-                window.location.hash = '#post-comment';
+                $("#post-comment textarea").focus();
+                Metronic.scrollTo($("#post-comment"));
+
             },
             
             ReplyComment: function () {
@@ -250,17 +201,28 @@
 
             AjaxAddComment: function (actionData) {
 
+                if (actionData.Content.length <= 0 ) {
+                    Metronic.remindError("回复内容不能为空！");
+                    return;
+                }
+
                 $.ajax({
                     url: actions.comments_add,
                     data: actionData,
                     type: "POST",
                     dataType: "json",
                     success: function (retData) {
-                        paramMethods.GetCommnetList();
-                        paramMethods.ClearComment();
+                        if (retData.IsSuccess) {
+                            Metronic.remindSuccess("回复成功")
+                            paramMethods.GetCommnetList();
+                            paramMethods.ClearComment();
+                        }
+                        else {
+                            Metronic.remindError(retData.Message);
+                        }
                     },
                     error: function (retData) {
-                        Metronic.simpleAlert("发生错误，请重试！");
+                        Metronic.remindError("发生错误，请重试！");
                     }
                 })
             },

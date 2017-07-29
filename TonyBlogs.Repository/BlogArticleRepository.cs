@@ -64,9 +64,14 @@ namespace TonyBlogs.Repository
             return list;
         }
 
-        public List<BlogArticleViewRankItemPageDTO> GetViewRankList()
+        public List<BlogArticleViewRankItemPageDTO> GetViewRankList(long userID)
         {
             var sqlExp = GetSqlExp();
+            if (userID > 0)
+            {
+                sqlExp.Where(m=>m.UserID == userID);
+            }
+
             sqlExp.Select(m => new
             {
                 m.ID,

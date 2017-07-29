@@ -12,7 +12,7 @@ namespace TonyBlogs.IRepository
     {
         List<BlogArticleEntity> GetList(BlogArticleSearchDTO searchDTO, out long totalCount);
 
-        List<BlogArticleViewRankItemPageDTO> GetViewRankList();
+        List<BlogArticleViewRankItemPageDTO> GetViewRankList(long userID);
 
         ExecuteResult AddBlogTraffic(long blogID, string ip);
 

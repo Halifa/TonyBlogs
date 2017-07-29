@@ -877,6 +877,33 @@ var Metronic = function () {
             $dialog.modal('show');
         },
 
+        remind:function(content, isSuccess) {
+            var dialogId = "Simple_Modal_Remind";
+            if ($("#" + dialogId, "body").is('div')) {
+                $("#" + dialogId).remove();
+            }
+            var $dialog = $(document.createElement("div"));
+            $dialog.attr("id", dialogId);
+
+            var $dialogHtmlContent = isSuccess ? '<ul id="noty_topCenter_layout_container" class="i-am-new" style="top: 20%; left: 40%; position: fixed; width: 310px; height: auto; margin: 0px; padding: 0px; list-style-type: none; z-index: 10000000;"><li style="top: 50px; overflow: hidden; margin: 4px 0px; border-radius: 4px !important; border: 1px solid rgb(73, 190, 56); box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px; background-color: rgb(255, 255, 255); color: rgb(73, 190, 56); width: 310px; cursor: pointer;"><div class="noty_bar noty_type_success" id="noty_767452046665604900"><div class="noty_message" style="font-size: 13px; line-height: 16px; text-align: center; padding: 10px; width: auto; position: relative;"><span class="noty_text">{0}</span></div></div></li></ul>'
+                : '<ul id="noty_topCenter_layout_container" class="i-am-new" style="top: 20%; left: 40%; position: fixed; width: 310px; height: auto; margin: 0px; padding: 0px; list-style-type: none; z-index: 10000000;"><li style="top: 50px; overflow: hidden; margin: 4px 0px; border-radius: 4px !important; border: 1px solid rgb(222, 83, 58); box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px; background-color: rgb(255, 255, 255); color: rgb(222, 83, 58); width: 310px; cursor: pointer;"><div class="noty_bar noty_type_error" id="noty_312195705739244800"><div class="noty_message" style="font-size: 13px; line-height: 16px; text-align: center; padding: 10px; width: auto; position: relative; font-weight: bold;"><span class="noty_text">{0}</span></div></div></li></ul>';
+            var $dialogHtml = this.formatString($dialogHtmlContent,content);
+            $dialog.html($dialogHtml);
+            $("body").append($dialog);
+            $dialog.show();
+
+            setTimeout(function () {
+                $dialog.hide();
+            }, 1000);
+        },
+
+        remindSuccess: function (content) {
+            this.remind(content, true);
+        },
+        remindError: function (content) {
+            this.remind(content, false);
+        },
+
         // initializes uniform elements
         initUniform: function (els) {
             if (els) {
