@@ -27,7 +27,7 @@ namespace TonyBlogs.Repository
 
             totalCount = base.Count(sqlExp);
 
-            sqlExp.Limit(searchDTO.PageIndex - 1, searchDTO.iDisplayLength);
+            sqlExp.Limit((searchDTO.PageIndex - 1) * searchDTO.iDisplayLength, searchDTO.iDisplayLength);
 
             var list = base.QueryWhere(sqlExp);
 

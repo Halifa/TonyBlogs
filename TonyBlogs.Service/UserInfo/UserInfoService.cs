@@ -197,3 +197,48 @@ namespace TonyBlogs.Service
         }
     }
 }
+
+public class usertest {
+    public virtual void test() { }
+}
+
+
+public class usertest1 : usertest {
+    public override void test()
+    {
+        base.test();
+    }
+}
+
+public class usertest2 : usertest1 {
+    public override void test()
+    {
+        int[] a = new int[] { 1,123,12,11};
+        int temp = 0;
+        for (int i = 0; i < a.Length-1; i++)
+        {
+            for (int j = i+1; j < a.Length; j++)
+            {
+                if (a[j]<a[i])
+                {
+                    temp = a[j];
+                    a[j] = a[i];
+                    a[i] = temp;
+                }
+            }
+        }
+    }
+
+    public int getnum(int n)
+    {
+
+        if (n== 1 || n == 2)
+        {
+            return 1;
+        }
+        else
+	    {
+            return getnum(n - 1) * getnum(n - 2);
+	    }
+    }
+}

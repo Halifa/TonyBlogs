@@ -39,7 +39,6 @@ namespace TonyBlogs.WebApp.Controllers
         {
             var list = this._blogCommentService.GetCommentList(blogID);
 
-
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 

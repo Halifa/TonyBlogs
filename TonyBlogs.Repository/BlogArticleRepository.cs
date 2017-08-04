@@ -57,7 +57,7 @@ namespace TonyBlogs.Repository
                 m.CreateTime,
                 m.Remark,
             });
-            sqlExp.Limit(searchDTO.PageIndex - 1, searchDTO.PageSize);
+            sqlExp.Limit((searchDTO.PageIndex - 1)*searchDTO.PageSize, searchDTO.PageSize);
 
             var list = base.QueryWhere(sqlExp);
 
