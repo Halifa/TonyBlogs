@@ -27,34 +27,9 @@ namespace TonyBlogs.Framework
              return _container.Resolve<T>();
          }
 
-        public static object Resolve(Type type, ILifetimeScope scope = null)
+        public static object Resolve(Type type)
         {
             return _container.Resolve(type);
-        }
-
-        public static bool IsRegistered(Type serviceType, ILifetimeScope scope = null)
-        {
-            if (scope == null)
-            {
-                //no scope specified
-                scope = Scope();
-            }
-            return scope.IsRegistered(serviceType);
-        }
-
-        public static object ResolveOptional(Type serviceType, ILifetimeScope scope = null)
-        {
-            if (scope == null)
-            {
-                //no scope specified
-                scope = Scope();
-            }
-            return scope.ResolveOptional(serviceType);
-        }
-
-        public static ILifetimeScope Scope()
-        {
-            return Container.BeginLifetimeScope();
         }
          
      }
