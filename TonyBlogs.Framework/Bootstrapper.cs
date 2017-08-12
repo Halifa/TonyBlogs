@@ -24,16 +24,14 @@ namespace TonyBlogs.Framework
             // 获取所有相关类库的程序集
             Assembly[] assemblies = BuildManager.GetReferencedAssemblies().Cast<Assembly>().ToArray();
             
-            var registBuilder = containerBuilder.RegisterAssemblyTypes(assemblies);
-
             containerBuilder.RegisterAssemblyTypes(assemblies).Where(type => baseType.IsAssignableFrom(type) && !type.IsAbstract)
-                .AsImplementedInterfaces().InstancePerLifetimeScope();//InstancePerLifetimeScope 保证对象生命周期基于请求
+                .AsImplementedInterfaces().InstancePerDependency();//每次解析获得新实例
 
             Type singletonType = typeof(ISignleton);
             containerBuilder.RegisterAssemblyTypes(assemblies).Where(type => singletonType.IsAssignableFrom(type) && !type.IsAbstract)
-                .AsImplementedInterfaces().SingleInstance();//InstancePerLifetimeScope 保证对象生命周期基于请求
+                .AsImplementedInterfaces().SingleInstance();// 保证对象生命周期基于单例
 
-            containerBuilder.RegisterAssemblyModules(assemblies);
+            containerBuilder.RegisterAssemblyModules(assemblies);//所有继承module中的类都会被注册
 
             var container = containerBuilder.Build();
             ContainerManager.SetContainer(container);
